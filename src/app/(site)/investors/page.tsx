@@ -26,7 +26,7 @@ export default function InvestorsPage() {
       <SplitHero eyebrow="For investors" title="A ₦700bn+ addressable market, and the compliance moat to defend it." body="Nigeria’s Tax Act 2025 is making e-invoicing and digital compliance mandatory. XPensari is the AI-native finance platform built for that window." cta="Request the investor deck" ctaHref="#request" alt={null} image="/images/94759cc3.jpg" imgAlt="Lagos skyline" />
       <LibTrust data={{ L: "A", items: [["Building", "Built on WorkMerate ERP"], ["Landmark", "Nigeria Tax Act 2025 rules built in"], ["Receipt", "Identity and payments with ChamsAccess"], ["Sparkles", "Seven AI agents for finance"]] }} />
       <section className="section-y bg-white">
-        <div className="wrap flex flex-col gap-12">
+        <div className="wrap flex flex-col gap-8 md:gap-12">
           <SectionHeader eyebrow="Market opportunity" title="The opportunity, by the numbers" />
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             <Stat value="₦2.1T" label="TAM: Nigeria SME finance and compliance software spend" />
@@ -41,8 +41,8 @@ export default function InvestorsPage() {
         </div>
       </section>
       <section className="section-y bg-page">
-        <div className="wrap flex flex-col items-center gap-12 lg:flex-row lg:gap-16">
-          <div className="relative w-full overflow-hidden rounded-[32px] bg-teal-tint p-6 lg:w-[600px]">
+        <div className="wrap flex flex-col items-center gap-8 md:gap-12 lg:flex-row lg:gap-16">
+          <div className="relative w-full overflow-hidden rounded-3xl md:rounded-[32px] bg-teal-tint p-6 lg:w-[600px]">
             <ScaleToFit width={960} height={580}><DashboardMock /></ScaleToFit>
             <Toast icon="Check" tone="success" title="NRS e-invoice accepted" body="INV-2026-0142 · just now" className="absolute bottom-4 right-4 w-[280px]" />
           </div>
@@ -60,7 +60,7 @@ export default function InvestorsPage() {
         </div>
       </section>
       <section className="section-y bg-subtle">
-        <div className="wrap flex flex-col items-center gap-12">
+        <div className="wrap flex flex-col items-center gap-8 md:gap-12">
           <SectionHeader align="center" eyebrow="The moat" title="Why XPensari wins" body="Compliance that is built in, not bolted on, with distribution and intelligence on top." />
           <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {MOAT.map(([img, t, b]) => (

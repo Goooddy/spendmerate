@@ -41,7 +41,7 @@ export function Accordion({ items, defaultOpen = 0 }: { items: QA[]; defaultOpen
 export function FaqSection({ eyebrow = "FAQ", title, body, items, bg = "bg-page" }: { eyebrow?: string; title: string; body?: string; items: QA[]; bg?: string }) {
   return (
     <section className={cx("section-y", bg)}>
-      <div className="wrap flex flex-col items-center gap-12">
+      <div className="wrap flex flex-col items-center gap-8 md:gap-12">
         <SectionHeader align="center" eyebrow={eyebrow} title={title} body={body} />
         <div className="w-full max-w-[800px]">
           <Accordion items={items} />

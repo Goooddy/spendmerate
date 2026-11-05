@@ -27,6 +27,24 @@ const TILES = [
   ["Trending Up", "Revenue Intelligence", "Grow money in with the same rigour you apply to spend.", PRODUCTS.revenue.href],
 ];
 
+/** Mobile hero: dashboard plus the AI and NRS cards only (Approval card hidden on mobile per the motion spec). */
+function MobileStage() {
+  return (
+    <div className="relative h-[300px] w-full max-w-[400px] md:hidden">
+      <div aria-hidden="true" className="absolute inset-x-[-20%] top-4 h-[290px] rounded-full bg-teal opacity-[0.06] blur-[40px]" />
+      <div className="rise absolute inset-x-1.5 top-10 overflow-hidden rounded-md" style={{ animationDelay: "200ms" }}>
+        <ScaleToFit width={960} height={580}><DashboardMock /></ScaleToFit>
+      </div>
+      <div className="rise-drift absolute right-0 top-0 w-[280px] max-w-[80%]" style={{ animationDelay: "600ms, 1100ms" }}>
+        <Toast icon="Check" tone="success" title="NRS e-invoice accepted" body="INV-2026-0142 · just now" />
+      </div>
+      <div className="rise-drift absolute bottom-0 left-0 w-[312px] max-w-[88%]" style={{ animationDelay: "900ms, 1900ms" }}>
+        <Toast icon="Sparkles" tone="ai" title="AI CFO found ₦1.2M in savings" body="3 overlapping subscriptions" />
+      </div>
+    </div>
+  );
+}
+
 function HeroStage() {
   return (
     <div className="relative h-[580px] w-[1248px]">
@@ -51,14 +69,14 @@ export default function Home() {
   return (
     <>
       {/* Hero */}
-      <section className="relative overflow-hidden bg-page pt-16">
+      <section className="relative overflow-hidden bg-page pb-12 pt-12 md:pb-0 md:pt-16">
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/images/globe.svg" alt="" className="absolute left-1/2 top-[-120px] w-[1240px] max-w-none -translate-x-1/2" style={{ maskImage: "linear-gradient(#0000008c, #000 40%)" }} />
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/images/globe-halo.svg" alt="" className="absolute left-1/2 top-[-10px] w-[1100px] max-w-none -translate-x-1/2" />
         </div>
-        <div className="wrap relative flex flex-col items-center gap-12">
+        <div className="wrap relative flex flex-col items-center gap-8 md:gap-12">
           <div className="flex flex-col items-center gap-6 text-center">
             <span className="flex items-center gap-2 rounded-full border border-line bg-white px-3 py-2">
               <span className="size-1.5 rounded-full bg-amber" />
@@ -68,12 +86,13 @@ export default function Home() {
             <p className="t-lead max-w-[720px] text-ink-2">
               The AI-native Financial &amp; Revenue Operating System for Nigerian and African enterprises: FinOps, RevOps, Payments and Compliance in one intelligence layer.
             </p>
-            <div className="flex flex-wrap justify-center gap-3">
-              <Button href={DEMO_HREF} icon="Arrow Right">Request a Demo</Button>
-              <Button href="#platform" variant="ghost">See How It Works</Button>
+            <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:flex-wrap sm:justify-center">
+              <Button href={DEMO_HREF} icon="Arrow Right" className="w-full sm:w-auto">Request a Demo</Button>
+              <Button href="#platform" variant="ghost" className="w-full sm:w-auto">See How It Works</Button>
             </div>
           </div>
-          <div className="w-full max-w-[1248px] overflow-hidden">
+          <MobileStage />
+          <div className="hidden w-full max-w-[1248px] overflow-hidden md:block">
             <ScaleToFit width={1248} height={520}><HeroStage /></ScaleToFit>
           </div>
         </div>
@@ -87,9 +106,9 @@ export default function Home() {
 
       {/* Problem */}
       <section className="section-y bg-page">
-        <div className="wrap flex flex-col gap-12">
+        <div className="wrap flex flex-col gap-8 md:gap-12">
           <SectionHeader eyebrow="The problem" title="Nigerian finance teams are drowning in fragmentation." body="Spreadsheets, disconnected tools and manual compliance slow every close and hide where the money goes." />
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-2 gap-4 md:gap-6 lg:grid-cols-4">
             <Stat value="39.7M" label="Nigerian MSMEs, only ~3% formally registered" />
             <Stat value="86%" label="of African firms have basic digital access" />
             <Stat value="11%" label="use advanced technology intensively" />
@@ -101,7 +120,7 @@ export default function Home() {
 
       {/* Solution bento */}
       <section id="platform" className="section-y bg-subtle">
-        <div className="wrap flex flex-col items-center gap-12">
+        <div className="wrap flex flex-col items-center gap-8 md:gap-12">
           <SectionHeader align="center" eyebrow="One platform" title="One platform. One data model. One source of truth." body="FinOps, RevOps, Payments and Compliance in one system, so your team stops reconciling between tools." />
           <div className="grid w-full grid-cols-1 gap-6 lg:grid-cols-[718fr_506fr]">
             <BentoTile bg="bg-teal-tint" kicker="Control money out" title="FinOps" body="Expenses, procurement, payables, budgets and treasury in one flow, with approvals that happen where the money moves." link="Explore FinOps" href={PRODUCTS.expense.href}>
@@ -132,7 +151,7 @@ export default function Home() {
 
       {/* AI layer */}
       <section className="section-y bg-navy">
-        <div className="wrap flex flex-col gap-12">
+        <div className="wrap flex flex-col gap-8 md:gap-12">
           <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
             <SectionHeader dark eyebrow="AI Intelligence Layer" title="Seven AI agents, working the books with you." body="Each agent watches one part of your finance operation and acts before problems reach month-end." />
             <div className="flex flex-wrap gap-6">
@@ -140,7 +159,7 @@ export default function Home() {
               <Button href={PRODUCTS.api.href} variant="link-light" icon="Arrow Right">Explore the API platform</Button>
             </div>
           </div>
-          <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-[540fr_644fr]">
+          <div className="grid grid-cols-1 items-center gap-8 md:gap-16 lg:grid-cols-[540fr_644fr]">
             <ul className="flex flex-col">
               {AGENTS.map(([icon, name, body], i) => (
                 <li key={name} className={"flex items-center gap-4 py-3 " + (i < AGENTS.length - 1 ? "border-b border-navy-raised" : "")}>
@@ -152,8 +171,8 @@ export default function Home() {
                 </li>
               ))}
             </ul>
-            <div className="relative h-[580px] overflow-hidden rounded-3xl border border-navy-raised bg-navy-deep">
-              <div className="absolute inset-0 flex flex-col items-center justify-center gap-5 p-6">
+            <div className="relative overflow-hidden md:h-[580px] rounded-2xl md:rounded-3xl border border-navy-raised bg-navy-deep">
+              <div className="flex flex-col items-center justify-center gap-4 p-4 md:absolute md:inset-0 md:gap-5 md:p-6">
                 <AiRecSnippet className="self-start sm:ml-6" />
                 <CashFlowSnippet dark className="sm:self-end sm:mr-6" />
                 <Toast dark icon="Check" tone="success" title="AI AP/AR matched 128 invoices" body="3 mismatches sent for review" className="w-[300px] self-start sm:ml-16" />
@@ -166,7 +185,7 @@ export default function Home() {
 
       {/* Product grid */}
       <section className="section-y bg-page">
-        <div className="wrap flex flex-col items-center gap-12">
+        <div className="wrap flex flex-col items-center gap-8 md:gap-12">
           <SectionHeader align="center" eyebrow="Products" title="Built for every finance and revenue function." />
           <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {TILES.map(([icon, title, body, href]) => <ProductTile key={title} icon={icon} title={title} body={body} link={`Explore ${title}`} href={href} />)}
@@ -177,12 +196,12 @@ export default function Home() {
 
       {/* Product preview */}
       <section className="section-y bg-subtle">
-        <div className="wrap grid grid-cols-1 items-center gap-16 lg:grid-cols-[400fr_784fr]">
+        <div className="wrap grid grid-cols-1 items-center gap-8 md:gap-16 lg:grid-cols-[400fr_784fr]">
           <div className="flex flex-col gap-8">
             <SectionHeader eyebrow="Product preview" title="Every naira, one clear view." body="Total spend, savings and compliance in one executive dashboard, with AI recommendations your team can act on." />
             <Button href={DEMO_HREF} variant="ghost" icon="Arrow Right" className="self-start">Watch a 2-min Demo</Button>
           </div>
-          <div aria-hidden="true" className="illus flex flex-col gap-6 rounded-3xl border border-line bg-white p-6 md:p-8">
+          <div aria-hidden="true" className="illus flex flex-col gap-6 rounded-2xl md:rounded-3xl border border-line bg-white p-6 md:p-8">
             <div className="flex items-center justify-between gap-3">
               <span className="text-base font-semibold">Executive overview · Q3</span>
               <Badge tone="neutral">Illustrative data</Badge>
@@ -213,7 +232,7 @@ export default function Home() {
 
       {/* Starting point */}
       <section className="section-y bg-page">
-        <div className="wrap flex flex-col items-center gap-12">
+        <div className="wrap flex flex-col items-center gap-8 md:gap-12">
           <SectionHeader align="center" eyebrow="Find your starting point" title="One platform, three ways in." />
           <div className="grid w-full grid-cols-1 gap-6 md:grid-cols-3">
             <ImageCard image="/images/00039d94.jpg" alt="Finance leadership meeting" title="For your role" body="CFOs, procurement, sales and developers: each team gets the workflows for the problem it owns." link="Find your role" href="/solutions#role" />
@@ -225,7 +244,7 @@ export default function Home() {
 
       {/* Compliance & trust */}
       <section className="section-y bg-subtle">
-        <div className="wrap flex flex-col gap-12">
+        <div className="wrap flex flex-col gap-8 md:gap-12">
           <SectionHeader eyebrow="Compliance & security" title="Built for the Nigeria Tax Act 2025, not retrofitted to it." body="Tax rules, e-invoicing and audit trails are part of the core, so compliance happens as you work." />
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
             <FeatureCard icon="Shield" title="NRS e-invoicing ready" body="System-to-system e-invoicing through the NRS gateway, with VAT, WHT and PAYE handled by the tax engine." />
@@ -237,7 +256,7 @@ export default function Home() {
 
       {/* Social proof */}
       <section className="section-y-sm bg-page">
-        <div className="wrap flex flex-col items-center gap-12">
+        <div className="wrap flex flex-col items-center gap-8 md:gap-12">
           <SectionHeader align="center" eyebrow="Pilot results" title="Less chasing. Faster month-ends." body="Early numbers from finance teams piloting XPensari across Lagos and Abuja." />
           <div className="grid w-full grid-cols-1 gap-6 md:grid-cols-3">
             <Stat value="4 days" label="faster month-end close in the first quarter" />
@@ -250,7 +269,7 @@ export default function Home() {
 
       {/* Resources */}
       <section className="section-y bg-subtle">
-        <div className="wrap flex flex-col gap-12">
+        <div className="wrap flex flex-col gap-8 md:gap-12">
           <SectionHeader eyebrow="Resources" title="Start with the numbers, not a sales call." body="Estimate your savings, check what the Nigeria Tax Act 2025 changes for you, or read how other finance teams are handling it." />
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
             <ProductTile icon="Calculator" title="Savings Calculator" body="Estimate what you could save in under a minute." link="Open" href={RESOURCES.calculator.href} />
@@ -260,14 +279,14 @@ export default function Home() {
         </div>
       </section>
 
-      <CtaBand eyebrow="Get started" title="Let’s build the platform Nigeria and Africa’s enterprises deserve." />
+      <CtaBand image="3b2a41a6" eyebrow="Get started" title="Let’s build the platform Nigeria and Africa’s enterprises deserve." />
     </>
   );
 }
 
 function BentoTile({ bg, kicker, title, body, link, href, children }: { bg: string; kicker: string; title: string; body: string; link: string; href: string; children: React.ReactNode }) {
   return (
-    <div className={`flex flex-col gap-6 overflow-hidden rounded-3xl p-6 md:p-8 ${bg}`}>
+    <div className={`flex flex-col gap-6 overflow-hidden rounded-2xl md:rounded-3xl p-6 md:p-8 ${bg}`}>
       <div className="flex flex-col gap-2">
         <Eyebrow className="[&>span:first-child]:hidden [&>span]:!text-teal-text">{kicker}</Eyebrow>
         <h3 className="t-h3">{title}</h3>
@@ -276,7 +295,7 @@ function BentoTile({ bg, kicker, title, body, link, href, children }: { bg: stri
           {link} <Icon name="Arrow Right" size={16} />
         </Link>
       </div>
-      <div className="relative h-[300px]">{children}</div>
+      <div className="relative h-[320px] md:h-[300px]">{children}</div>
     </div>
   );
 }

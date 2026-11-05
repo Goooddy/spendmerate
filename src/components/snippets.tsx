@@ -4,7 +4,7 @@ import { Badge, Icon, IconChip, cx } from "./ui";
 
 export function ApprovalSnippet({ className = "", style }: { className?: string; style?: React.CSSProperties }) {
   return (
-    <div aria-hidden="true" style={{ boxShadow: "var(--shadow-float)", ...style }} className={cx("illus flex w-[300px] flex-col gap-3 rounded-2xl border border-line bg-white p-4", className)}>
+    <div aria-hidden="true" style={{ boxShadow: "var(--shadow-float)", ...style }} className={cx("illus flex w-[300px] max-w-full flex-col gap-3 rounded-2xl border border-line bg-white p-4", className)}>
       <div className="flex items-center justify-between">
         <span className="text-xs leading-4 text-ink-3">Approval request</span>
         <Badge tone="amber">Pending</Badge>
@@ -29,7 +29,7 @@ export function CashFlowSnippet({ dark, className = "" }: { dark?: boolean; clas
   const bars = [30, 40, 35, 48, 53, 66];
   const months = ["Apr", "May", "Jun", "Jul", "Aug", "Sep"];
   return (
-    <div aria-hidden="true" style={{ boxShadow: "var(--shadow-float)" }} className={cx("illus flex w-[320px] flex-col gap-3 rounded-2xl border p-4", dark ? "border-navy-raised bg-navy-raised" : "border-line bg-white", className)}>
+    <div aria-hidden="true" style={{ boxShadow: "var(--shadow-float)" }} className={cx("illus flex w-[320px] max-w-full flex-col gap-3 rounded-2xl border p-4", dark ? "border-navy-raised bg-navy-raised" : "border-line bg-white", className)}>
       <div className="flex justify-between">
         <span className="flex flex-col gap-1">
           <span className={cx("text-xs leading-4", dark ? "text-muted-dark" : "text-ink-3")}>Cash position</span>
@@ -51,7 +51,7 @@ export function CashFlowSnippet({ dark, className = "" }: { dark?: boolean; clas
 
 export function CardSnippet({ className = "" }: { className?: string }) {
   return (
-    <div aria-hidden="true" style={{ boxShadow: "var(--shadow-float)" }} className={cx("illus flex w-[300px] flex-col gap-3 rounded-2xl border border-line bg-white p-4", className)}>
+    <div aria-hidden="true" style={{ boxShadow: "var(--shadow-float)" }} className={cx("illus flex w-[300px] max-w-full flex-col gap-3 rounded-2xl border border-line bg-white p-4", className)}>
       <div className="flex h-40 flex-col justify-between rounded-xl bg-navy p-4">
         <div className="flex items-center justify-between">
           <span className="flex items-end gap-0.5">
@@ -85,7 +85,7 @@ export function CardSnippet({ className = "" }: { className?: string }) {
 
 export function ReceiptSnippet({ className = "" }: { className?: string }) {
   return (
-    <div aria-hidden="true" style={{ boxShadow: "var(--shadow-float)" }} className={cx("illus flex w-[300px] items-center gap-3 rounded-2xl border border-line bg-white p-4", className)}>
+    <div aria-hidden="true" style={{ boxShadow: "var(--shadow-float)" }} className={cx("illus flex w-[300px] max-w-full items-center gap-3 rounded-2xl border border-line bg-white p-4", className)}>
       <span className="flex h-[72px] w-14 items-center justify-center rounded-lg bg-subtle"><Icon name="Receipt" /></span>
       <span className="flex flex-col gap-1">
         <span className="text-sm font-semibold leading-5">Iya Bisi Kitchen, Lekki</span>
@@ -98,7 +98,7 @@ export function ReceiptSnippet({ className = "" }: { className?: string }) {
 
 export function InvoiceStatusSnippet({ className = "" }: { className?: string }) {
   return (
-    <div aria-hidden="true" style={{ boxShadow: "var(--shadow-float)" }} className={cx("illus flex w-[300px] flex-col gap-3 rounded-2xl border border-line bg-white p-4", className)}>
+    <div aria-hidden="true" style={{ boxShadow: "var(--shadow-float)" }} className={cx("illus flex w-[300px] max-w-full flex-col gap-3 rounded-2xl border border-line bg-white p-4", className)}>
       <span className="flex flex-col gap-1">
         <span className="text-sm font-semibold leading-5">E-invoice INV-2026-0142</span>
         <span className="text-xs leading-4 text-ink-3">Adeyemi Logistics Ltd · ₦2,450,000</span>
@@ -117,7 +117,7 @@ export function InvoiceStatusSnippet({ className = "" }: { className?: string })
 
 export function AiRecSnippet({ className = "" }: { className?: string }) {
   return (
-    <div aria-hidden="true" className={cx("illus flex w-[360px] gap-3 rounded-2xl border border-navy-raised bg-navy-raised p-4", className)} style={{ boxShadow: "var(--shadow-float)" }}>
+    <div aria-hidden="true" className={cx("illus flex w-[360px] max-w-full gap-3 rounded-2xl border border-navy-raised bg-navy-raised p-4", className)} style={{ boxShadow: "var(--shadow-float)" }}>
       <IconChip icon="Sparkles" size={32} iconSize={18} tone="navy" />
       <span className="flex flex-col gap-1">
         <span className="text-sm font-semibold leading-5 text-cream">AI CFO recommendation</span>
@@ -132,7 +132,7 @@ export function DashboardMock() {
   const bars = [75, 93, 72, 105, 87, 99, 78, 111, 90, 123, 102, 135];
   const nav = ["Overview", "Spend", "Approvals", "Invoices & NRS", "Cash flow", "Compliance", "AI agents"];
   return (
-    <div aria-hidden="true" className="illus flex h-[580px] w-[960px] flex-col overflow-hidden rounded-3xl border border-line bg-white" style={{ boxShadow: "var(--shadow-lg)" }}>
+    <div aria-hidden="true" className="illus flex h-[580px] w-[960px] flex-col overflow-hidden rounded-2xl md:rounded-3xl border border-line bg-white" style={{ boxShadow: "var(--shadow-lg)" }}>
       <div className="flex items-center gap-2 bg-subtle px-4 py-3">
         {[0, 1, 2].map((i) => <span key={i} className="size-2.5 rounded-full bg-ink-3/60" />)}
         <span className="flex flex-1 justify-center rounded-full bg-white px-4 py-1 text-xs text-ink-3">app.xpensari.com/overview</span>

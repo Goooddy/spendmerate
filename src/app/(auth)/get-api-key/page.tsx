@@ -27,7 +27,7 @@ export default function GetApiKeyPage() {
         <Link href="/resources/developers" className="text-sm font-semibold text-teal-text hover:underline">Back to developer docs</Link>
       </header>
       <main id="main" className="flex flex-1 items-center justify-center px-4 py-12">
-        <div className="rise flex w-full max-w-[520px] flex-col gap-6 rounded-3xl border border-line bg-white p-8 shadow-md md:p-10">
+        <div className="rise flex w-full max-w-[520px] flex-col gap-6 rounded-2xl md:rounded-3xl border border-line bg-white p-8 shadow-md md:p-10">
           {issued ? (
             <div role="status" className="fade-in flex flex-col gap-5">
               <span className="flex size-14 items-center justify-center rounded-full bg-teal-chip"><Icon name="Check" /></span>

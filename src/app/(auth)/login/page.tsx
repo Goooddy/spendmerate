@@ -20,7 +20,7 @@ export default function LoginPage() {
         <Link href="/" className="text-sm font-semibold text-teal-text hover:underline">Back to xpensari.com</Link>
       </header>
       <main id="main" className="flex flex-1 items-center justify-center px-4 py-12">
-        <div className="rise flex w-full max-w-[480px] flex-col gap-6 rounded-3xl border border-line bg-white p-8 shadow-md md:p-10">
+        <div className="rise flex w-full max-w-[480px] flex-col gap-6 rounded-2xl md:rounded-3xl border border-line bg-white p-8 shadow-md md:p-10">
           <div className="flex flex-col gap-2">
             <h1 className="t-h2">Log in to XPensari</h1>
             <p className="text-sm text-ink-2">Use the work email your organisation was set up with.</p>

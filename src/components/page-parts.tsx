@@ -6,7 +6,7 @@ import type { ReactNode } from "react";
 export function PageHero({ eyebrow, title, body, actions = true, children, className = "" }: { eyebrow: string; title: string; body?: string; actions?: boolean; children?: ReactNode; className?: string }) {
   return (
     <section className={cx("bg-page section-y", className)}>
-      <div className="wrap flex flex-col items-center gap-12">
+      <div className="wrap flex flex-col items-center gap-8 md:gap-12">
         <SectionHeader as="h1" level="page" align="center" eyebrow={eyebrow} title={title} body={body} className="rise" />
         {actions && (
           <div className="flex flex-wrap items-center justify-center gap-6">

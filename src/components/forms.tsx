@@ -2,6 +2,7 @@
 import { useRouter } from "next/navigation";
 import { useId, useState, type FormEvent } from "react";
 import { Icon, cx } from "./ui";
+import { fieldClass, helperClass, pillClass, pillInputClass } from "./inputStyles";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -31,15 +32,12 @@ export function NewsletterForm({ dark }: { dark?: boolean }) {
           onChange={(e) => { setEmail(e.target.value); setState("idle"); }}
           placeholder="name@company.com"
           aria-invalid={state === "error"}
-          className={cx(
-            "h-12 min-w-0 flex-1 rounded-lg border px-4 text-base outline-none",
-            dark ? "border-line-dark bg-navy-raised text-cream placeholder:text-muted-dark" : "border-line-strong bg-white text-ink placeholder:text-ink-3",
-            state === "error" && "border-[#c2410c]",
-          )}
+          aria-describedby={state === "error" ? id + "-e" : undefined}
+          className={fieldClass({ error: state === "error", dark, className: "h-12 min-w-0 flex-1 py-0" })}
         />
         <button type="submit" className="h-12 rounded-lg bg-teal px-6 text-base font-semibold text-ink hover:bg-[#13a382]">Subscribe</button>
       </div>
-      {state === "error" && <p className={cx("text-xs", dark ? "text-amber" : "text-[#b42318]")}>Enter a valid work email.</p>}
+      {state === "error" && <p id={id + "-e"} className={helperClass(true, dark)}>Enter a valid work email.</p>}
     </form>
   );
 }
@@ -52,7 +50,7 @@ export function EmailCapture({ dark, className = "" }: { dark?: boolean; classNa
     router.push("/request-demo" + (email ? `?email=${encodeURIComponent(email)}` : ""));
   };
   return (
-    <form onSubmit={submit} className={cx("flex w-full max-w-[480px] items-center gap-2 rounded-2xl border py-1.5 pl-5 pr-1.5", dark ? "border-line-dark bg-navy-raised" : "border-line-strong bg-white", className)}>
+    <form onSubmit={submit} className={pillClass({ dark, className: cx("w-full max-w-[480px]", className) })}>
       <label htmlFor="hero-email" className="sr-only">Work email</label>
       <input
         id="hero-email"
@@ -60,9 +58,36 @@ export function EmailCapture({ dark, className = "" }: { dark?: boolean; classNa
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder="Work email"
-        className={cx("min-w-0 flex-1 bg-transparent text-sm outline-none", dark ? "text-cream placeholder:text-muted-dark" : "text-ink placeholder:text-ink-3")}
+        className={pillInputClass(dark)}
       />
-      <button type="submit" className="whitespace-nowrap rounded-lg bg-teal px-4 py-3 text-sm font-semibold text-ink hover:bg-[#13a382] sm:px-6 sm:text-base">Request a Demo</button>
+      <button type="submit" className="press whitespace-nowrap rounded-lg bg-teal px-4 py-3 text-sm font-semibold text-ink hover:bg-[#13a382] sm:px-6 sm:text-base">Request a Demo</button>
+    </form>
+  );
+}
+
+/** Email-capture slot of the CTA band: pill input + action, with an inline confirmation. */
+export function PillSubscribe({ action = "Subscribe", done = "You’re subscribed. Look out for the next issue.", dark }: { action?: string; done?: string; dark?: boolean }) {
+  const id = useId();
+  const [email, setEmail] = useState("");
+  const [state, setState] = useState<"idle" | "error" | "done">("idle");
+  const submit = (e: FormEvent) => {
+    e.preventDefault();
+    setState(EMAIL_RE.test(email) ? "done" : "error");
+  };
+  if (state === "done")
+    return (
+      <p role="status" className={cx("fade-in flex items-center gap-2 text-base font-medium", dark ? "text-teal-bright" : "text-teal-text")}>
+        <Icon name="Check" size={20} /> {done}
+      </p>
+    );
+  return (
+    <form onSubmit={submit} noValidate className="flex w-full max-w-[480px] flex-col gap-2">
+      <div className={pillClass({ dark, error: state === "error" })}>
+        <label htmlFor={id} className="sr-only">Work email</label>
+        <input id={id} type="email" value={email} onChange={(e) => { setEmail(e.target.value); setState("idle"); }} placeholder="you@company.com" aria-invalid={state === "error"} aria-describedby={state === "error" ? id + "-e" : undefined} className={pillInputClass(dark)} />
+        <button type="submit" className="press whitespace-nowrap rounded-lg bg-teal px-5 py-3 text-sm font-semibold text-ink hover:bg-[#13a382] sm:px-6 sm:text-base">{action}</button>
+      </div>
+      {state === "error" && <p id={id + "-e"} className={helperClass(true, dark)}>Enter a valid work email.</p>}
     </form>
   );
 }

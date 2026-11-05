@@ -13,7 +13,7 @@ export default function ProductsPage() {
       <PageHero eyebrow="Products" title="Eleven products. One data model." body="Every XPensari product writes to the same ledger, so spend, revenue, payments and compliance stay in step without reconciliation." />
       <StdTrust />
       <section className="section-y bg-subtle">
-        <div className="wrap flex flex-col gap-16">
+        <div className="wrap flex flex-col gap-8 md:gap-16">
           <TileGroup title="Control money out" body="Stop leakage before it reaches the ledger." tiles={[
             t("Scan Eye", "spend", "Catch avoidable spend early"),
             t("Credit Card", "expense", "Control spend where it happens"),
@@ -27,7 +27,7 @@ export default function ProductsPage() {
           <TileGroup title="Platform" body="The layer everything else runs on." tiles={[t("Sparkles", "ai", "Seven AI agents"), t("Plug", "api", "Open by design")]} />
         </div>
       </section>
-      <CtaBand eyebrow="Get started" title="See the whole platform in one session." body="Thirty minutes on your own numbers, across spend, revenue, payments and compliance." />
+      <CtaBand image="73fee244" eyebrow="Get started" title="SEE THE WHOLE PLATFORM IN ONE SESSION." body="Thirty minutes on your own numbers, across spend, revenue, payments and compliance." />
     </>
   );
 }

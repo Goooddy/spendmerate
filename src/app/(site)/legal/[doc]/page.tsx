@@ -25,7 +25,7 @@ export default async function LegalPage({ params }: { params: Promise<{ doc: str
         </div>
       </section>
       <section className="bg-white py-16">
-        <div className="wrap flex flex-col gap-12 lg:flex-row lg:gap-16">
+        <div className="wrap flex flex-col gap-8 md:gap-12 lg:flex-row lg:gap-16">
           <nav aria-label="On this page" className="lg:sticky lg:top-28 lg:w-[240px] lg:self-start">
             <p className="t-eyebrow mb-3 text-ink-3">On this page</p>
             <ol className="flex flex-col">

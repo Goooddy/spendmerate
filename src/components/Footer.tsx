@@ -13,8 +13,8 @@ const SOCIAL = [
 export function Footer() {
   return (
     <footer className="bg-navy text-cream">
-      <div className="wrap flex flex-col gap-12 pb-8 pt-16">
-        <div className="flex flex-col gap-12 lg:flex-row lg:gap-16">
+      <div className="wrap flex flex-col gap-8 pb-6 pt-12 md:gap-12 md:pb-8 md:pt-16">
+        <div className="flex flex-col gap-8 md:gap-12 lg:flex-row lg:gap-16">
           <div className="flex w-full max-w-[360px] flex-col gap-6">
             <Logo light />
             <p className="text-sm leading-[22px] text-mist">The AI-native financial and revenue operating system for Nigerian and African enterprises.</p>

@@ -4,51 +4,13 @@ import { InvoiceStatusSnippet, ReceiptSnippet } from "@/components/snippets";
 import { LogoMarquee } from "@/components/LogoMarquee";
 import { FaqSection } from "@/components/Accordion";
 import { PricingTiers } from "./PricingTiers";
+import { CompareTable } from "./CompareTable";
 
 export const metadata: Metadata = { title: "Pricing", description: "Naira-priced. Modular. Built to scale with you." };
 
-const Y = "check";
-const COMPARE: { group: string; rows: [string, string, string, string, string][] }[] = [
-  { group: "FinOps", rows: [
-    ["Expense management & receipt capture", Y, Y, Y, Y],
-    ["Budgets & approval workflows", Y, Y, Y, Y],
-    ["Procurement & vendor intelligence", "—", Y, Y, Y],
-    ["Invoice & AP/AR automation", "—", Y, Y, Y],
-  ] },
-  { group: "RevOps", rows: [
-    ["CRM, pipeline & quotations", "—", "—", Y, Y],
-    ["Collections & cash-flow forecasting", "—", "Basic", Y, Y],
-  ] },
-  { group: "Payments", rows: [
-    ["Supplier payments & bulk transfers", Y, Y, Y, Y],
-    ["Automated bank reconciliation", "—", Y, Y, Y],
-    ["Multi-currency accounts", "—", "—", Y, Y],
-  ] },
-  { group: "Compliance", rows: [
-    ["VAT, WHT & PAYE tax engine", Y, Y, Y, Y],
-    ["NRS e-invoicing", Y, Y, Y, Y],
-    ["Risk, audit & ESG reporting", "—", "—", Y, Y],
-  ] },
-  { group: "AI agents", rows: [
-    ["AI CFO", "Insights", Y, Y, Y],
-    ["AI Procurement", "—", Y, Y, Y],
-    ["All seven AI agents", "—", "—", Y, Y],
-  ] },
-  { group: "Platform & support", rows: [
-    ["Users", "Up to 10", "Up to 50", "Unlimited", "Unlimited"],
-    ["Entities", "1", "Up to 3", "Up to 10", "Multi-country"],
-    ["SSO & advanced roles", "—", "—", Y, Y],
-    ["API / ESB access", "—", "—", "Add-on", Y],
-    ["Support", "Email & chat", "Priority", "Dedicated manager", "Custom SLA"],
-  ] },
-];
-const PLANS = [["Starter", "₦250,000 / month", "Talk to Sales"], ["Growth", "₦650,000 / month", "Talk to Sales"], ["Enterprise", "₦1.5M+ / month", "Talk to Sales"], ["Custom", "Custom quote", "Get a Quote"]];
-
-const Cell = ({ v }: { v: string }) => (v === Y ? <Icon name="Check" size={20} className="mx-auto text-teal-text" /> : <span className={cx("text-sm", v === "—" ? "text-ink-3" : "text-ink")}>{v}</span>);
-
 function IncludedTile({ bg, title, body, children }: { bg: string; title: string; body: string; children: React.ReactNode }) {
   return (
-    <div className={cx("flex flex-col gap-6 overflow-hidden rounded-3xl p-8", bg)}>
+    <div className={cx("flex flex-col gap-6 overflow-hidden rounded-2xl md:rounded-3xl p-8", bg)}>
       <div className="flex flex-col gap-2">
         <h3 className="t-h3">{title}</h3>
         <p className="text-sm leading-[22px] text-ink-2">{body}</p>
@@ -62,7 +24,7 @@ export default function PricingPage() {
   return (
     <>
       <section className="section-y bg-page">
-        <div className="wrap flex flex-col items-center gap-12">
+        <div className="wrap flex flex-col items-center gap-8 md:gap-12">
           <SectionHeader as="h1" level="page" align="center" eyebrow="Pricing" title="Naira-priced. Modular. Built to scale with you." body="Choose the tier that fits your organisation today and add modules as you grow. Every plan is billed in Naira." />
           <PricingTiers />
           <p className="text-center text-xs text-ink-3">All prices are in Naira (₦) and exclude VAT. Plan contents are confirmed in your proposal.</p>
@@ -74,7 +36,7 @@ export default function PricingPage() {
       </section>
 
       <section className="section-y bg-subtle">
-        <div className="wrap flex flex-col items-center gap-12">
+        <div className="wrap flex flex-col items-center gap-8 md:gap-12">
           <SectionHeader align="center" eyebrow="Every plan" title="The essentials come standard." body="Compliance, controls and AI insight are in every tier, not sold back to you as extras." />
           <div className="grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             <IncludedTile bg="bg-teal-tint" title="NRS e-invoicing" body="Every invoice signed with an IRN and QR code, then sent to NRS for you."><InvoiceStatusSnippet /></IncludedTile>
@@ -109,43 +71,14 @@ export default function PricingPage() {
       </section>
 
       <section className="section-y bg-page">
-        <div className="wrap flex flex-col items-center gap-12">
+        <div className="wrap flex flex-col items-center gap-8 md:gap-12">
           <SectionHeader align="center" eyebrow="Compare plans" title="Every plan, line by line." body="Prices are per organisation. Every plan includes onboarding support and Naira billing." />
-          <div className="w-full overflow-x-auto rounded-3xl border border-line bg-white">
-            <table className="w-full min-w-[880px] border-collapse text-left">
-              <caption className="sr-only">Plan comparison</caption>
-              <thead>
-                <tr>
-                  <th className="w-[32%] p-6 align-bottom text-xs font-normal text-ink-3">Prices shown for annual billing.</th>
-                  {PLANS.map(([n, p, c], i) => (
-                    <th key={n} scope="col" className={cx("p-6 text-center align-top", i === 1 && "bg-teal-tint")}>
-                      <div className="flex flex-col items-center gap-2">
-                        <span className="t-h3">{n}</span>
-                        <span className="text-sm font-normal text-ink-2">{p}</span>
-                        <Button href={n === "Custom" ? "/contact" : "/request-demo"} size="sm" variant={i === 1 ? "primary" : "secondary"}>{c}</Button>
-                      </div>
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              {COMPARE.map((g) => (
-                <tbody key={g.group}>
-                  <tr className="bg-subtle"><th colSpan={5} scope="colgroup" className="px-6 py-3 t-eyebrow text-ink">{g.group}</th></tr>
-                  {g.rows.map(([label, ...vals]) => (
-                    <tr key={label} className="border-t border-line">
-                      <th scope="row" className="px-6 py-4 text-sm font-normal text-ink">{label}</th>
-                      {vals.map((v, i) => <td key={i} className={cx("px-6 py-4 text-center", i === 1 && "bg-teal-tint")}><Cell v={v} /></td>)}
-                    </tr>
-                  ))}
-                </tbody>
-              ))}
-            </table>
-          </div>
+          <CompareTable />
         </div>
       </section>
 
       <section className="section-y bg-subtle">
-        <div className="wrap flex flex-col gap-12">
+        <div className="wrap flex flex-col gap-8 md:gap-12">
           <SectionHeader eyebrow="Add-ons" title="Add what you need, when you need it." body="Optional modules on top of any plan, plus clear usage and one-time fees. No surprises on your invoice." />
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             <ProductTile icon="Shield" title="Compliance-as-a-Service" body="We run your statutory filings and NRS submissions alongside your team." link="Ask about this add-on" href="/contact" />
@@ -185,7 +118,7 @@ export default function PricingPage() {
         { q: "How are payment fees charged?", a: "Only when money moves through XPensari, per transfer or as a capped percentage on collections. Failed or reversed transfers are free." },
       ]} />
 
-      <CtaBand tone="teal" eyebrow="Still deciding?" title="Not sure which plan fits?" body="Talk to sales. We’ll map your modules, users and entities to the right tier and send you a Naira quote." secondary={{ label: "Get a Custom Quote", href: "/contact" }} />
+      <CtaBand image="a03beb62" tone="teal" eyebrow="Still deciding?" title="Not sure which plan fits?" body="Talk to sales. We’ll map your modules, users and entities to the right tier and send you a Naira quote." secondary={{ label: "Get a Custom Quote", href: "/contact" }} />
     </>
   );
 }

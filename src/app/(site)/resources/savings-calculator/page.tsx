@@ -12,7 +12,7 @@ export default function SavingsCalculatorPage() {
   return (
     <>
       <InView as="section" className="bg-page pb-24 pt-16">
-        <div className="wrap flex flex-col items-center gap-12 lg:flex-row lg:gap-16">
+        <div className="wrap flex flex-col items-center gap-8 md:gap-12 lg:flex-row lg:gap-16">
           <div className="flex w-full max-w-[560px] flex-col gap-6">
             <SectionHeader as="h1" level="page" eyebrow="Free tool" title="Savings Calculator" body="See your potential savings in under a minute, then talk to our team about the details." />
             <Button href="#calculator" className="self-start">Calculate my savings</Button>
@@ -22,7 +22,7 @@ export default function SavingsCalculatorPage() {
         </div>
       </InView>
       <section className="section-y bg-subtle">
-        <div className="wrap flex flex-col gap-12 lg:flex-row lg:gap-16">
+        <div className="wrap flex flex-col gap-8 md:gap-12 lg:flex-row lg:gap-16">
           <div className="flex flex-col gap-8 lg:w-[440px]">
             <SectionHeader eyebrow="Your details" title="Tell us about your business" body="Four quick questions. Your estimate appears straight away — no sign-up, no demo call." />
             <ul className="flex flex-col gap-3 text-sm text-ink-2">
@@ -31,7 +31,7 @@ export default function SavingsCalculatorPage() {
               ))}
             </ul>
           </div>
-          <div className="flex-1 rounded-3xl bg-white p-6 md:p-10"><Calculator /></div>
+          <div className="flex-1 rounded-2xl md:rounded-3xl bg-white p-6 md:p-10"><Calculator /></div>
         </div>
       </section>
       <LibHiw data={{ L: "B", h: { e: "How it works", t: "How we estimate your savings", b: "A quick, honest starting point you can refine with our team." }, steps: [
@@ -46,7 +46,7 @@ export default function SavingsCalculatorPage() {
         { q: "Is there a cost?", a: "No. The calculator and the follow-up call are free, with no commitment." },
       ]} />
       <MoreResources keys={["hub", "calendar", "blog", "docs"]} />
-      <CtaBand tone="teal" eyebrow="Next step" title="Want the full breakdown?" body="Talk to our team about your numbers and see how XPensari would work for your business." />
+      <CtaBand image="3aabbf34" tone="teal" eyebrow="Next step" title="Want the full breakdown?" body="Talk to our team about your numbers and see how XPensari would work for your business." />
     </>
   );
 }

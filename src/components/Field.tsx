@@ -1,5 +1,6 @@
 "use client";
-import { useId } from "react";
+import { useId, useState } from "react";
+import { fieldClass, helperClass } from "./inputStyles";
 import { Icon, cx } from "./ui";
 
 type Base = { label: string; required?: boolean; error?: string; hint?: string; className?: string };
@@ -8,29 +9,37 @@ export function Field({
   label, required, error, hint, className = "", as = "input", options, ...rest
 }: Base & { as?: "input" | "select" | "textarea"; options?: string[] } & React.InputHTMLAttributes<HTMLInputElement> & React.TextareaHTMLAttributes<HTMLTextAreaElement> & React.SelectHTMLAttributes<HTMLSelectElement>) {
   const id = useId();
-  const cls = cx(
-    "w-full rounded-lg border bg-white px-4 py-3 text-base text-ink outline-none transition-colors placeholder:text-ink-3 focus:border-navy",
-    error ? "border-[#b42318]" : "border-line-strong",
-  );
+  const disabled = !!rest.disabled;
+  const cls = fieldClass({ error: !!error });
+  // Selects have no placeholder: show the "Select…" option in placeholder grey until a value is chosen.
+  const [selVal, setSelVal] = useState(String(rest.value ?? rest.defaultValue ?? ""));
   return (
     <div className={cx("flex flex-col gap-2", className)}>
-      <label htmlFor={id} className="text-sm font-medium text-ink">
-        {label} {required && <span className="text-[#b42318]" aria-hidden="true">*</span>}
+      <label htmlFor={id} className={cx("text-sm font-medium", disabled ? "text-disabled" : "text-ink")}>
+        {label} {required && <span className={disabled ? "text-disabled" : "text-error-text"} aria-hidden="true">*</span>}
       </label>
       {as === "textarea" ? (
-        <textarea id={id} rows={5} aria-invalid={!!error} aria-describedby={error || hint ? id + "-d" : undefined} className={cls} {...(rest as React.TextareaHTMLAttributes<HTMLTextAreaElement>)} />
+        <textarea id={id} rows={5} aria-invalid={!!error} aria-required={required} aria-describedby={error || hint ? id + "-d" : undefined} className={cx(cls, "min-h-32 resize-y")} {...(rest as React.TextareaHTMLAttributes<HTMLTextAreaElement>)} />
       ) : as === "select" ? (
         <div className="relative">
-          <select id={id} aria-invalid={!!error} aria-describedby={error || hint ? id + "-d" : undefined} className={cx(cls, "appearance-none pr-10")} {...(rest as React.SelectHTMLAttributes<HTMLSelectElement>)}>
+          <select
+            id={id}
+            aria-invalid={!!error}
+            aria-required={required}
+            aria-describedby={error || hint ? id + "-d" : undefined}
+            className={cx(cls, "appearance-none pr-10", !selVal && "text-ink-3")}
+            {...(rest as React.SelectHTMLAttributes<HTMLSelectElement>)}
+            onChange={(e) => { setSelVal(e.target.value); (rest as React.SelectHTMLAttributes<HTMLSelectElement>).onChange?.(e); }}
+          >
             <option value="">{rest.placeholder ?? "Select"}</option>
-            {options?.map((o) => <option key={o} value={o}>{o}</option>)}
+            {options?.map((o) => <option key={o} value={o} className="text-ink">{o}</option>)}
           </select>
-          <Icon name="Chevron Down" size={20} className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2" />
+          <Icon name="Chevron Down" size={20} className={cx("pointer-events-none absolute right-4 top-1/2 -translate-y-1/2", disabled && "text-disabled")} />
         </div>
       ) : (
-        <input id={id} aria-invalid={!!error} aria-describedby={error || hint ? id + "-d" : undefined} className={cls} {...(rest as React.InputHTMLAttributes<HTMLInputElement>)} />
+        <input id={id} aria-invalid={!!error} aria-required={required} aria-describedby={error || hint ? id + "-d" : undefined} className={cls} {...(rest as React.InputHTMLAttributes<HTMLInputElement>)} />
       )}
-      {(error || hint) && <p id={id + "-d"} className={cx("text-xs", error ? "text-[#b42318]" : "text-ink-3")}>{error || hint}</p>}
+      {(error || hint) && <p id={id + "-d"} className={cx(helperClass(!!error), disabled && "text-disabled")}>{error || hint}</p>}
     </div>
   );
 }

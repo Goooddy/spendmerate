@@ -38,10 +38,10 @@ function HeroCopy({ h, dark, points }: { h: Header; dark?: boolean; points?: str
   );
 }
 
-function TxnCard({ t, style }: { t: NonNullable<HeroData["txn"]>; style?: React.CSSProperties }) {
+function TxnCard({ t, style, className }: { t: NonNullable<HeroData["txn"]>; style?: React.CSSProperties; className?: string }) {
   const [b1, b2] = t.badges.map((b) => badge(b)!);
   return (
-    <div aria-hidden="true" className="illus seq-up absolute flex w-[400px] flex-col gap-4 rounded-2xl border border-line bg-white px-6 py-5" style={{ ...d(400), ...style }}>
+    <div aria-hidden="true" className={cx("illus seq-up flex flex-col gap-4 rounded-2xl border border-line bg-white px-6 py-5", className ?? "absolute w-[400px]")} style={{ ...d(400), ...style }}>
       <div className="flex gap-3">
         <div className="flex flex-1 flex-col gap-1">
           <span className="text-sm font-semibold">{t.title}</span>
@@ -72,7 +72,7 @@ function TxnCard({ t, style }: { t: NonNullable<HeroData["txn"]>; style?: React.
 
 function AiCard({ ai, dark, style, className = "" }: { ai: NonNullable<HeroData["ai"]>; dark?: boolean; style?: React.CSSProperties; className?: string }) {
   return (
-    <div aria-hidden="true" className={cx("illus seq-up flex w-[400px] flex-col rounded-2xl border px-6 py-5", dark ? "border-navy-raised bg-navy-raised" : "border-line bg-white", className)} style={{ ...d(1500), ...style }}>
+    <div aria-hidden="true" className={cx("illus seq-up flex w-[400px] max-w-full flex-col rounded-2xl border px-6 py-5", dark ? "border-navy-raised bg-navy-raised" : "border-line bg-white", className)} style={{ ...d(1500), ...style }}>
       <div className="flex items-center gap-2 pb-3">
         <span className={cx("flex size-6 items-center justify-center rounded-full", dark ? "bg-navy text-teal-bright" : "bg-teal-chip")}><Icon name="Sparkles" size={14} /></span>
         <span className={cx("text-sm font-semibold", dark ? "text-cream" : "text-ink")}>{ai.title}</span>
@@ -87,9 +87,9 @@ function AiCard({ ai, dark, style, className = "" }: { ai: NonNullable<HeroData[
   );
 }
 
-function ProgressCard({ p, style }: { p: NonNullable<HeroData["progress"]>; style?: React.CSSProperties }) {
+function ProgressCard({ p, style, className }: { p: NonNullable<HeroData["progress"]>; style?: React.CSSProperties; className?: string }) {
   return (
-    <div aria-hidden="true" className="illus seq-up absolute flex w-[232px] flex-col gap-2 rounded-2xl border border-line bg-white px-5 py-4" style={{ ...d(3200, { ["--dy" as string]: "16px" }), ...style }}>
+    <div aria-hidden="true" className={cx("illus seq-up flex w-[232px] flex-col gap-2 rounded-2xl border border-line bg-white px-5 py-4", className ?? "absolute")} style={{ ...d(3200, { ["--dy" as string]: "16px" }), ...style }}>
       <div className="flex justify-between gap-2">
         <span className="text-xs text-ink-2">{p.label}</span>
         <span className="text-sm font-medium">{p.value}</span>
@@ -103,13 +103,22 @@ function ProgressCard({ p, style }: { p: NonNullable<HeroData["progress"]>; styl
 
 function HeroCanvas({ data, w, h, pos }: { data: HeroData; w: number; h: number; pos: { txn: [number, number]; ai: [number, number]; pr: [number, number] } }) {
   return (
-    <ScaleToFit width={w} height={h}>
-      <div className="relative overflow-hidden rounded-[32px] bg-subtle" style={{ width: w, height: h }}>
-        {data.txn && <TxnCard t={data.txn} style={{ left: pos.txn[0], top: pos.txn[1] }} />}
-        {data.ai && <AiCard ai={data.ai} className="absolute" style={{ left: pos.ai[0], top: pos.ai[1] }} />}
-        {data.progress && <ProgressCard p={data.progress} style={{ left: pos.pr[0], top: pos.pr[1] }} />}
+    <>
+      <div className="hidden lg:block">
+        <ScaleToFit width={w} height={h}>
+          <div className="relative overflow-hidden rounded-[32px] bg-subtle" style={{ width: w, height: h }}>
+            {data.txn && <TxnCard t={data.txn} style={{ left: pos.txn[0], top: pos.txn[1] }} />}
+            {data.ai && <AiCard ai={data.ai} className="absolute" style={{ left: pos.ai[0], top: pos.ai[1] }} />}
+            {data.progress && <ProgressCard p={data.progress} style={{ left: pos.pr[0], top: pos.pr[1] }} />}
+          </div>
+        </ScaleToFit>
       </div>
-    </ScaleToFit>
+      <div className="flex flex-col gap-4 overflow-hidden rounded-3xl bg-subtle px-1.5 pb-4 pt-12 lg:hidden">
+        {data.txn && <TxnCard t={data.txn} className="relative mr-auto w-full max-w-[400px]" />}
+        {data.ai && <AiCard ai={data.ai} className="ml-auto w-full" />}
+        {data.progress && <ProgressCard p={data.progress} className="relative -mt-6 ml-1" />}
+      </div>
+    </>
   );
 }
 
@@ -135,20 +144,23 @@ export function LibHero({ data }: { data: HeroData }) {
     return (
       <InView as="section" className="relative overflow-hidden bg-navy">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={`/images/${data.img}.jpg`} alt="" className="absolute inset-y-0 right-0 h-full w-full object-cover opacity-40 lg:w-[60%] lg:opacity-100" />
-        <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-r from-navy via-navy/90 to-navy/20 lg:via-navy/40" />
-        <div className="wrap relative flex min-h-[680px] flex-col justify-center gap-10 py-16 lg:flex-row lg:items-center lg:justify-between">
+        <div className="relative h-[300px] lg:absolute lg:inset-y-0 lg:right-0 lg:h-full lg:w-[60%]">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={`/images/${data.img}.jpg`} alt="" className="h-full w-full object-cover" />
+          <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-b from-navy/10 via-navy/30 to-navy lg:bg-gradient-to-r lg:from-navy lg:via-navy/40 lg:to-transparent" />
+        </div>
+        <div className="wrap relative -mt-16 flex flex-col gap-8 pb-14 lg:mt-0 lg:min-h-[680px] lg:flex-row lg:items-center lg:justify-between lg:gap-10 lg:py-16">
           <div className="max-w-[540px]"><HeroCopy h={h} dark /></div>
-          {data.ai && <AiCard ai={data.ai} dark className="max-w-full self-end lg:mt-64" />}
+          {data.ai && <AiCard ai={data.ai} dark className="w-full lg:mt-64 lg:w-[400px] lg:self-end" />}
         </div>
       </InView>
     );
   if (data.L === "D")
     return (
       <InView as="section" className="bg-page pb-24 pt-16">
-        <div className="wrap flex flex-col items-center gap-16 lg:flex-row">
+        <div className="wrap flex flex-col items-center gap-8 md:gap-16 lg:flex-row">
           <HeroCopy h={h} points={data.points} />
-          <div className="flex w-full flex-1 flex-col justify-center gap-6 rounded-[32px] bg-teal-tint p-6 md:p-[72px] lg:min-h-[520px]">
+          <div className="flex w-full flex-1 flex-col justify-center gap-4 rounded-3xl bg-teal-tint px-2 py-6 md:gap-6 md:rounded-[32px] md:p-[72px] lg:min-h-[520px]">
             {data.alerts?.map((a, i) => {
               const b = badge(a.badge);
               return (
@@ -168,7 +180,7 @@ export function LibHero({ data }: { data: HeroData }) {
     );
   return (
     <InView as="section" className="bg-page pb-24 pt-16">
-      <div className="wrap flex flex-col items-center gap-16 lg:flex-row">
+      <div className="wrap flex flex-col items-center gap-8 md:gap-16 lg:flex-row">
         <HeroCopy h={h} />
         <div className="w-full flex-1">
           <HeroCanvas data={data} w={624} h={520} pos={{ txn: [32, 96], ai: [192, 296], pr: [368, 40] }} />
@@ -186,7 +198,7 @@ export function LibTrust({ data }: { data: TrustData }) {
       <section className="border-y border-line bg-page py-8">
         <div className="wrap flex flex-col gap-6 lg:flex-row lg:items-center">
           <p className="t-eyebrow shrink-0 text-teal-text lg:w-[200px]">{data.label ?? "Why finance teams choose XPensari"}</p>
-          <ul className="grid flex-1 grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <ul className="flex flex-1 flex-col gap-3 lg:grid lg:grid-cols-4 lg:gap-4">
             {items.map(([i, t]) => (
               <li key={t} className="flex items-center gap-2 border-l border-line pl-6 pr-4 text-sm text-ink"><Icon name={i} size={20} className="shrink-0 text-teal-text" />{t}</li>
             ))}
@@ -197,7 +209,7 @@ export function LibTrust({ data }: { data: TrustData }) {
   if (data.L === "C")
     return (
       <section className="bg-page py-8">
-        <ul className="wrap flex flex-wrap justify-center gap-3">
+        <ul className="wrap flex flex-col items-start gap-3 md:flex-row md:flex-wrap md:justify-center">
           {items.map(([i, t]) => (
             <li key={t} className="flex items-center gap-2 rounded-full border border-line bg-white py-2.5 pl-3.5 pr-[18px] text-sm font-medium text-ink"><Icon name={i} size={16} className="text-teal-text" />{t}</li>
           ))}
@@ -207,7 +219,7 @@ export function LibTrust({ data }: { data: TrustData }) {
   if (data.L === "D")
     return (
       <section className="bg-navy py-7">
-        <ul className="wrap flex flex-wrap justify-between gap-x-8 gap-y-3">
+        <ul className="wrap flex flex-col gap-3 md:flex-row md:flex-wrap md:justify-between md:gap-x-8">
           {items.map(([i, t]) => (
             <li key={t} className="flex items-center gap-3 text-sm font-medium text-cream"><Icon name={i} size={20} className="text-teal-bright" />{t}</li>
           ))}
@@ -216,7 +228,7 @@ export function LibTrust({ data }: { data: TrustData }) {
     );
   return (
     <section className="border-b border-line bg-page py-6">
-      <ul className="wrap flex flex-wrap items-center justify-center gap-x-12 gap-y-3">
+      <ul className="wrap flex flex-col items-start gap-3 md:flex-row md:flex-wrap md:items-center md:justify-center md:gap-x-12">
         {items.map(([i, t]) => (
           <li key={t} className="flex items-center gap-2 text-sm font-medium text-ink-2"><Icon name={i} size={20} className="text-teal-text" />{t}</li>
         ))}
@@ -284,7 +296,7 @@ export function LibHiw({ data, bg = "bg-page" }: { data: HiwData; bg?: string })
     );
   } else if (data.L === "C") {
     body = (
-      <InView className="flex w-full flex-col gap-16">
+      <InView className="flex w-full flex-col gap-8 md:gap-16">
         {steps.map((s, i) => (
           <div key={s.t} className={cx("seq-up flex flex-col items-center gap-8 lg:gap-16", i % 2 ? "lg:flex-row-reverse" : "lg:flex-row")} style={d(100)}>
             <div className="flex flex-1 flex-col gap-3">
@@ -292,7 +304,7 @@ export function LibHiw({ data, bg = "bg-page" }: { data: HiwData; bg?: string })
               <h3 className="t-h3">{s.t}</h3>
               <p className="text-base text-ink-2">{s.b}</p>
             </div>
-            <div className="flex h-[380px] w-full items-center justify-center rounded-3xl bg-subtle p-6 lg:w-[600px]">
+            <div className="flex w-full items-center justify-center py-8 md:h-[380px] md:py-0 rounded-2xl md:rounded-3xl bg-subtle p-6 lg:w-[600px]">
               {cards[i] && <MiniCard data={cards[i]!} className="shadow-sm" />}
             </div>
           </div>
@@ -301,8 +313,8 @@ export function LibHiw({ data, bg = "bg-page" }: { data: HiwData; bg?: string })
     );
   } else if (data.L === "D") {
     body = (
-      <div {...st.bind} className="flex w-full flex-col gap-12">
-        <div role="tablist" aria-label="Steps" className="grid grid-cols-2 gap-6 lg:grid-cols-4">
+      <div {...st.bind} className="flex w-full flex-col gap-8 md:gap-12">
+        <div role="tablist" aria-label="Steps" className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
           {steps.map((s, i) => (
             <button key={s.t} role="tab" aria-selected={st.i === i} onClick={() => st.select(i)} className={cx("flex flex-col gap-3 text-left text-sm font-semibold transition-opacity", st.i === i ? "opacity-100" : "opacity-50 hover:opacity-80")}>
               {s.t}
@@ -310,7 +322,7 @@ export function LibHiw({ data, bg = "bg-page" }: { data: HiwData; bg?: string })
             </button>
           ))}
         </div>
-        <div role="tabpanel" className="flex min-h-[460px] flex-col items-center gap-10 rounded-[32px] bg-teal-tint p-8 lg:flex-row lg:gap-16 lg:px-16">
+        <div role="tabpanel" className="flex flex-col items-center gap-6 rounded-3xl bg-teal-tint p-6 md:min-h-[460px] md:gap-10 md:rounded-[32px] md:p-8 lg:flex-row lg:gap-16 lg:px-16">
           <div key={st.i} className="panel-in flex flex-1 flex-col gap-3">
             <span className="text-sm font-medium text-teal-text">Step {String(st.i + 1).padStart(2, "0")}</span>
             <h3 className="t-h3">{steps[st.i].t}</h3>
@@ -322,7 +334,7 @@ export function LibHiw({ data, bg = "bg-page" }: { data: HiwData; bg?: string })
     );
   } else {
     body = (
-      <div {...st.bind} className="flex w-full flex-col items-center gap-16 lg:flex-row">
+      <div {...st.bind} className="flex w-full flex-col items-center gap-8 md:gap-16 lg:flex-row">
         <div role="tablist" aria-label="Steps" className="flex w-full flex-col lg:w-[480px]">
           {steps.map((s, i) => (
             <button key={s.t} role="tab" aria-selected={st.i === i} onClick={() => st.select(i)} className={cx("relative flex flex-col gap-2 py-6 text-left transition-opacity duration-300", st.i === i ? "opacity-100" : "opacity-40 hover:opacity-70")}>
@@ -335,7 +347,7 @@ export function LibHiw({ data, bg = "bg-page" }: { data: HiwData; bg?: string })
             </button>
           ))}
         </div>
-        <div role="tabpanel" className="flex h-[420px] w-full flex-1 items-center justify-center rounded-[32px] bg-teal-tint p-6 lg:h-[520px]">
+        <div role="tabpanel" className="hidden h-[420px] w-full flex-1 items-center lg:flex justify-center rounded-3xl md:rounded-[32px] bg-teal-tint p-6 lg:h-[520px]">
           {cards.map((c, i) => <StepCardVisual key={i} c={c} i={i} active={st.i} />)}
         </div>
       </div>
@@ -344,7 +356,7 @@ export function LibHiw({ data, bg = "bg-page" }: { data: HiwData; bg?: string })
 
   return (
     <section className={cx("section-y", bg)}>
-      <div className="wrap flex flex-col items-center gap-12 lg:gap-16">
+      <div className="wrap flex flex-col items-center gap-8 md:gap-12 lg:gap-16">
         <SectionHeader align="center" eyebrow={h.e} title={h.t} body={h.b} />
         {body}
       </div>
@@ -361,7 +373,7 @@ function Agents({ ah, agents, dark, cards }: { ah?: Header; agents: OutData["age
       <div className="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-12">
         {agents.map(([i, n, b]) =>
           cards ? (
-            <div key={n} className="card-lift flex flex-col gap-3 rounded-3xl border border-line bg-white p-6">
+            <div key={n} className="card-lift flex flex-col gap-3 rounded-2xl md:rounded-3xl border border-line bg-white p-6">
               <IconChip icon={i} iconSize={20} />
               <h3 className="text-base font-semibold">{n}</h3>
               <p className="text-sm leading-[22px] text-ink-2">{b}</p>
@@ -384,8 +396,8 @@ export function LibOutcomes({ data }: { data: OutData }) {
   if (data.L === "B")
     return (
       <section className="section-y bg-page">
-        <div className="wrap flex flex-col gap-16">
-          <div className="flex flex-col gap-12 lg:flex-row lg:gap-16">
+        <div className="wrap flex flex-col gap-8 md:gap-16">
+          <div className="flex flex-col gap-8 md:gap-12 lg:flex-row lg:gap-16">
             <SectionHeader eyebrow={h.e} title={h.t} body={h.b} className="lg:w-[440px] lg:shrink-0" />
             <InView className="flex flex-1 flex-col">
               {data.items.map((o, i) => (
@@ -407,11 +419,11 @@ export function LibOutcomes({ data }: { data: OutData }) {
     const bars = [28, 40, 34, 52, 46, 64, 58, 80];
     return (
       <section className="section-y bg-navy">
-        <div className="wrap flex flex-col gap-12">
+        <div className="wrap flex flex-col gap-8 md:gap-12">
           <SectionHeader dark align="center" eyebrow={h.e} title={h.t} body={h.b} />
           <InView className="grid grid-cols-1 gap-6 lg:grid-cols-3">
             {data.items.map((o, i) => (
-              <div key={o.v} className={cx("seq-up flex flex-col gap-3 rounded-3xl border border-navy-raised bg-navy-raised p-9", i === 0 && "lg:col-span-2", i === 2 && "lg:col-span-1")} style={d(i * 200)}>
+              <div key={o.v} className={cx("seq-up flex flex-col gap-3 rounded-2xl md:rounded-3xl border border-navy-raised bg-navy-raised p-9", i === 0 && "lg:col-span-2", i === 2 && "lg:col-span-1")} style={d(i * 200)}>
                 <span className="t-eyebrow text-teal-bright">{o.l}</span>
                 <span className="t-h1 text-cream">{o.v}</span>
                 <span className="text-sm text-mist">{o.b}</span>
@@ -423,7 +435,7 @@ export function LibOutcomes({ data }: { data: OutData }) {
               </div>
             ))}
             {data.agents.length > 0 && (
-              <div className="flex flex-col gap-6 rounded-3xl border border-navy-raised p-9 lg:col-span-2">
+              <div className="flex flex-col gap-6 rounded-2xl md:rounded-3xl border border-navy-raised p-9 lg:col-span-2">
                 <SectionHeader dark eyebrow={data.ah?.e} title={data.ah?.t} />
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
                   {data.agents.map(([ic, n, b]) => (
@@ -444,8 +456,8 @@ export function LibOutcomes({ data }: { data: OutData }) {
   if (data.L === "D")
     return (
       <section className="section-y bg-page">
-        <div className="wrap flex flex-col gap-16">
-          <InView className="flex flex-col gap-12 rounded-[32px] bg-teal-tint p-8 md:p-16">
+        <div className="wrap flex flex-col gap-8 md:gap-16">
+          <InView className="flex flex-col gap-8 md:gap-12 rounded-3xl md:rounded-[32px] bg-teal-tint px-6 py-8 md:p-16">
             <SectionHeader eyebrow={h.e} title={h.t} body={h.b} />
             <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
               {data.items.map((o, i) => (
@@ -463,11 +475,11 @@ export function LibOutcomes({ data }: { data: OutData }) {
     );
   return (
     <section className="section-y bg-navy">
-      <div className="wrap flex flex-col gap-16">
+      <div className="wrap flex flex-col gap-8 md:gap-16">
         <SectionHeader dark align="center" eyebrow={h.e} title={h.t} body={h.b} />
         <InView className="grid grid-cols-1 gap-6 md:grid-cols-3">
           {data.items.map((o, i) => (
-            <div key={o.v} className="seq-up flex flex-col gap-3 rounded-3xl border border-navy-raised bg-navy-raised p-8" style={d(i * 200)}>
+            <div key={o.v} className="seq-up flex flex-col gap-3 rounded-2xl md:rounded-3xl border border-navy-raised bg-navy-raised p-8" style={d(i * 200)}>
               <span className="t-eyebrow text-teal-bright">{o.l}</span>
               <span className="t-h1 text-cream">{o.v}</span>
               <span className="text-sm text-mist">{o.b}</span>
@@ -492,12 +504,12 @@ export function LibProducts({ data }: { data: ProdData }) {
   if (data.L === "A")
     return (
       <section className="section-y bg-page">
-        <div className="wrap flex flex-col gap-12">
+        <div className="wrap flex flex-col gap-8 md:gap-12">
           <SectionHeader eyebrow={h.e} title={h.t} body={h.b} />
-          <div className="grid grid-cols-1 gap-12 md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-8 md:gap-12 md:grid-cols-2">
             {items.map((it) => (
               <div key={it.t} className="flex flex-col gap-6">
-                <div className="flex h-[320px] items-center justify-center rounded-3xl bg-subtle p-6 md:h-[400px]">{prodCard(it) && <MiniCard data={prodCard(it)!} className="shadow-sm" />}</div>
+                <div className="flex items-center justify-center py-8 md:py-0 rounded-2xl md:rounded-3xl bg-subtle p-6 md:h-[400px]">{prodCard(it) && <MiniCard data={prodCard(it)!} className="shadow-sm" />}</div>
                 <div className="flex flex-col gap-2">
                   <h3 className="t-h3">{it.t}</h3>
                   <p className="text-base text-ink-2">{it.b}</p>
@@ -512,9 +524,9 @@ export function LibProducts({ data }: { data: ProdData }) {
   if (data.L === "C")
     return (
       <section className="section-y bg-page">
-        <div className="wrap flex flex-col items-center gap-16">
+        <div className="wrap flex flex-col items-center gap-8 md:gap-16">
           <SectionHeader align="center" eyebrow={h.e} title={h.t} body={h.b} />
-          <div className="flex w-full flex-col gap-16">
+          <div className="flex w-full flex-col gap-8 md:gap-16">
             {items.map((it, i) => (
               <div key={it.t} className={cx("flex flex-col items-center gap-8 lg:gap-16", i % 2 ? "lg:flex-row-reverse" : "lg:flex-row")}>
                 <div className="flex flex-1 flex-col gap-4">
@@ -523,7 +535,7 @@ export function LibProducts({ data }: { data: ProdData }) {
                   <p className="text-base text-ink-2">{it.b}</p>
                   <ProdLink t={it.t} link={it.link} />
                 </div>
-                <div className="flex h-[400px] w-full items-center justify-center rounded-3xl bg-subtle p-6 lg:w-[600px]">{prodCard(it) && <MiniCard data={prodCard(it)!} className="shadow-sm" />}</div>
+                <div className="flex w-full items-center justify-center py-8 md:h-[400px] md:py-0 rounded-2xl md:rounded-3xl bg-subtle p-6 lg:w-[600px]">{prodCard(it) && <MiniCard data={prodCard(it)!} className="shadow-sm" />}</div>
               </div>
             ))}
           </div>
@@ -534,9 +546,9 @@ export function LibProducts({ data }: { data: ProdData }) {
     const [first, ...rest] = items;
     return (
       <section className="section-y bg-page">
-        <div className="wrap flex flex-col gap-12">
+        <div className="wrap flex flex-col gap-8 md:gap-12">
           <SectionHeader eyebrow={h.e} title={h.t} body={h.b} />
-          <div className="flex flex-col items-center gap-10 rounded-[32px] bg-subtle p-8 lg:flex-row lg:gap-16 lg:p-14">
+          <div className="flex flex-col items-center gap-10 rounded-3xl md:rounded-[32px] bg-subtle p-8 lg:flex-row lg:gap-16 lg:p-14">
             <div className="flex flex-1 flex-col gap-4">
               <IconChip icon={productIcon(first.t)} size={48} iconSize={24} />
               <h3 className="t-h2">{first.t}</h3>
@@ -561,11 +573,11 @@ export function LibProducts({ data }: { data: ProdData }) {
   }
   return (
     <section className="section-y bg-page">
-      <div className="wrap flex flex-col items-center gap-12">
+      <div className="wrap flex flex-col items-center gap-8 md:gap-12">
         <SectionHeader align="center" eyebrow={h.e} title={h.t} body={h.b} />
         <div className="grid w-full grid-cols-1 gap-6 md:grid-cols-2">
           {items.map((it) => (
-            <Link key={it.t} href={productHref(it.t)} className="card-lift group flex gap-5 rounded-3xl border border-line bg-white p-7">
+            <Link key={it.t} href={productHref(it.t)} className="card-lift group flex flex-col gap-4 rounded-2xl border border-line bg-white p-7 md:flex-row md:gap-5 md:rounded-3xl">
               <IconChip icon={productIcon(it.t)} size={48} iconSize={24} />
               <div className="flex flex-col gap-2.5">
                 <h3 className="text-lg font-semibold leading-6">{it.t}</h3>
@@ -598,6 +610,27 @@ function Ledger({ l, dark }: { l: [string, string]; dark?: boolean }) {
     </div>
   );
 }
+function MobileFlow({ sources, ledger, dark, hub }: { sources: [string, string][]; ledger: [string, string]; dark?: boolean; hub?: boolean }) {
+  const line = <span className="seq-fade mx-auto block h-8 w-0.5 bg-teal" style={d(700)} />;
+  return (
+    <InView className="flex w-full flex-col lg:hidden">
+      <div className="flex flex-col gap-3">
+        {sources.map(([i, t], k) => (
+          <div key={t} className="seq-up [&>span]:w-full" style={d(k * 150, { ["--dy" as string]: "12px" })}><Pill icon={i} text={t} dark={dark} /></div>
+        ))}
+      </div>
+      {line}
+      {hub && (
+        <>
+          <div className="seq-up mx-auto flex size-28 items-center justify-center rounded-full bg-teal text-base font-semibold" style={d(900)}>XPensari</div>
+          {line}
+        </>
+      )}
+      <div className="seq-up [&>div]:w-full" style={d(1100)}><Ledger l={ledger} dark={dark} /></div>
+    </InView>
+  );
+}
+
 function FlowDiagram({ sources, ledger, dark }: { sources: [string, string][]; ledger: [string, string]; dark?: boolean }) {
   return (
     <InView className="relative h-[300px] w-[560px]" >
@@ -619,9 +652,10 @@ export function LibIntegration({ data }: { data: IntData }) {
   if (data.L === "B")
     return (
       <section className="section-y bg-page">
-        <div className="wrap flex flex-col items-center gap-12">
+        <div className="wrap flex flex-col items-center gap-8 md:gap-12">
           <SectionHeader align="center" eyebrow={h.e} title={h.t} body={h.b} />
-          <div className="w-full max-w-[1248px]">
+          <MobileFlow sources={data.sources} ledger={ledger} hub />
+          <div className="hidden w-full max-w-[1248px] lg:block">
             <ScaleToFit width={1248} height={320}>
               <InView className="relative h-[320px] w-[1248px]">
                 {data.sources.map(([i, t], k) => (
@@ -643,8 +677,8 @@ export function LibIntegration({ data }: { data: IntData }) {
   if (data.L === "C")
     return (
       <section className="section-y bg-navy">
-        <div className="wrap flex flex-col-reverse items-center gap-12 lg:flex-row lg:gap-16">
-          <div className="w-full max-w-[560px]"><ScaleToFit width={560} height={300}><FlowDiagram sources={data.sources} ledger={ledger} dark /></ScaleToFit></div>
+        <div className="wrap flex flex-col-reverse items-center gap-8 md:gap-12 lg:flex-row lg:gap-16">
+          <MobileFlow sources={data.sources} ledger={ledger} dark /><div className="hidden w-full max-w-[560px] lg:block"><ScaleToFit width={560} height={300}><FlowDiagram sources={data.sources} ledger={ledger} dark /></ScaleToFit></div>
           <div className="flex flex-1 flex-col gap-6">
             <SectionHeader dark eyebrow={h.e} title={h.t} body={h.b} />
             {link}
@@ -655,13 +689,13 @@ export function LibIntegration({ data }: { data: IntData }) {
   if (data.L === "D")
     return (
       <section className="section-y bg-page">
-        <div className="wrap flex flex-col items-center gap-12 lg:flex-row lg:gap-16">
+        <div className="wrap flex flex-col items-center gap-8 md:gap-12 lg:flex-row lg:gap-16">
           <div className="flex flex-1 flex-col gap-6">
             <SectionHeader eyebrow={h.e} title={h.t} body={h.b} />
             {link}
           </div>
           {data.log && (
-            <InView className="illus flex w-full max-w-[580px] flex-col rounded-3xl border border-line bg-white px-7 pb-3 pt-6" >
+            <InView className="illus flex w-full max-w-[580px] flex-col rounded-2xl md:rounded-3xl border border-line bg-white px-7 pb-3 pt-6" >
               <div className="flex items-center justify-between pb-3">
                 <span className="text-sm font-semibold">{data.log.title}</span>
                 <Badge tone="neutral">Sample data</Badge>
@@ -687,12 +721,12 @@ export function LibIntegration({ data }: { data: IntData }) {
   return (
     <section className="section-y bg-page">
       <div className="wrap">
-        <div className="flex flex-col items-center gap-12 rounded-[32px] bg-teal-tint p-8 lg:flex-row lg:gap-16 lg:p-16">
+        <div className="flex flex-col items-center gap-8 md:gap-12 rounded-3xl md:rounded-[32px] bg-teal-tint px-6 py-8 lg:flex-row lg:gap-16 lg:p-16">
           <div className="flex flex-1 flex-col gap-4">
             <SectionHeader eyebrow={h.e} title={h.t} body={h.b} />
             {link}
           </div>
-          <div className="w-full max-w-[560px]"><ScaleToFit width={560} height={300}><FlowDiagram sources={data.sources} ledger={ledger} /></ScaleToFit></div>
+          <MobileFlow sources={data.sources} ledger={ledger} /><div className="hidden w-full max-w-[560px] lg:block"><ScaleToFit width={560} height={300}><FlowDiagram sources={data.sources} ledger={ledger} /></ScaleToFit></div>
         </div>
       </div>
     </section>
@@ -706,16 +740,16 @@ export function LibCalculator({ data }: { data: CalcData }) {
   if (data.L === "B")
     return (
       <section className="section-y bg-page">
-        <div className="wrap flex flex-col items-center gap-12">
+        <div className="wrap flex flex-col items-center gap-8 md:gap-12">
           <SectionHeader align="center" eyebrow={h.e} title={h.t} body={h.b} />
-          <InView className="flex w-full flex-col gap-6 rounded-[32px] border border-line bg-white p-6 md:p-12">
+          <InView className="flex w-full flex-col gap-6 rounded-3xl md:rounded-[32px] border border-line bg-white p-6 md:p-12">
             {CALC_ITEMS.map(([l, v, p], i) => (
-              <div key={l} className="flex flex-col gap-2 md:flex-row md:items-center md:gap-6">
+              <div key={l} className="grid grid-cols-[1fr_auto] items-center gap-x-4 gap-y-2.5 md:flex md:gap-6">
                 <span className="text-sm text-ink-2 md:w-[200px]">{l}</span>
-                <span className="h-10 flex-1 overflow-hidden rounded-2xl bg-subtle">
+                <span className="col-span-2 h-3 overflow-hidden rounded-2xl bg-subtle md:order-2 md:h-10 md:flex-1">
                   <span className="seq-grow block h-full rounded-xl bg-teal-chip" style={{ width: `${p * 100}%`, ...d(i * 200) }} />
                 </span>
-                <span className="t-h3 md:w-[100px] md:text-right">{v}</span>
+                <span className="t-h3 md:order-3 md:w-[100px] md:text-right">{v}</span>
               </div>
             ))}
           </InView>
@@ -726,7 +760,7 @@ export function LibCalculator({ data }: { data: CalcData }) {
   if (data.L === "C")
     return (
       <section className="section-y bg-page">
-        <div className="wrap flex flex-col items-center gap-12 lg:flex-row lg:gap-16">
+        <div className="wrap flex flex-col items-center gap-8 md:gap-12 lg:flex-row lg:gap-16">
           <div className="flex flex-1 flex-col gap-8">
             <SectionHeader eyebrow={h.e} title={h.t} body={h.b} />
             <div role="radiogroup" aria-label="Monthly transactions" className="flex flex-col gap-2">
@@ -739,7 +773,7 @@ export function LibCalculator({ data }: { data: CalcData }) {
             </div>
             <p className="text-xs text-ink-3">{CALC_NOTE}</p>
           </div>
-          <div aria-live="polite" className="flex h-[360px] w-full flex-col items-center justify-center gap-2 rounded-[32px] bg-teal-tint lg:h-[440px] lg:w-[560px]">
+          <div aria-live="polite" className="flex h-[360px] w-full flex-col items-center justify-center gap-2 rounded-3xl md:rounded-[32px] bg-teal-tint lg:h-[440px] lg:w-[560px]">
             <span key={sel} className="panel-in font-display text-[96px] leading-none text-teal-text md:text-[144px]">{CALC_ITEMS[sel][1]}</span>
             <span className="text-base text-ink-2">{CALC_ITEMS[sel][0]}</span>
           </div>
@@ -749,11 +783,11 @@ export function LibCalculator({ data }: { data: CalcData }) {
   if (data.L === "D")
     return (
       <section className="section-y bg-navy">
-        <div className="wrap flex flex-col items-center gap-12">
+        <div className="wrap flex flex-col items-center gap-8 md:gap-12">
           <SectionHeader dark align="center" eyebrow={h.e} title={h.t} body={h.b} />
-          <InView className="grid w-full grid-cols-1 overflow-hidden rounded-3xl border border-navy-raised bg-navy-raised sm:grid-cols-2 lg:grid-cols-4">
+          <InView className="grid w-full grid-cols-1 overflow-hidden rounded-2xl md:rounded-3xl border border-navy-raised bg-navy-raised sm:grid-cols-2 lg:grid-cols-4">
             {CALC_ITEMS.map(([l, v, p], i) => (
-              <div key={l} className="flex flex-col gap-4 border-navy p-8 lg:border-l first:border-l-0">
+              <div key={l} className="flex flex-col gap-4 border-t border-navy p-8 first:border-t-0 lg:border-l lg:border-t-0 lg:first:border-l-0">
                 <span className="text-sm text-mist">{l}</span>
                 <span className="t-h1 text-cream">{v}</span>
                 <span className="h-2 rounded-full bg-navy"><span className="seq-grow block h-2 rounded bg-teal" style={{ width: `${p * 100}%`, ...d(i * 200) }} /></span>
@@ -766,11 +800,21 @@ export function LibCalculator({ data }: { data: CalcData }) {
     );
   return (
     <section className="section-y bg-page">
-      <div className="wrap flex flex-col items-center gap-12">
+      <div className="wrap flex flex-col items-center gap-8 md:gap-12">
         <SectionHeader align="center" eyebrow={h.e} title={h.t} body={h.b} />
-        <InView className="grid w-full grid-cols-2 gap-6 lg:grid-cols-4">
+        <InView className="flex w-full flex-col gap-3 lg:hidden">
           {CALC_ITEMS.map(([l, v, p], i) => (
-            <div key={l} className="relative flex h-[300px] flex-col overflow-hidden rounded-3xl border border-line bg-white md:h-[400px]">
+            <div key={l} className="relative flex h-24 items-center overflow-hidden rounded-2xl border border-line bg-white">
+              <div className={cx("seq-x absolute inset-y-0 left-0 flex items-center px-5", i === 3 ? "bg-teal" : "bg-teal-tint")} style={{ width: `${38 + p * 62}%`, ...d(i * 150) }}>
+                <span className={cx("t-h3", i === 3 ? "text-ink" : "text-teal-text")}>{v}</span>
+              </div>
+              <span className={cx("relative ml-auto max-w-[45%] pr-5 text-right text-xs font-medium", i === 3 ? "text-ink" : "text-ink-2")}>{l}</span>
+            </div>
+          ))}
+        </InView>
+        <InView className="hidden w-full grid-cols-4 gap-6 lg:grid">
+          {CALC_ITEMS.map(([l, v, p], i) => (
+            <div key={l} className="relative flex h-[300px] flex-col overflow-hidden rounded-2xl md:rounded-3xl border border-line bg-white md:h-[400px]">
               <span className="p-5 text-sm font-medium text-ink-2 md:p-6">{i < 3 && l}</span>
               <div className={cx("seq-up absolute inset-x-0 bottom-0 flex flex-col justify-start gap-2 p-5 md:p-6", i === 3 ? "bg-teal" : "bg-teal-tint")} style={{ height: `${38 + p * 62}%`, ...d(i * 200) }}>
                 <span className={cx("t-h1", i === 3 ? "text-ink" : "text-teal-text")}>{v}</span>
@@ -809,6 +853,7 @@ export function LibraryPageView({ page, kind }: { page: LibraryPage; kind: "prod
       {cta && (
         <CtaBand
           tone={(cta.tone as CtaTone) ?? "navy"}
+          image={cta.img}
           eyebrow={cta.e}
           title={cta.t}
           body={cta.b}

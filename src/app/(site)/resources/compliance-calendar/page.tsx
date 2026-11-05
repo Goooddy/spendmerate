@@ -4,6 +4,7 @@ import { FaqSection } from "@/components/Accordion";
 import { InView } from "@/components/motion";
 import { d } from "@/components/seq";
 import { MoreResources } from "@/components/resources";
+import { PillSubscribe } from "@/components/forms";
 import { Deadlines } from "./Deadlines";
 
 export const metadata: Metadata = { title: "Compliance Calendar", description: "Every recurring tax and regulatory deadline for a Nigerian business, in one list." };
@@ -12,13 +13,13 @@ export default function CompliancePage() {
   return (
     <>
       <InView as="section" className="bg-page pb-24 pt-16">
-        <div className="wrap flex flex-col items-center gap-12 lg:flex-row lg:gap-16">
+        <div className="wrap flex flex-col items-center gap-8 md:gap-12 lg:flex-row lg:gap-16">
           <div className="flex w-full max-w-[560px] flex-col gap-6">
             <SectionHeader as="h1" level="page" eyebrow="Stay ahead of deadlines" title="Compliance Calendar" body="Every recurring tax and regulatory deadline that applies to a Nigerian business, in one list." />
             <Button href="#deadlines" className="self-start">View all deadlines</Button>
             <span className="flex flex-wrap items-center gap-2 text-xs text-ink-2">Prefer a conversation? <Button href="/contact" variant="link" size="sm" icon="Arrow Right">Talk to sales</Button></span>
           </div>
-          <div aria-hidden="true" className="illus flex w-full flex-1 flex-col justify-center gap-5 rounded-[32px] bg-subtle p-6 md:min-h-[480px] md:p-12">
+          <div aria-hidden="true" className="illus flex w-full flex-1 flex-col justify-center gap-5 rounded-3xl md:rounded-[32px] bg-subtle p-6 md:min-h-[480px] md:p-12">
             <div className="seq-up flex w-full max-w-[380px] flex-col gap-3 self-end rounded-2xl border border-line bg-white p-5">
               <Toast icon="Clock" tone="warning" title="VAT return due in 3 days" body="Draft ready for review" className="!border-0 !p-0 !shadow-none" />
               <div className="flex items-center justify-between border-t border-line pt-3"><span className="text-xs text-ink-2">21 Jun · Status</span><Badge tone="amber">Due soon</Badge></div>
@@ -34,7 +35,7 @@ export default function CompliancePage() {
         </div>
       </InView>
       <section className="section-y bg-white">
-        <div className="wrap flex flex-col gap-12">
+        <div className="wrap flex flex-col gap-8 md:gap-12">
           <SectionHeader eyebrow="Deadlines" title="Upcoming filing deadlines" body="Recurring tax and regulatory deadlines for Nigerian businesses, in date order." />
           <Deadlines />
         </div>
@@ -45,7 +46,9 @@ export default function CompliancePage() {
         { q: "Can I get reminders?", a: "Yes. Download the .ics file or add the dates to Google Calendar. XPensari customers also get reminders and draft returns inside the platform." },
       ]} />
       <MoreResources keys={["hub", "calc", "blog", "docs"]} />
-      <CtaBand eyebrow="Reminders" title="Never miss a deadline" body="XPensari prepares VAT, WHT and PAYE returns from your books and reminds the right person before every due date." />
+      <CtaBand image="e834fbad" eyebrow="Reminders" title="Never miss a deadline" body="Get an email reminder a week before each filing date that applies to your business.">
+        <PillSubscribe dark action="Get reminders" done="Reminders are on. We’ll email you a week before each deadline." />
+      </CtaBand>
     </>
   );
 }

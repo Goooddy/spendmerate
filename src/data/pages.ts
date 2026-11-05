@@ -8,6 +8,22 @@ import type { LibraryPage } from "./library";
 const P = { ...p1, ...p2 } as unknown as Record<string, LibraryPage>;
 const S = { ...s1, ...s2, ...s3 } as unknown as Record<string, LibraryPage>;
 
+/** Inner-orbit image of each page's CTA band (each Figma instance overrides it). */
+const PRODUCT_CTA_IMG: Record<string, string> = {
+  "ai-spend-intelligence": "2069de14", "expense-management": "1e54c159", procurement: "22e64d1e", "invoice-ap-ar": "1a091798",
+  "budget-analytics": "69f88811", "revenue-intelligence": "4be01f3a", payments: "1a091798", "tax-compliance": "2376e85e",
+  "risk-audit-esg": "00039d94", "ai-intelligence-layer": "1a091798", "integrations-api": "1a091798",
+};
+const SOLUTION_CTA_IMG: Record<string, string> = {
+  cfos: "ee9b89bb", "procurement-teams": "21991faf", "sales-revenue": "d6ece747", developers: "be3d6935", "growing-businesses": "21e66b35",
+  "mid-sized": "3aabbf34", enterprises: "12071550", retail: "e66af21b", manufacturing: "b5bb59cd", hospitality: "9199f133",
+  healthcare: "e834fbad", "oil-gas": "e0b43624", education: "00c8bc4d",
+};
+const withImg = (pages: Record<string, LibraryPage>, imgs: Record<string, string>) => {
+  for (const [slug, p] of Object.entries(pages)) if (p?.cta) p.cta.img = imgs[slug];
+  return pages;
+};
+
 export const PRODUCT_PAGES: Record<string, LibraryPage> = {
   "ai-spend-intelligence": P["436:17839"],
   "expense-management": P["436:17805"],
@@ -21,6 +37,7 @@ export const PRODUCT_PAGES: Record<string, LibraryPage> = {
   "ai-intelligence-layer": P["507:20454"],
   "integrations-api": P["507:20481"],
 };
+withImg(PRODUCT_PAGES, PRODUCT_CTA_IMG);
 
 export const SOLUTION_PAGES: Record<string, LibraryPage> = {
   cfos: S["402:21620"],
@@ -37,3 +54,4 @@ export const SOLUTION_PAGES: Record<string, LibraryPage> = {
   "oil-gas": S["402:21904"],
   education: S["402:21930"],
 };
+withImg(SOLUTION_PAGES, SOLUTION_CTA_IMG);

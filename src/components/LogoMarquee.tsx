@@ -14,7 +14,7 @@ export function LogoMarquee() {
     <div className="relative overflow-hidden" style={{ maskImage: "linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent)" }}>
       <div className="marquee-track flex w-max">
         {[0, 1, 2].map((set) => (
-          <ul key={set} aria-hidden={set > 0} className="flex shrink-0 items-center gap-16 pr-16">
+          <ul key={set} aria-hidden={set > 0} className="flex shrink-0 items-center gap-8 md:gap-16 pr-16">
             {LOGOS.map((l) => (
               <li key={l.alt} className="flex h-16 items-center opacity-80 grayscale transition hover:opacity-100 hover:grayscale-0">
                 {/* eslint-disable-next-line @next/next/no-img-element */}

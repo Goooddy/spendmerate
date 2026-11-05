@@ -1,9 +1,9 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Button, SectionHeader } from "@/components/ui";
+import { Button, CtaBand, SectionHeader } from "@/components/ui";
 import { Accordion } from "@/components/Accordion";
-import { NewsletterForm } from "@/components/forms";
+import { PillSubscribe } from "@/components/forms";
 import { ArticleCard } from "@/components/resources";
 import { ARTICLES } from "@/data/articles";
 import { ShareLinks } from "./ShareLinks";
@@ -46,10 +46,10 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       </section>
       <div className="wrap">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={a.image} alt="" className="h-[280px] w-full rounded-[32px] object-cover md:h-[520px]" />
+        <img src={a.image} alt="" className="h-[280px] w-full rounded-3xl md:rounded-[32px] object-cover md:h-[520px]" />
       </div>
       <section className="section-y bg-page">
-        <div className="wrap flex flex-col gap-12 lg:flex-row lg:gap-16">
+        <div className="wrap flex flex-col gap-8 md:gap-12 lg:flex-row lg:gap-16">
           <aside className="flex flex-col gap-8 lg:sticky lg:top-28 lg:w-[260px] lg:self-start">
             <nav aria-label="In this article">
               <p className="t-eyebrow mb-3 text-ink-3">In this article</p>
@@ -104,19 +104,14 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
         </div>
       </section>
       <section className="section-y bg-subtle">
-        <div className="wrap flex flex-col gap-12">
+        <div className="wrap flex flex-col gap-8 md:gap-12">
           <SectionHeader eyebrow="Keep reading" title="Related articles" />
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">{related.map((r) => <ArticleCard key={r.slug} a={r} />)}</div>
         </div>
       </section>
-      <section className="py-12 md:py-20">
-        <div className="wrap">
-          <div className="flex flex-col gap-8 rounded-3xl bg-teal-tint p-8 md:flex-row md:items-end md:justify-between md:p-16">
-            <SectionHeader eyebrow="Newsletter" title="Get the monthly digest" body="Compliance deadlines, product updates and FinOps tips. Once a month, no spam." />
-            <div className="w-full max-w-[420px]"><NewsletterForm /></div>
-          </div>
-        </div>
-      </section>
+      <CtaBand image="12071550" tone="mint" eyebrow="Newsletter" title="Get the monthly digest" body="Compliance deadlines, product updates and FinOps tips. Once a month, no spam.">
+        <PillSubscribe />
+      </CtaBand>
     </>
   );
 }

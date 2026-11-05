@@ -18,7 +18,7 @@ export default function PartnersPage() {
     <>
       <SplitHero eyebrow="Partner ecosystem" title="Building Africa’s financial infrastructure, together." body="XPensari doesn’t build every layer alone. ERP, identity, payments and banking rails come from partners we integrate deeply with, so every onboarded business gets one connected experience." cta="Become a partner" ctaHref="#enquiry" alt={null} image="/images/22e64d1e.jpg" imgAlt="Partners in a meeting" />
       <section className="section-y bg-white">
-        <div className="wrap flex flex-col items-center gap-12">
+        <div className="wrap flex flex-col items-center gap-8 md:gap-12">
           <SectionHeader align="center" eyebrow="Our partners" title="Who’s building this with us" body="Each partner owns one layer of the stack, so XPensari can focus on the intelligence on top." />
           <div className="grid w-full grid-cols-1 gap-6 md:grid-cols-3">
             <ImageCard image="/images/7abe3e51.png" alt="WorkMerate illustration" title="McGeorge / WorkMerate" body="The Odoo-based ERP our AI layer runs on: 60 customised modules, already live with FMCG, banking and manufacturing clients." link="Explore WorkMerate" href="/products/integrations-api" />
@@ -28,7 +28,7 @@ export default function PartnersPage() {
         </div>
       </section>
       <section className="section-y bg-subtle">
-        <div className="wrap flex flex-col gap-12">
+        <div className="wrap flex flex-col gap-8 md:gap-12">
           <SectionHeader eyebrow="The stack" title="What each partner brings" body="No single partner covers the full stack. Here is the piece each one contributes." />
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {CAPS.map(([n, items]) => (
@@ -43,7 +43,7 @@ export default function PartnersPage() {
         </div>
       </section>
       <section className="section-y bg-page">
-        <div className="wrap flex flex-col items-center gap-12">
+        <div className="wrap flex flex-col items-center gap-8 md:gap-12">
           <SectionHeader align="center" eyebrow="Who we partner with" title="Four ways to build with XPensari" body="Banks, ERP consultants, systems integrators, cloud providers and government bodies each plug in differently." />
           <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             <ProductTile icon="Landmark" title="Banks & payment providers" body="Settlement rails, card issuing and distribution to SMEs." link="Partner with us" href="#enquiry" />

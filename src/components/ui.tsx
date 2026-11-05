@@ -5,6 +5,7 @@ import {
   ScanEye, Shield, ShoppingCart, Sparkles, Target, Terminal, TrendingUp, Users, Wallet, X, type LucideIcon,
 } from "lucide-react";
 import type { ReactNode } from "react";
+import { CtaArt } from "./CtaArt";
 
 const ICONS: Record<string, LucideIcon> = {
   "Arrow Left Right": ArrowLeftRight, "Arrow Right": ArrowRight, "Arrow Up Right": ArrowUpRight, "Book Open": BookOpen,
@@ -42,7 +43,7 @@ export function Button({
   type?: "submit" | "button"; onClick?: () => void;
 }) {
   const cls = cx(
-    "inline-flex items-center justify-center gap-2 font-semibold whitespace-nowrap transition-colors duration-150 rounded-lg",
+    "press inline-flex items-center justify-center gap-2 font-semibold whitespace-nowrap transition-[color,background-color,border-color,transform] duration-150 rounded-lg",
     size === "md" ? "px-6 py-3 text-base leading-5" : "px-4 py-2 text-sm leading-5",
     BTN[variant],
     className,
@@ -112,7 +113,7 @@ export function IconChip({
 /* ---------- Cards ---------- */
 export function ProductTile({ icon, title, body, link, href }: { icon: string; title: string; body: string; link: string; href: string }) {
   return (
-    <Link href={href} className="card-lift group flex flex-col gap-4 rounded-2xl border border-line bg-white p-6 shadow-sm">
+    <Link href={href} className="card-lift group flex flex-col gap-4 rounded-2xl border border-line bg-white p-5 shadow-sm md:p-6">
       <IconChip icon={icon} round={false} />
       <div className="flex flex-col gap-2">
         <h3 className="text-lg leading-6 font-semibold text-ink">{title}</h3>
@@ -128,7 +129,7 @@ export function ProductTile({ icon, title, body, link, href }: { icon: string; t
 
 export function FeatureCard({ icon, title, body, highlight }: { icon: string; title: string; body: string; highlight?: boolean }) {
   return (
-    <div className={cx("card-lift flex flex-col gap-6 rounded-2xl p-8", highlight ? "bg-navy" : "bg-white")}>
+    <div className={cx("card-lift flex flex-col gap-5 rounded-2xl p-6 md:gap-6 md:p-8", highlight ? "bg-navy" : "bg-white")}>
       <IconChip icon={icon} size={48} tone={highlight ? "dark" : "teal"} />
       <div className="flex flex-col gap-3">
         <h3 className={cx("t-h3", highlight ? "text-cream" : "text-ink")}>{title}</h3>
@@ -140,7 +141,7 @@ export function FeatureCard({ icon, title, body, highlight }: { icon: string; ti
 
 export function Stat({ value, label, dark }: { value: string; label: string; dark?: boolean }) {
   return (
-    <div className="flex flex-col gap-2 border-l-2 border-amber pl-6">
+    <div className="flex flex-col gap-2 border-l-2 border-amber pl-5 md:pl-6">
       <span className={cx("t-stat", dark ? "text-cream" : "text-ink")}>{value}</span>
       <span className={cx("text-sm leading-[22px]", dark ? "text-mist" : "text-ink-2")}>{label}</span>
     </div>
@@ -216,35 +217,35 @@ export function Toast({ icon, tone, title, body, dark, className = "" }: { icon:
 
 /* ---------- CTA band ---------- */
 export type CtaTone = "navy" | "teal" | "amber" | "mint";
+/**
+ * CTA band (Figma component 442:16839): Navy / Teal / Amber / Mint.
+ * Art is the component's own exported artwork (glow, orbit, textured inner orbit, accent bar),
+ * placed at the component's coordinates on desktop and scaled to 280px bottom-right on mobile.
+ * Pass `children` instead of buttons to use the band's email-capture slot.
+ */
 export function CtaBand({
-  tone = "navy", eyebrow, title, body, primary = { label: "Request a Demo", href: "/request-demo" }, secondary,
+  tone = "navy", eyebrow, title, body, primary = { label: "Request a Demo", href: "/request-demo" }, secondary, children, image = "73fee244",
 }: {
-  tone?: CtaTone; eyebrow: string; title: string; body?: string; primary?: { label: string; href: string }; secondary?: { label: string; href: string };
+  tone?: CtaTone; eyebrow?: string; title: string; body?: string; primary?: { label: string; href: string }; secondary?: { label: string; href: string }; children?: ReactNode; image?: string;
 }) {
   const dark = tone === "navy";
   const bg = { navy: "bg-navy", teal: "bg-teal", amber: "bg-amber", mint: "bg-teal-tint" }[tone];
   const bodyC = dark ? "text-mist" : tone === "mint" ? "text-ink-2" : "text-ink";
-  const accent = tone === "amber" ? "#222148" : "#f2a93b";
-  const orbit = dark || tone === "mint" ? "#17b893" : "#222148";
-  const glow = dark || tone === "mint" ? "#17b893" : "#ffffff";
   return (
-    <section className="py-12 md:py-20">
-      <div className="wrap">
-        <div className={cx("relative overflow-hidden rounded-3xl p-8 md:p-16", bg)}>
-          <div aria-hidden="true" className="pointer-events-none absolute -right-24 top-1/2 hidden size-[450px] -translate-y-1/2 md:block lg:right-[-60px]">
-            <div className="absolute inset-[-55px] rounded-full opacity-25 blur-3xl" style={{ background: glow }} />
-            <div className="absolute inset-0 rounded-full border" style={{ borderColor: orbit }} />
-            <div className="absolute inset-[70px] rounded-full border opacity-40" style={{ borderColor: orbit }} />
-            <div className="absolute left-[256px] top-[112px] h-[226px] w-[62px] rotate-[28deg] rounded-[31px]" style={{ background: accent }} />
-          </div>
+    <section className="md:py-20">
+      <div className="mx-auto w-full max-w-[calc(1248px+2*var(--page-x))] md:px-[var(--page-x)]">
+        <div className={cx("relative overflow-hidden px-5 py-16 md:rounded-3xl md:p-16", bg)}>
+          <CtaArt tone={tone} image={image} className="pointer-events-none absolute -bottom-[174px] -right-[174px] size-[348px] max-w-none select-none lg:-right-[165px] lg:-top-[110px] lg:bottom-auto lg:size-[560px]" />
           <div className="relative flex max-w-[720px] flex-col gap-6">
-            <Eyebrow dark={dark} dot={tone === "teal" || tone === "amber" ? "navy" : "amber"}>{eyebrow}</Eyebrow>
-            <h2 className={cx("t-h1 uppercase", dark ? "text-cream" : "text-ink")}>{title}</h2>
+            {eyebrow && <Eyebrow dark={dark} dot={tone === "teal" || tone === "amber" ? "navy" : "amber"}>{eyebrow}</Eyebrow>}
+            <h2 className={cx("t-h1", dark ? "text-cream" : "text-ink")}>{title}</h2>
             {body && <p className={cx("t-lead", bodyC)}>{body}</p>}
-            <div className="flex flex-wrap gap-4">
-              <Button href={primary.href} variant={dark || tone === "mint" ? "primary" : "on-teal"} icon="Arrow Up Right">{primary.label}</Button>
-              {secondary && <Button href={secondary.href} variant={dark ? "ghost-light" : "ghost"}>{secondary.label}</Button>}
-            </div>
+            {children ?? (
+              <div className="flex flex-wrap gap-4">
+                <Button href={primary.href} variant={dark || tone === "mint" ? "primary" : "on-teal"} icon="Arrow Up Right">{primary.label}</Button>
+                {secondary && <Button href={secondary.href} variant={dark ? "ghost-light" : "ghost"}>{secondary.label}</Button>}
+              </div>
+            )}
           </div>
         </div>
       </div>

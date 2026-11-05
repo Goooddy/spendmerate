@@ -15,7 +15,7 @@ export default function CareersPage() {
           <SectionHeader align="center" eyebrow="Open roles" title="No open roles right now." body="We're not hiring through the site yet. New roles will be listed here first, so check back soon." />
         </div>
       </section>
-      <CtaBand eyebrow="Get in touch" title="Not seeing your role?" body="Tell us what you'd bring to XPensari. We read every message." primary={{ label: "Contact Us", href: "/contact" }} />
+      <CtaBand image="73fee244" eyebrow="Get in touch" title="NOT SEEING YOUR ROLE?" body="Tell us what you'd bring to XPensari. We read every message." primary={{ label: "Contact Us", href: "/contact" }} />
     </>
   );
 }

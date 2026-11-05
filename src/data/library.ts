@@ -25,7 +25,7 @@ export type ProdData = { L: "A" | "B" | "C" | "D"; h: Header; items: ProdItem[] 
 export type IntData = { L: "A" | "B" | "C" | "D"; h: Header; link?: string; sources: [string, string][]; ledger?: [string, string]; log?: { title: string; rows: [string, string, string, RawBadge][] } };
 export type CalcData = { L: "A" | "B" | "C" | "D"; h: Header };
 export type FaqData = { h: Header; items: ([string, string] | [string] | { q: string; a: string })[] };
-export type CtaData = { tone?: string; e: string; t: string; b?: string; btns: string[] };
+export type CtaData = { tone?: string; e: string; t: string; b?: string; btns: string[]; img?: string };
 
 export type LibraryPage = {
   name: string; hero: HeroData; trust?: TrustData; hiw?: HiwData; out?: OutData; prod?: ProdData; int?: IntData; calc?: CalcData; faq?: FaqData; cta?: CtaData;

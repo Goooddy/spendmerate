@@ -2,6 +2,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { Icon } from "@/components/ui";
+import { pillClass, pillInputClass } from "@/components/inputStyles";
 
 const INDEX = [
   ["Nigeria Tax Act 2025 Overview", "#guides"],
@@ -21,9 +22,9 @@ export function HubSearch() {
   const hits = useMemo(() => (q.trim() ? INDEX.filter(([t]) => t.toLowerCase().includes(q.trim().toLowerCase())) : []), [q]);
   return (
     <form role="search" onSubmit={(e) => { e.preventDefault(); setOpen(true); }} className="relative w-full max-w-[480px]">
-      <div className="flex items-center gap-2 rounded-2xl border border-line-strong bg-white py-1.5 pl-5 pr-1.5">
+      <div className={pillClass()}>
         <label htmlFor="hub-q" className="sr-only">Search the hub</label>
-        <input id="hub-q" value={q} onChange={(e) => { setQ(e.target.value); setOpen(true); }} placeholder="Search guides, deadlines, checklists…" className="min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-ink-3" autoComplete="off" />
+        <input id="hub-q" value={q} onChange={(e) => { setQ(e.target.value); setOpen(true); }} placeholder="Search guides, deadlines, checklists…" className={pillInputClass()} autoComplete="off" />
         <button type="submit" className="rounded-lg bg-teal px-6 py-3 text-sm font-semibold hover:bg-[#13a382]">Search</button>
       </div>
       {open && q.trim() && (

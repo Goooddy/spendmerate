@@ -16,9 +16,9 @@ export default function AboutPage() {
     <>
       <SplitHero eyebrow="About XPensari" title="Africa's Intelligent Financial Operations Platform" body="Built to help organizations spend less, automate more, stay compliant, and make smarter financial decisions." cta="Explore our solutions" ctaHref="/solutions" image="/images/69f88811.jpg" card={{ title: "Your ambition. Fewer obstacles." }} />
       <section className="section-y bg-white">
-        <div className="wrap flex flex-col items-center gap-12 lg:flex-row lg:gap-16">
+        <div className="wrap flex flex-col items-center gap-8 md:gap-12 lg:flex-row lg:gap-16">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/images/4be01f3a.jpg" alt="Business owner reviewing finances" className="h-[420px] w-full rounded-[32px] object-cover lg:h-[560px] lg:w-[520px]" loading="lazy" />
+          <img src="/images/4be01f3a.jpg" alt="Business owner reviewing finances" className="h-[420px] w-full rounded-3xl md:rounded-[32px] object-cover lg:h-[560px] lg:w-[520px]" loading="lazy" />
           <div className="flex flex-1 flex-col gap-8">
             <SectionHeader eyebrow="Our Story" title="Money is complex. Life isn't." />
             <p className="t-lead text-ink-2">XPensari is designed to bridge the gap between traditional ERP and native financial intelligence; built on a customised Odoo ERP. We advocate for Nigerians and African enterprises worldwide. Behind every balance is a bigger story: a first paycheck, an independent venture, a business ready for its next chapter. Financial tools should help that story move forward—not get in the way.</p>
@@ -41,7 +41,7 @@ export default function AboutPage() {
         ["Phase 3", "Full AI-Native Transformation", "Full AI-native transformation for legacy system users."],
       ]} />
       <section className="section-y bg-white">
-        <div className="wrap flex flex-col items-center gap-12">
+        <div className="wrap flex flex-col items-center gap-8 md:gap-12">
           <SectionHeader align="center" eyebrow="Leadership" title="Different perspectives. One shared direction." body="Better finance takes more than technology. It takes curious minds, thoughtful design, and people who care about the person on the other side of the screen." />
           <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {TEAM.map(([img, n, r]) => (
@@ -57,7 +57,7 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-      <CtaBand eyebrow="Your next chapter" title="Let's move forward. Together." body="Find a simpler way to manage your money—and more room for your ambition." primary={{ label: "See Careers", href: "/careers" }} secondary={{ label: "Contact Us", href: "/contact" }} />
+      <CtaBand image="73fee244" eyebrow="Your next chapter" title="LET'S MOVE FORWARD. TOGETHER." body="Find a simpler way to manage your money—and more room for your ambition." primary={{ label: "See Careers", href: "/careers" }} secondary={{ label: "Contact Us", href: "/contact" }} />
     </>
   );
 }

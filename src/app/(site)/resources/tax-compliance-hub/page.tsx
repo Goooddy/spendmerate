@@ -21,13 +21,13 @@ export default function TaxHubPage() {
   return (
     <>
       <InView as="section" className="bg-page pb-24 pt-16">
-        <div className="wrap flex flex-col items-center gap-12 lg:flex-row lg:gap-16">
+        <div className="wrap flex flex-col items-center gap-8 md:gap-12 lg:flex-row lg:gap-16">
           <div className="flex w-full max-w-[560px] flex-col gap-6">
             <SectionHeader as="h1" level="page" eyebrow="Compliance" title="Tax & Compliance Hub" body="Everything your finance team needs to stay ahead of Nigeria Tax Act 2025, in one place, kept current." />
             <HubSearch />
             <span className="flex flex-wrap items-center gap-2 text-xs text-ink-2">Next deadline coming up? <Button href="/resources/compliance-calendar" variant="link" size="sm" icon="Arrow Right">View compliance calendar</Button></span>
           </div>
-          <div aria-hidden="true" className="illus relative flex h-[460px] w-full flex-1 flex-col justify-center gap-5 rounded-[32px] bg-subtle p-6 md:p-12">
+          <div aria-hidden="true" className="illus relative flex h-[460px] w-full flex-1 flex-col justify-center gap-5 rounded-3xl md:rounded-[32px] bg-subtle p-6 md:p-12">
             <Toast icon="Check" tone="success" title="NRS e-invoice accepted" body="INV-2026-0142 · just now" className="seq-up w-full max-w-[320px] self-end" />
             <div className="seq-up flex w-full max-w-[400px] flex-col rounded-2xl border border-line bg-white px-6 py-5" style={d(800)}>
               <div className="flex items-center justify-between pb-3">
@@ -49,7 +49,7 @@ export default function TaxHubPage() {
         </div>
       </InView>
       <section id="guides" className="section-y scroll-mt-20 bg-white">
-        <div className="wrap flex flex-col gap-12">
+        <div className="wrap flex flex-col gap-8 md:gap-12">
           <SectionHeader eyebrow="Guides" title="Core topics" body="Plain-language guides to every part of the Nigeria Tax Act 2025 that affects your finance team." />
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {GUIDES.map((g) => <ProductTile key={g.title} {...g} link="Read guide" href="/resources/insights/nigeria-tax-act-2025-smes" />)}
@@ -57,9 +57,9 @@ export default function TaxHubPage() {
         </div>
       </section>
       <section className="section-y bg-page">
-        <div className="wrap flex flex-col gap-12">
+        <div className="wrap flex flex-col gap-8 md:gap-12">
           <SectionHeader eyebrow="What’s new" title="Latest updates to the hub" body="Guides are reviewed whenever official guidance changes." />
-          <ul className="flex flex-col rounded-3xl border border-line bg-white px-6 md:px-8">
+          <ul className="flex flex-col rounded-2xl md:rounded-3xl border border-line bg-white px-6 md:px-8">
             {[["28 Sep", "E-invoicing requirements guide updated", "Clearer steps for submitting invoices through the NRS gateway.", "Updated"], ["15 Sep", "New: Record-keeping requirements", "What to keep, for how long, and in what format.", "New"], ["02 Sep", "Filing deadlines refreshed for Q4", "Monthly, quarterly and annual dates checked and updated.", "Updated"]].map(([dt, t, b, tag], i) => (
               <li key={t} className={`flex flex-col gap-3 py-6 sm:flex-row sm:items-center sm:gap-8 ${i ? "border-t border-line" : ""}`}>
                 <span className="w-20 shrink-0 text-sm font-medium text-teal-text">{dt}</span>
@@ -76,7 +76,7 @@ export default function TaxHubPage() {
         { q: "How often is the hub updated?", a: "Guides are reviewed whenever the NRS or the Federal Government publishes new guidance, and at least once a quarter." },
         { q: "Can XPensari apply these rules for us?", a: "Yes. Tax & Compliance Intelligence applies VAT, WHT and PAYE rules on every transaction and sends e-invoices to the NRS gateway." },
       ]} />
-      <CtaBand tone="mint" eyebrow="Compliance review" title="Need a compliance review before the deadline?" body="Our team can walk through your current setup against the Tax Act 2025 requirements on a 20-minute call." />
+      <CtaBand image="e57ac192" tone="mint" title="Need a compliance review before the deadline?" body="Our team can walk through your current setup against the Tax Act 2025 requirements on a 20-minute call." />
     </>
   );
 }

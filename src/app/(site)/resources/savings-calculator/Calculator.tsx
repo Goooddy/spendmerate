@@ -31,10 +31,26 @@ function Modal({ onClose, label, children }: { onClose: () => void; label: strin
     document.body.style.overflow = "hidden";
     return () => { document.removeEventListener("keydown", k); document.body.style.overflow = ""; prev?.focus(); };
   }, [onClose]);
+  // Mobile bottom sheet: drag the handle down to dismiss.
+  const startY = useRef<number | null>(null);
+  const [drag, setDrag] = useState(0);
+  const onTouchStart = (e: React.TouchEvent) => { startY.current = e.touches[0].clientY; };
+  const onTouchMove = (e: React.TouchEvent) => { if (startY.current !== null) setDrag(Math.max(0, e.touches[0].clientY - startY.current)); };
+  const onTouchEnd = () => { if (drag > 90) onClose(); setDrag(0); startY.current = null; };
   return (
-    <div className="fade-in fixed inset-0 z-[60] flex items-center justify-center bg-navy/50 p-4" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
-      <div ref={ref} role="dialog" aria-modal="true" aria-label={label} className="rise relative max-h-[90vh] w-full max-w-[720px] overflow-y-auto rounded-3xl bg-white p-8 shadow-lg md:p-10">
-        <button type="button" aria-label="Close" onClick={onClose} className="absolute right-4 top-4 rounded-full p-2 hover:bg-subtle"><Icon name="Close" size={20} /></button>
+    <div className="fade-in fixed inset-0 z-[80] flex items-end justify-center bg-navy/40 md:items-center md:bg-navy/50 md:p-4" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
+      <div
+        ref={ref}
+        role="dialog"
+        aria-modal="true"
+        aria-label={label}
+        style={drag ? { transform: `translateY(${drag}px)`, transition: "none" } : undefined}
+        className="sheet-up relative max-h-[90vh] w-full overflow-y-auto rounded-t-3xl bg-white px-5 pb-8 pt-3 shadow-lg transition-transform duration-200 md:max-w-[720px] md:rounded-3xl md:p-10"
+      >
+        <div className="-mx-5 mb-3 flex justify-center py-1 md:hidden" onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd} aria-hidden="true">
+          <span className="h-1 w-10 rounded-full bg-line" />
+        </div>
+        <button type="button" aria-label="Close" onClick={onClose} className="press absolute right-3 top-5 flex size-11 items-center justify-center rounded-full hover:bg-subtle md:right-4 md:top-4"><Icon name="Close" size={20} /></button>
         {children}
       </div>
     </div>
@@ -89,12 +105,10 @@ export function Calculator() {
             </div>
             <form onSubmit={(e) => { e.preventDefault(); if (!EMAIL_RE.test(email)) return setEmailErr("Enter a valid work email."); setStage("email"); }} noValidate className="flex flex-col gap-3 rounded-2xl bg-teal-tint p-5">
               <p className="text-sm font-semibold">Get the full breakdown by email</p>
-              <div className="flex flex-col gap-2 sm:flex-row">
-                <label htmlFor="calc-email" className="sr-only">Work email</label>
-                <input id="calc-email" type="email" value={email} onChange={(e) => { setEmail(e.target.value); setEmailErr(""); }} placeholder="you@company.com" aria-invalid={!!emailErr} className="h-12 flex-1 rounded-lg border border-line-strong bg-white px-4 outline-none focus:border-navy" />
-                <button type="submit" className="h-12 rounded-lg bg-teal px-6 font-semibold hover:bg-[#13a382]">Send breakdown</button>
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
+                <Field className="flex-1" name="calc-email" type="email" label="Work email" required value={email} onChange={(e) => { setEmail((e.target as HTMLInputElement).value); setEmailErr(""); }} placeholder="you@company.com" autoComplete="email" error={emailErr || undefined} />
+                <button type="submit" className="press h-12 shrink-0 rounded-lg bg-teal px-6 font-semibold hover:bg-[#13a382] sm:mb-0">Email me the full breakdown</button>
               </div>
-              {emailErr && <p className="text-xs text-[#b42318]">{emailErr}</p>}
               <p className="text-xs text-ink-3">Illustrative estimate based on businesses like yours. We'll never share your email.</p>
             </form>
           </div>
@@ -116,7 +130,7 @@ export function Calculator() {
 
 export function HeroPreview() {
   return (
-    <div aria-hidden="true" className="illus relative flex h-[440px] w-full items-center justify-center rounded-[32px] bg-subtle p-6 md:h-[520px]">
+    <div aria-hidden="true" className="illus relative flex h-[440px] w-full items-center justify-center rounded-3xl md:rounded-[32px] bg-subtle p-6 md:h-[520px]">
       <div className="seq-up flex w-full max-w-[400px] flex-col gap-4 rounded-2xl border border-line bg-white p-6" style={{ ["--d" as string]: "400ms" }}>
         <div className="flex items-center justify-between"><span className="text-sm font-semibold">Your estimated savings</span><Badge tone="neutral">Sample data</Badge></div>
         <span className="text-xs text-ink-3">Logistics · ₦250m–₦1bn turnover</span>

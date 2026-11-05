@@ -28,12 +28,12 @@ export function Testimonials() {
   const q = QUOTES[i];
   const go = (d: number) => setI((i + d + QUOTES.length) % QUOTES.length);
   return (
-    <figure className="flex w-full flex-col overflow-hidden rounded-3xl border border-line bg-white md:flex-row" aria-roledescription="carousel">
+    <figure className="flex w-full flex-col overflow-hidden rounded-2xl md:rounded-3xl border border-line bg-white md:flex-row" aria-roledescription="carousel">
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={q.image} alt={`Portrait of ${q.name}`} className="h-72 w-full object-cover md:h-auto md:w-[420px] md:shrink-0" />
-      <div className="flex flex-1 flex-col justify-between gap-8 p-8 md:p-12">
+      <img src={q.image} alt={`Portrait of ${q.name}`} className="h-[300px] w-full object-cover md:h-auto md:w-[420px] md:shrink-0" />
+      <div className="flex flex-1 flex-col justify-between gap-6 p-6 md:gap-8 md:p-12">
         <div className="flex flex-col gap-2">
-          <span aria-hidden="true" className="font-display text-[88px] leading-[92px] text-teal-display">“</span>
+          <span aria-hidden="true" className="font-display text-[56px] leading-[56px] text-teal-display md:text-[88px] md:leading-[92px]">“</span>
           <blockquote className="t-lead text-ink" aria-live="polite">{q.quote}</blockquote>
         </div>
         <div className="flex flex-wrap items-center justify-between gap-4">

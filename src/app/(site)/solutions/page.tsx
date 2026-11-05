@@ -13,7 +13,7 @@ export default function SolutionsPage() {
       <PageHero eyebrow="Solutions" title="Find the fit for your team, your size, your industry." body="The same platform, framed around how you actually buy: by the role that owns the problem, the size of your business, or the sector you operate in." />
       <StdTrust />
       <section className="section-y bg-subtle">
-        <div className="wrap flex flex-col gap-16">
+        <div className="wrap flex flex-col gap-8 md:gap-16">
           <TileGroup id="role" title="By role" body="The person who owns the problem." cols={2} tiles={[
             t("Chart Pie", "cfo", "Control spend and close faster"),
             t("Shopping Cart", "procurement", "Buy smarter, see vendor risk"),
@@ -35,7 +35,7 @@ export default function SolutionsPage() {
           ]} />
         </div>
       </section>
-      <CtaBand eyebrow="Get started" title="Not sure which fit is yours?" body="Tell us your role, size and sector and we will show the shortest path to value." />
+      <CtaBand image="73fee244" eyebrow="Get started" title="NOT SURE WHICH FIT IS YOURS?" body="Tell us your role, size and sector and we will show the shortest path to value." />
     </>
   );
 }

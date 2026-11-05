@@ -46,7 +46,7 @@ export function Deadlines() {
           <a href={gcal} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-lg border border-navy px-4 py-2 text-sm font-semibold hover:bg-navy hover:text-cream">Add to Google Calendar</a>
         </div>
       </div>
-      <ul className="flex flex-col rounded-3xl border border-line bg-white px-6 md:px-8">
+      <ul className="flex flex-col rounded-2xl md:rounded-3xl border border-line bg-white px-6 md:px-8">
         {list.map((d, i) => (
           <li key={d.title} className={cx("fade-in flex flex-col gap-3 py-6 sm:flex-row sm:items-center sm:gap-8", i > 0 && "border-t border-line")}>
             <span className="font-display w-24 shrink-0 text-[32px] leading-9 text-teal-text">{d.date}</span>

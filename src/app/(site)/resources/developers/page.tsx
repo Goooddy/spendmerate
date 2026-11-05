@@ -31,7 +31,7 @@ export default function DevDocsPage() {
   return (
     <>
       <InView as="section" className="bg-page pb-24 pt-16">
-        <div className="wrap flex flex-col items-center gap-12 lg:flex-row lg:gap-16">
+        <div className="wrap flex flex-col items-center gap-8 md:gap-12 lg:flex-row lg:gap-16">
           <div className="flex w-full max-w-[560px] flex-col gap-6">
             <SectionHeader as="h1" level="page" eyebrow="For developers" title="Developer Docs & API" body="Open, documented endpoints for transactions, invoicing and compliance, built on Odoo." />
             <div className="flex flex-wrap gap-3">
@@ -39,7 +39,7 @@ export default function DevDocsPage() {
               <Button href="https://github.com" variant="ghost">View on GitHub</Button>
             </div>
           </div>
-          <div className="relative w-full flex-1 rounded-[32px] bg-subtle p-4 md:p-8">
+          <div className="relative w-full flex-1 rounded-3xl md:rounded-[32px] bg-subtle p-4 md:p-8">
             <div className="mb-3 flex justify-end"><Badge tone="neutral">Sample response</Badge></div>
             <Code lines={['curl https://api.xpensari.com/v1/compliance/status \\', '  -H "Authorization: Bearer YOUR_API_KEY"', "", "{", '  "business_id": "biz_9f2a1c",', '  "e_invoicing": "compliant",', '  "last_filing": "2026-09-21",', '  "next_deadline": "2026-10-21"', "}"]} />
             <Toast icon="Check" tone="success" title="200 OK" body="Compliance status · 142 ms" className="seq-up absolute -bottom-6 left-6 w-[260px]" />
@@ -47,7 +47,7 @@ export default function DevDocsPage() {
         </div>
       </InView>
       <section className="section-y bg-white">
-        <div className="wrap flex flex-col gap-12 lg:flex-row lg:gap-16">
+        <div className="wrap flex flex-col gap-8 md:gap-12 lg:flex-row lg:gap-16">
           <div className="flex flex-col gap-8 lg:w-[440px]">
             <SectionHeader eyebrow="Get started" title="Quickstart" body="Three steps from API key to your first response." />
             <ol className="flex flex-col gap-4">
@@ -60,9 +60,9 @@ export default function DevDocsPage() {
         </div>
       </section>
       <section id="reference" className="section-y scroll-mt-20 bg-page">
-        <div className="wrap flex flex-col gap-12">
+        <div className="wrap flex flex-col gap-8 md:gap-12">
           <SectionHeader eyebrow="Reference" title="Core endpoints" body="REST endpoints for transactions, invoices, compliance status, webhooks and savings reports. All responses are JSON." />
-          <ul className="flex flex-col rounded-3xl border border-line bg-white px-6 md:px-8">
+          <ul className="flex flex-col rounded-2xl md:rounded-3xl border border-line bg-white px-6 md:px-8">
             {ENDPOINTS.map(([m, p, b], i) => (
               <li key={p} className={`flex flex-col gap-3 py-5 md:flex-row md:items-center md:gap-6 ${i ? "border-t border-line" : ""}`}>
                 <Badge tone={m === "GET" ? "teal" : "amber"} className="w-16 justify-center">{m}</Badge>
@@ -74,7 +74,7 @@ export default function DevDocsPage() {
         </div>
       </section>
       <section className="section-y bg-subtle">
-        <div className="wrap flex flex-col gap-12">
+        <div className="wrap flex flex-col gap-8 md:gap-12">
           <SectionHeader eyebrow="Build" title="Everything you need to build" body="From your first key to production, in one place." />
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             <ProductTile icon="Book Open" title="API reference" body="Every endpoint, parameter and response, with examples." link="Open reference" href="#reference" />
@@ -89,7 +89,7 @@ export default function DevDocsPage() {
         { q: "How do I authenticate?", a: "Send your API key as a Bearer token in the Authorization header of every request. Keys can be rotated from your dashboard." },
         { q: "Are webhooks supported?", a: "Yes. Register an endpoint with POST /v1/webhooks to receive signed events for transactions, invoices and compliance status changes." },
       ]} />
-      <CtaBand eyebrow="Scale up" title="Need higher rate limits?" body="Reach out and we'll scope a plan that fits your integration." primary={{ label: "Contact us", href: "/contact" }} />
+      <CtaBand image="db465366" title="Need higher rate limits?" body="Reach out and we'll scope a plan that fits your integration." primary={{ label: "Contact us", href: "/contact" }} />
     </>
   );
 }

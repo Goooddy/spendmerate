@@ -2,25 +2,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { MEGA, DEMO_HREF, type Mega, type MenuItem } from "@/data/site";
+import { MEGA, DEMO_HREF, type Mega } from "@/data/site";
+import { FeaturedCard, GroupLabel, MegaItem } from "./menu-parts";
 import { Logo } from "./Logo";
-import { Button, Icon, IconChip, cx } from "./ui";
-
-function MegaItem({ it, onNav }: { it: MenuItem; onNav: () => void }) {
-  return (
-    <Link href={it.href} onClick={onNav} className="flex items-center gap-3 rounded-xl p-3 transition-colors hover:bg-page focus-visible:bg-page">
-      <IconChip icon={it.icon} round={false} size={40} iconSize={24} />
-      <span className="flex min-w-0 flex-col gap-0.5">
-        <span className="text-sm font-semibold leading-5 text-ink">{it.title}</span>
-        <span className="text-sm leading-[22px] text-ink-2">{it.body}</span>
-      </span>
-    </Link>
-  );
-}
-
-function GroupLabel({ children }: { children: string }) {
-  return <p className="pl-3 t-eyebrow text-ink-3">{children}</p>;
-}
+import { Button, Icon, cx } from "./ui";
+import { MobileMenu } from "./MobileMenu";
 
 function MegaPanel({ m, onNav }: { m: Mega; onNav: () => void }) {
   return (
@@ -41,7 +27,7 @@ function MegaPanel({ m, onNav }: { m: Mega; onNav: () => void }) {
             <GroupLabel>{m.textLinks.label}</GroupLabel>
             <div className="flex flex-col gap-1">
               {m.textLinks.links.map((l) => (
-                <Link key={l.href} href={l.href} onClick={onNav} className="rounded-xl px-3 py-2 text-sm leading-[22px] text-ink hover:bg-page">{l.title}</Link>
+                <Link key={l.href} href={l.href} onClick={onNav} className="rounded-xl px-3 py-2 text-sm leading-[22px] text-ink transition-colors duration-150 hover:bg-page">{l.title}</Link>
               ))}
             </div>
           </div>
@@ -51,22 +37,12 @@ function MegaPanel({ m, onNav }: { m: Mega; onNav: () => void }) {
         {m.side && (
           <div className="flex flex-col gap-2">
             <GroupLabel>{m.side.label}</GroupLabel>
-            {m.side.items.map((it) => <MegaItem key={it.href} it={it} onNav={onNav} />)}
+            {m.side.items.map((it) => <MegaItem key={it.href} it={it} onNav={onNav} v2 />)}
           </div>
         )}
         <div className="flex flex-col gap-2">
           <GroupLabel>Featured</GroupLabel>
-          <Link href={m.featured.href} onClick={onNav} className="group flex flex-col gap-3">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={m.featured.image} alt="" className="h-32 w-full rounded-xl object-cover" />
-            <span className="flex flex-col gap-1">
-              <span className="text-sm font-semibold leading-5 text-ink">{m.featured.title}</span>
-              <span className="text-xs leading-[18px] text-ink-2">{m.featured.body}</span>
-            </span>
-            <span className="inline-flex items-center gap-2 text-sm font-semibold text-teal-text group-hover:underline underline-offset-4">
-              {m.featured.link} <Icon name="Arrow Right" size={16} />
-            </span>
-          </Link>
+          <FeaturedCard f={m.featured} onNav={onNav} />
         </div>
       </div>
     </div>
@@ -81,16 +57,26 @@ function activeKey(path: string) {
   return "";
 }
 
+const OPEN_DELAY = 300; // design: 0.3–0.5s hover open delay
+const CLOSE_GRACE = 500; // design: 0.5s close grace
+
 export function Nav() {
   const path = usePathname() || "/";
   const [open, setOpen] = useState<string | null>(null);
   const [mobile, setMobile] = useState(false);
-  const [mobileSection, setMobileSection] = useState<string | null>(null);
   const ref = useRef<HTMLElement>(null);
+  const menuBtn = useRef<HTMLButtonElement>(null);
   const triggers = useRef<Record<string, HTMLButtonElement | null>>({});
-  const hoverTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const openTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const clearTimers = () => {
+    if (openTimer.current) clearTimeout(openTimer.current);
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+  };
 
   useEffect(() => {
+    clearTimers();
     setOpen(null);
     setMobile(false);
   }, [path]);
@@ -113,22 +99,23 @@ export function Nav() {
     };
   }, [open]);
 
-  useEffect(() => {
-    document.body.style.overflow = mobile ? "hidden" : "";
-  }, [mobile]);
-
   const act = activeKey(path);
-  const enter = (k: string) => {
-    if (hoverTimer.current) clearTimeout(hoverTimer.current);
-    setOpen(k);
+  /** Hover: open after a short delay (or instantly if a menu is already open, so moving between triggers feels direct). */
+  const hoverOpen = (k: string) => {
+    clearTimers();
+    if (open) return setOpen(k);
+    openTimer.current = setTimeout(() => setOpen(k), OPEN_DELAY);
   };
-  const leave = () => {
-    hoverTimer.current = setTimeout(() => setOpen(null), 120);
+  const keep = () => clearTimers();
+  const hoverClose = () => {
+    clearTimers();
+    closeTimer.current = setTimeout(() => setOpen(null), CLOSE_GRACE);
   };
   const navLink = (href: string, label: string) => (
     <Link
       href={href}
-      className={cx("rounded-lg px-3 py-2 text-[15px] font-medium leading-5 transition-colors hover:bg-page", path === href ? "text-teal-text" : "text-ink")}
+      onMouseEnter={hoverClose}
+      className={cx("rounded-lg px-3 py-2 text-[15px] font-medium leading-5 transition-colors duration-150 hover:bg-page", path === href ? "text-teal-text" : "text-ink")}
     >
       {label}
     </Link>
@@ -136,9 +123,9 @@ export function Nav() {
   const current = MEGA.find((m) => m.key === open);
 
   return (
-    <header ref={ref} className="sticky top-0 z-50 border-b border-line bg-white" onMouseLeave={leave}>
-      <div className="wrap flex h-[77px] items-center justify-between gap-6 !max-w-none lg:!px-[var(--page-x)]">
-        <Logo />
+    <header ref={ref} className="sticky top-0 z-50 border-b border-line bg-white" onMouseLeave={hoverClose}>
+      <div className="flex h-[69px] items-center justify-between gap-6 px-5 lg:h-[77px] lg:px-[var(--page-x)]">
+        <span className="origin-left scale-[0.78] lg:scale-100"><Logo /></span>
         <nav aria-label="Main" className="hidden items-center gap-1 lg:flex">
           {MEGA.map((m) => (
             <button
@@ -147,10 +134,12 @@ export function Nav() {
               type="button"
               aria-expanded={open === m.key}
               aria-haspopup="true"
-              onMouseEnter={() => enter(m.key)}
-              onClick={() => setOpen(open === m.key ? null : m.key)}
+              onMouseEnter={() => hoverOpen(m.key)}
+              onFocus={() => { clearTimers(); }}
+              onClick={() => { clearTimers(); setOpen(open === m.key ? null : m.key); }}
+              onKeyDown={(e) => { if (e.key === "ArrowDown") { e.preventDefault(); setOpen(m.key); } }}
               className={cx(
-                "flex items-center gap-1 rounded-lg px-3 py-2 text-[15px] font-medium leading-5 transition-colors hover:bg-page",
+                "flex items-center gap-1 rounded-lg px-3 py-2 text-[15px] font-medium leading-5 transition-colors duration-150 hover:bg-page",
                 act === m.key || open === m.key ? "text-teal-text" : "text-ink",
               )}
             >
@@ -158,63 +147,28 @@ export function Nav() {
               <Icon name="Chevron Down" size={16} className={cx("transition-transform duration-150", open === m.key && "rotate-180")} />
             </button>
           ))}
-          <span onMouseEnter={() => setOpen(null)}>{navLink("/pricing", "Pricing")}</span>
+          {navLink("/pricing", "Pricing")}
         </nav>
-        <div className="hidden items-center gap-2 lg:flex" onMouseEnter={() => setOpen(null)}>
+        <div className="hidden items-center gap-2 lg:flex">
           {navLink("/contact", "Contact")}
           {navLink("/login", "Log In")}
-          <Button href={DEMO_HREF}>Request a Demo</Button>
+          <span onMouseEnter={hoverClose}><Button href={DEMO_HREF}>Request a Demo</Button></span>
         </div>
-        <button type="button" className="rounded-lg p-2 lg:hidden" aria-label={mobile ? "Close menu" : "Open menu"} aria-expanded={mobile} onClick={() => setMobile(!mobile)}>
-          <Icon name={mobile ? "Close" : "Menu"} size={24} />
+        <button ref={menuBtn} type="button" className="press -mr-2 flex size-11 items-center justify-center rounded-lg lg:hidden" aria-label="Open menu" aria-expanded={mobile} aria-controls="mobile-menu" onClick={() => setMobile(true)}>
+          <Icon name="Menu" size={24} />
         </button>
       </div>
 
       {current && (
-        <div className={cx("absolute inset-x-0 top-full hidden lg:block")} onMouseEnter={() => enter(current.key)}>
+        <div className="absolute inset-x-0 top-full hidden lg:block" onMouseEnter={keep}>
           <div className={cx("wrap", current.width === "narrow" && "flex justify-center")}>
             <MegaPanel m={current} onNav={() => setOpen(null)} />
           </div>
         </div>
       )}
-      {current && <div aria-hidden="true" className="fixed inset-x-0 bottom-0 top-[77px] -z-10 hidden bg-navy/20 lg:block" onMouseEnter={() => setOpen(null)} />}
+      {current && <div aria-hidden="true" className="fade-in fixed inset-x-0 bottom-0 top-[77px] -z-10 hidden bg-navy/20 lg:block" onMouseEnter={hoverClose} />}
 
-      {mobile && (
-        <div className="fixed inset-x-0 bottom-0 top-[77px] overflow-y-auto bg-white lg:hidden">
-          <div className="flex flex-col gap-1 p-4">
-            {MEGA.map((m) => (
-              <div key={m.key} className="border-b border-line">
-                <button type="button" aria-expanded={mobileSection === m.key} onClick={() => setMobileSection(mobileSection === m.key ? null : m.key)} className="flex w-full items-center justify-between py-4 text-base font-semibold text-ink">
-                  {m.label}
-                  <Icon name="Chevron Down" size={20} className={cx("transition-transform", mobileSection === m.key && "rotate-180")} />
-                </button>
-                {mobileSection === m.key && (
-                  <div className="flex flex-col gap-4 pb-4">
-                    {[...m.columns.flat(), ...(m.side ? [m.side] : [])].map((g) => (
-                      <div key={g.label} className="flex flex-col gap-1">
-                        <GroupLabel>{g.label}</GroupLabel>
-                        {g.items.map((it) => <MegaItem key={it.href + it.title} it={it} onNav={() => setMobile(false)} />)}
-                      </div>
-                    ))}
-                    {m.textLinks && (
-                      <div className="flex flex-col gap-1">
-                        <GroupLabel>{m.textLinks.label}</GroupLabel>
-                        {m.textLinks.links.map((l) => <Link key={l.href} href={l.href} className="rounded-xl px-3 py-2 text-sm text-ink">{l.title}</Link>)}
-                      </div>
-                    )}
-                  </div>
-                )}
-              </div>
-            ))}
-            <Link href="/pricing" className="border-b border-line py-4 text-base font-semibold text-ink">Pricing</Link>
-            <Link href="/contact" className="border-b border-line py-4 text-base font-semibold text-ink">Contact</Link>
-            <div className="flex flex-col gap-3 pt-6">
-              <Button href={DEMO_HREF}>Request a Demo</Button>
-              <Button href="/login" variant="ghost">Log In</Button>
-            </div>
-          </div>
-        </div>
-      )}
+      <MobileMenu open={mobile} onClose={() => { setMobile(false); menuBtn.current?.focus(); }} />
     </header>
   );
 }

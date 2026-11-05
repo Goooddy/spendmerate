@@ -14,7 +14,7 @@ const TIERS: Tier[] = [
 export function PricingTiers() {
   const [annual, setAnnual] = useState(true);
   return (
-    <div className="flex w-full flex-col items-center gap-12">
+    <div className="flex w-full flex-col items-center gap-8 md:gap-12">
       <div role="radiogroup" aria-label="Billing period" className="flex items-center gap-1 rounded-full border border-line bg-subtle p-1">
         <button role="radio" aria-checked={!annual} onClick={() => setAnnual(false)} className={cx("rounded-full px-4 py-2 text-sm font-semibold transition-all duration-150", !annual ? "bg-white text-ink shadow-sm" : "text-ink-2")}>Monthly</button>
         <button role="radio" aria-checked={annual} onClick={() => setAnnual(true)} className={cx("flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition-all duration-150", annual ? "bg-white text-ink shadow-sm" : "text-ink-2")}>

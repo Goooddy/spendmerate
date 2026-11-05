@@ -11,7 +11,7 @@ export default function RequestDemoPage() {
   return (
     <>
       <section className="section-y bg-page">
-        <div className="wrap flex flex-col gap-12 lg:flex-row lg:gap-16">
+        <div className="wrap flex flex-col gap-8 md:gap-12 lg:flex-row lg:gap-16">
           <div className="flex flex-col gap-8 lg:w-[560px]">
             <SectionHeader as="h1" level="page" eyebrow="Request a demo" title="See XPensari on your own numbers." body="A 30-minute walkthrough with our team, built around your spend, tax and compliance workflows." />
             <ul className="flex flex-col gap-3">
@@ -22,8 +22,8 @@ export default function RequestDemoPage() {
               ))}
             </ul>
           </div>
-          <div className="flex-1 rounded-[32px] bg-subtle p-4 md:p-10">
-            <div className="mx-auto max-w-[520px] rounded-3xl bg-white p-6 shadow-sm md:p-8">
+          <div className="flex-1 rounded-3xl md:rounded-[32px] bg-subtle p-4 md:p-10">
+            <div className="mx-auto max-w-[520px] rounded-2xl md:rounded-3xl bg-white p-6 shadow-sm md:p-8">
               <Suspense><DemoFlow /></Suspense>
             </div>
           </div>
