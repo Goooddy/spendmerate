@@ -1,5 +1,6 @@
 import { Button, FeatureCard, Icon, SectionHeader, cx } from "./ui";
-import { InView, d } from "./motion";
+import { InView } from "./motion";
+import { d } from "./seq";
 import type { ReactNode } from "react";
 
 export function SplitHero({ eyebrow, title, body, cta, ctaHref, alt = { label: "Talk to sales", href: "/contact" }, image, card, imgAlt = "" }: { eyebrow: string; title: string; body: string; cta: string; ctaHref: string; alt?: { label: string; href: string } | null; image: string; card?: { title: string }; imgAlt?: string }) {

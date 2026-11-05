@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
+export { d } from "./seq";
 import { cx } from "./ui";
 
 /** Arms a subtree for CSS sequence animations; sets data-in once it scrolls into view (plays once, holds final state). */
@@ -31,7 +32,6 @@ export function InView({ children, className = "", as = "div", style, threshold 
   );
 }
 
-export const d = (ms: number, extra?: CSSProperties): CSSProperties => ({ ["--d" as string]: `${ms}ms`, ...extra });
 
 /** Auto-advancing step index (one pass, then holds). Pauses on hover/focus and when off-screen; disabled for reduced motion. */
 export function useStepper(count: number, ms = 3000) {

@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useState, type FormEvent } from "react";
+import { useId, useState, type FormEvent } from "react";
 import { Icon, cx } from "./ui";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -8,6 +8,7 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export function NewsletterForm({ dark }: { dark?: boolean }) {
   const [email, setEmail] = useState("");
   const [state, setState] = useState<"idle" | "error" | "done">("idle");
+  const id = useId();
   const submit = (e: FormEvent) => {
     e.preventDefault();
     if (!EMAIL_RE.test(email)) return setState("error");
@@ -21,10 +22,10 @@ export function NewsletterForm({ dark }: { dark?: boolean }) {
     );
   return (
     <form onSubmit={submit} noValidate className="flex w-full flex-col gap-2">
-      <label htmlFor="nl-email" className={cx("text-sm font-medium leading-5", dark ? "text-cream" : "text-ink")}>Work email</label>
+      <label htmlFor={id} className={cx("text-sm font-medium leading-5", dark ? "text-cream" : "text-ink")}>Work email</label>
       <div className="flex gap-2">
         <input
-          id="nl-email"
+          id={id}
           type="email"
           value={email}
           onChange={(e) => { setEmail(e.target.value); setState("idle"); }}
