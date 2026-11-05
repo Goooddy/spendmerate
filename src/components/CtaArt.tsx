@@ -16,7 +16,7 @@ export function CtaArt({ tone, image, className = "" }: { tone: CtaArtTone; imag
   const t = TONES[tone];
   const uid = `cta-${tone}-${image.replace(/[^a-z0-9]/gi, "")}`;
   return (
-    <svg viewBox="80 -110 560 560" fill="none" aria-hidden="true" focusable="false" className={className}>
+    <svg viewBox="80 -110 560 560" fill="none" overflow="visible" aria-hidden="true" focusable="false" className={className} style={{ overflow: "visible" }}>
       <defs>
         <filter id={`${uid}-glow`} x="0" y="-190" width="720" height="720" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
           <feGaussianBlur stdDeviation="40" />

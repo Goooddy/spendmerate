@@ -23,14 +23,18 @@ function estimate(v: Record<string, string>) {
 
 function Modal({ onClose, label, children }: { onClose: () => void; label: string; children: React.ReactNode }) {
   const ref = useRef<HTMLDivElement>(null);
+  // Keep the latest onClose without re-running the mount effect: the parent re-renders on every
+  // keystroke, and re-running it would steal focus from the field being typed in.
+  const closeRef = useRef(onClose);
+  closeRef.current = onClose;
   useEffect(() => {
     const prev = document.activeElement as HTMLElement | null;
-    ref.current?.querySelector<HTMLElement>("input,button")?.focus();
-    const k = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    ref.current?.focus({ preventScroll: true }); // the dialog itself, so phones don't open the keyboard over the results
+    const k = (e: KeyboardEvent) => e.key === "Escape" && closeRef.current();
     document.addEventListener("keydown", k);
     document.body.style.overflow = "hidden";
     return () => { document.removeEventListener("keydown", k); document.body.style.overflow = ""; prev?.focus(); };
-  }, [onClose]);
+  }, []);
   // Mobile bottom sheet: drag the handle down to dismiss.
   const startY = useRef<number | null>(null);
   const [drag, setDrag] = useState(0);
@@ -44,8 +48,9 @@ function Modal({ onClose, label, children }: { onClose: () => void; label: strin
         role="dialog"
         aria-modal="true"
         aria-label={label}
+        tabIndex={-1}
         style={drag ? { transform: `translateY(${drag}px)`, transition: "none" } : undefined}
-        className="sheet-up relative max-h-[90vh] w-full overflow-y-auto rounded-t-3xl bg-white px-5 pb-8 pt-3 shadow-lg transition-transform duration-200 md:max-w-[720px] md:rounded-3xl md:p-10"
+        className="sheet-up relative max-h-[90vh] outline-none w-full overflow-y-auto rounded-t-3xl bg-white px-5 pb-8 pt-3 shadow-lg transition-transform duration-200 md:max-w-[720px] md:rounded-3xl md:p-10"
       >
         <div className="-mx-5 mb-3 flex justify-center py-1 md:hidden" onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd} aria-hidden="true">
           <span className="h-1 w-10 rounded-full bg-line" />
