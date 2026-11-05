@@ -13,7 +13,7 @@ export function ScaleToFit({ width, height, children, className = "", max = 1 }:
     return () => ro.disconnect();
   }, [width, max]);
   return (
-    <div ref={ref} className={className} style={{ width: "100%", height: height * s }}>
+    <div ref={ref} className={className} style={{ width: "100%", height: height * s, overflow: "hidden" }}>
       <div style={{ width, height, transform: `scale(${s})`, transformOrigin: "top left" }}>{children}</div>
     </div>
   );
