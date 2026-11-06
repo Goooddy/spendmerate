@@ -43,7 +43,8 @@ export function Button({
   type?: "submit" | "button"; onClick?: () => void;
 }) {
   const cls = cx(
-    "press inline-flex items-center justify-center gap-2 font-semibold whitespace-nowrap transition-[color,background-color,border-color,transform] duration-150 rounded-lg",
+    "press inline-flex items-center justify-center gap-2 font-semibold transition-[color,background-color,border-color,transform] duration-150 rounded-lg",
+    variant.startsWith("link") ? "max-w-full text-left" : "whitespace-nowrap",
     size === "md" ? "px-6 py-3 text-base leading-5" : "px-4 py-2 text-sm leading-5",
     BTN[variant],
     className,
@@ -61,9 +62,9 @@ export function Button({
 /* ---------- Text ---------- */
 export function Eyebrow({ children, dark, dot = "amber", className = "" }: { children: ReactNode; dark?: boolean; dot?: "amber" | "navy"; className?: string }) {
   return (
-    <div className={cx("flex items-center gap-2", className)}>
-      <span className={cx("size-1.5 rounded-full shrink-0", dot === "amber" ? "bg-amber" : "bg-navy")} />
-      <span className={cx("t-eyebrow", dark ? "text-cream" : "text-ink")}>{children}</span>
+    <div className={cx("t-eyebrow", dark ? "text-cream" : "text-ink", className)}>
+      <span aria-hidden="true" className={cx("mr-2 inline-block size-1.5 rounded-full align-[2px]", dot === "amber" ? "bg-amber" : "bg-navy")} />
+      {children}
     </div>
   );
 }
@@ -88,7 +89,7 @@ export function SectionHeader({
 export type Tone = "teal" | "amber" | "neutral";
 export function Badge({ tone = "teal", children, className = "", style }: { tone?: Tone; children: ReactNode; className?: string; style?: React.CSSProperties }) {
   const t = tone === "teal" ? "bg-teal-chip text-ink" : tone === "amber" ? "bg-amber-chip text-ink" : "bg-subtle text-ink-2";
-  return <span style={style} className={cx("inline-flex items-center rounded-full px-3 py-1 t-eyebrow whitespace-nowrap", t, className)}>{children}</span>;
+  return <span style={style} className={cx("inline-flex shrink-0 items-center rounded-full px-3 py-1 t-eyebrow whitespace-nowrap", t, className)}>{children}</span>;
 }
 
 export function IconChip({
@@ -171,27 +172,32 @@ export type MiniCardData = { title: string; badge?: [Tone, string]; rows: MiniRo
 export function MiniCard({ data, dark, className = "" }: { data: MiniCardData; dark?: boolean; className?: string }) {
   const line = dark ? "border-navy-raised" : "border-line";
   return (
-    <div aria-hidden="true" className={cx("illus flex w-full max-w-[420px] flex-col rounded-2xl border px-6 py-5", dark ? "bg-navy-raised border-navy-raised" : "bg-white border-line", className)}>
-      <div className="flex items-center justify-between gap-3 pb-3">
-        <span className={cx("text-sm font-semibold leading-5", dark ? "text-cream" : "text-ink")}>{data.title}</span>
-        {data.badge && <Badge tone={data.badge[0]}>{data.badge[1]}</Badge>}
+    <div aria-hidden="true" className={cx("illus flex w-full min-w-0 max-w-[420px] flex-col rounded-2xl border px-4 py-5 min-[360px]:px-5 sm:px-6", dark ? "bg-navy-raised border-navy-raised" : "bg-white border-line", className)}>
+      <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 pb-3">
+        <span className={cx("min-w-0 text-[13px] font-semibold leading-5 sm:text-sm", dark ? "text-cream" : "text-ink")}>{data.title}</span>
+        {data.badge && <Badge tone={data.badge[0]} className="shrink-0">{data.badge[1]}</Badge>}
       </div>
       {data.rows.map((r, i) =>
         r.bar !== undefined ? (
           <div key={i} className={cx("flex flex-col gap-2 border-t py-3", line)}>
             <div className="flex items-center justify-between gap-3">
-              <span className={cx("text-xs leading-[18px]", dark ? "text-mist" : "text-ink-2")}>{r.label}</span>
-              <span className={cx("text-sm font-medium leading-5", r.warn ? "text-amber-text" : dark ? "text-cream" : "text-ink")}>{r.value}</span>
+              <span className={cx("min-w-0 text-xs leading-[18px]", dark ? "text-mist" : "text-ink-2")}>{r.label}</span>
+              <span className={cx("shrink-0 whitespace-nowrap text-sm font-medium leading-5", r.warn ? "text-amber-text" : dark ? "text-cream" : "text-ink")}>{r.value}</span>
             </div>
             <div className={cx("h-2 w-full rounded-full", dark ? "bg-navy" : "bg-subtle")}>
               <div className={cx("h-2 rounded", r.warn ? "bg-amber-text" : "bg-teal")} style={{ width: `${r.bar * 100}%` }} />
             </div>
           </div>
         ) : (
-          <div key={i} className={cx("flex items-center gap-3 border-t py-3", line)}>
-            <span className={cx("flex-1 text-xs leading-[18px]", dark ? "text-mist" : "text-ink-2")}>{r.label}</span>
-            {r.value && <span className={cx("text-sm font-medium leading-5 text-right", r.warn ? "text-amber-text" : dark ? "text-cream" : "text-ink")}>{r.value}</span>}
-            {r.badge && <Badge tone={r.badge[0]}>{r.badge[1]}</Badge>}
+          // On narrow cards the value + badge wrap to their own right-aligned line instead of crushing the label.
+          <div key={i} className={cx("flex flex-wrap items-center gap-x-3 gap-y-1.5 border-t py-3", line)}>
+            <span className={cx("min-w-20 flex-1 text-xs leading-[18px]", dark ? "text-mist" : "text-ink-2")}>{r.label}</span>
+            {(r.value || r.badge) && (
+              <span className="ml-auto flex shrink-0 items-center gap-2 min-[360px]:gap-3">
+                {r.value && <span className={cx("whitespace-nowrap text-[13px] font-medium leading-5 text-right min-[360px]:text-sm", r.warn ? "text-amber-text" : dark ? "text-cream" : "text-ink")}>{r.value}</span>}
+                {r.badge && <Badge tone={r.badge[0]}>{r.badge[1]}</Badge>}
+              </span>
+            )}
           </div>
         ),
       )}
@@ -205,8 +211,8 @@ export function Toast({ icon, tone, title, body, dark, className = "" }: { icon:
     ? tone === "success" ? "darkSuccess" : tone === "warning" ? "darkWarning" : "dark"
     : tone === "success" ? "success" : tone === "warning" ? "warning" : "teal";
   return (
-    <div aria-hidden="true" className={cx("illus flex items-center gap-3 rounded-2xl border p-4", dark ? "bg-navy-raised border-navy-raised" : "bg-white border-line", className)} style={{ boxShadow: "var(--shadow-float)" }}>
-      <IconChip icon={icon} size={36} iconSize={20} tone={chip as never} />
+    <div aria-hidden="true" className={cx("illus flex max-w-full items-center gap-2.5 rounded-2xl border p-3 min-[360px]:gap-3 min-[360px]:p-4", dark ? "bg-navy-raised border-navy-raised" : "bg-white border-line", className)} style={{ boxShadow: "var(--shadow-float)" }}>
+      <IconChip icon={icon} size={36} iconSize={20} tone={chip as never} className="shrink-0" />
       <div className="flex min-w-0 flex-col gap-1">
         <span className={cx("text-sm font-semibold leading-5", dark ? "text-cream" : "text-ink")}>{title}</span>
         <span className={cx("text-xs leading-4", dark ? "text-muted-dark" : "text-ink-3")}>{body}</span>

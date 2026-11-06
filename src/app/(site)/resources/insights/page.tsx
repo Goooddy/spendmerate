@@ -21,9 +21,9 @@ export default function InsightsPage() {
             <div className="max-w-[480px]"><NewsletterForm /></div>
             <p className="text-xs text-ink-2">Compliance deadlines, product updates and FinOps tips. Once a month.</p>
           </div>
-          <div className="flex w-full flex-1 flex-col gap-4 rounded-3xl md:rounded-[32px] bg-subtle p-6 md:p-10">
+          <div className="flex w-full flex-1 flex-col gap-4 rounded-3xl md:rounded-[32px] bg-subtle px-2 py-6 md:p-10">
             <Link href={`/resources/insights/${feat.slug}`} className="seq-up flex flex-col gap-3 rounded-2xl border border-line bg-white p-6 hover:shadow-md" style={d(300)}>
-              <div className="flex items-center justify-between"><span className="t-eyebrow text-ink-3">Featured</span><Badge tone="amber">Compliance</Badge></div>
+              <div className="flex flex-wrap items-center justify-between gap-2"><span className="t-eyebrow text-ink-3">Featured</span><Badge tone="amber">Compliance</Badge></div>
               <span className="text-lg font-semibold leading-6">{feat.title}</span>
               <span className="text-xs text-ink-3">{feat.date} · {feat.read}</span>
               <span className="flex items-center gap-2 text-xs text-teal-text"><Icon name="Check" size={14} /> A plain-language walkthrough of the new e-invoicing rules</span>

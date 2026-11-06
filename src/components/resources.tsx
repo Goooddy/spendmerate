@@ -32,7 +32,7 @@ export function ArticleCard({ a, large }: { a: Article; large?: boolean }) {
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src={a.image} alt="" className={large ? "h-60 w-full object-cover md:h-auto md:w-1/2" : "h-[222px] w-full object-cover"} loading="lazy" />
       <div className="flex flex-1 flex-col gap-3 p-6">
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           {a.featured && <Badge tone="amber">Featured</Badge>}
           {large ? <Badge tone="teal">{a.cat}</Badge> : <span className="t-eyebrow text-teal-text">{a.cat === "Case Studies" ? "Case study" : a.cat}</span>}
         </div>

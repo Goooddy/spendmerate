@@ -135,9 +135,9 @@ export function Calculator() {
 
 export function HeroPreview() {
   return (
-    <div aria-hidden="true" className="illus relative flex h-[440px] w-full items-center justify-center rounded-3xl md:rounded-[32px] bg-subtle p-6 md:h-[520px]">
-      <div className="seq-up flex w-full max-w-[400px] flex-col gap-4 rounded-2xl border border-line bg-white p-6" style={{ ["--d" as string]: "400ms" }}>
-        <div className="flex items-center justify-between"><span className="text-sm font-semibold">Your estimated savings</span><Badge tone="neutral">Sample data</Badge></div>
+    <div aria-hidden="true" className="illus relative flex h-[440px] w-full items-center justify-center rounded-3xl md:rounded-[32px] bg-subtle px-2 py-6 md:h-[520px] md:p-6">
+      <div className="seq-up flex w-full max-w-[400px] flex-col gap-4 rounded-2xl border border-line bg-white p-5 sm:p-6" style={{ ["--d" as string]: "400ms" }}>
+        <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2"><span className="min-w-0 text-sm font-semibold">Your estimated savings</span><Badge tone="neutral">Sample data</Badge></div>
         <span className="text-xs text-ink-3">Logistics · ₦250m–₦1bn turnover</span>
         <span className="text-4xl font-semibold tracking-wider">₦ ••,•••,•••</span>
         <span className="flex items-center gap-2 text-xs text-teal-text"><Icon name="Check" size={14} /> Full breakdown unlocks with your work email</span>

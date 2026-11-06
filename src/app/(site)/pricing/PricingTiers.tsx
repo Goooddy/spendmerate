@@ -16,26 +16,26 @@ export function PricingTiers() {
   return (
     <div className="flex w-full flex-col items-center gap-8 md:gap-12">
       <div role="radiogroup" aria-label="Billing period" className="flex items-center gap-1 rounded-full border border-line bg-subtle p-1">
-        <button role="radio" aria-checked={!annual} onClick={() => setAnnual(false)} className={cx("rounded-full px-4 py-2 text-sm font-semibold transition-all duration-150", !annual ? "bg-white text-ink shadow-sm" : "text-ink-2")}>Monthly</button>
-        <button role="radio" aria-checked={annual} onClick={() => setAnnual(true)} className={cx("flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition-all duration-150", annual ? "bg-white text-ink shadow-sm" : "text-ink-2")}>
-          Annually <Badge tone="amber">Save 20%</Badge>
+        <button role="radio" aria-checked={!annual} onClick={() => setAnnual(false)} className={cx("rounded-full px-3 py-2 text-[13px] font-semibold transition-all duration-150 min-[360px]:px-4 min-[360px]:text-sm", !annual ? "bg-white text-ink shadow-sm" : "text-ink-2")}>Monthly</button>
+        <button role="radio" aria-checked={annual} onClick={() => setAnnual(true)} className={cx("flex items-center gap-1.5 rounded-full px-3 py-2 text-[13px] font-semibold transition-all duration-150 min-[360px]:gap-2 min-[360px]:px-4 min-[360px]:text-sm", annual ? "bg-white text-ink shadow-sm" : "text-ink-2")}>
+          Annually <Badge tone="amber" className="max-[359px]:px-2">Save 20%</Badge>
         </button>
       </div>
       <div className="grid w-full grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
         {TIERS.map((t) => {
           const dk = t.featured;
           return (
-            <div key={t.name} className={cx("card-lift flex flex-col gap-6 rounded-2xl border p-8", dk ? "border-navy-raised bg-navy" : "border-line bg-white")}>
+            <div key={t.name} className={cx("card-lift flex flex-col gap-6 rounded-2xl border p-6 md:p-8", dk ? "border-navy-raised bg-navy" : "border-line bg-white")}>
               <div className="flex flex-col gap-3">
-                <div className="flex items-center gap-3">
+                <div className="flex flex-wrap items-center gap-3">
                   <h3 className={cx("t-h3", dk ? "text-cream" : "text-ink")}>{t.name}</h3>
                   {t.badge && <Badge tone="teal">{t.badge}</Badge>}
                 </div>
                 <p className={cx("text-sm leading-[22px]", dk ? "text-mist" : "text-ink-2")}>{t.desc}</p>
               </div>
               <div className={cx("flex flex-col gap-1 border-t pt-6", dk ? "border-navy-raised" : "border-line")}>
-                <div className="flex items-baseline gap-1">
-                  <span key={String(annual)} className={cx("fade-in text-4xl font-semibold leading-10", dk ? "text-cream" : "text-ink")}>{annual ? t.annual : t.monthly}</span>
+                <div className="flex flex-wrap items-baseline gap-x-1">
+                  <span key={String(annual)} className={cx("fade-in text-[32px] font-semibold leading-10 min-[360px]:text-4xl", dk ? "text-cream" : "text-ink")}>{annual ? t.annual : t.monthly}</span>
                   {t.per && <span className={cx("text-xs", dk ? "text-muted-dark" : "text-ink-3")}>/ month</span>}
                 </div>
                 <span className={cx("text-xs", dk ? "text-muted-dark" : "text-ink-3")}>{annual ? t.noteA : t.noteM}</span>

@@ -41,13 +41,13 @@ function HeroCopy({ h, dark, points }: { h: Header; dark?: boolean; points?: str
 function TxnCard({ t, style, className }: { t: NonNullable<HeroData["txn"]>; style?: React.CSSProperties; className?: string }) {
   const [b1, b2] = t.badges.map((b) => badge(b)!);
   return (
-    <div aria-hidden="true" className={cx("illus seq-up flex flex-col gap-4 rounded-2xl border border-line bg-white px-6 py-5", className ?? "absolute w-[400px]")} style={{ ...d(400), ...style }}>
+    <div aria-hidden="true" className={cx("illus seq-up flex min-w-0 flex-col gap-4 rounded-2xl border border-line bg-white px-4 py-5 min-[360px]:px-5 sm:px-6", className ?? "absolute w-[400px]")} style={{ ...d(400), ...style }}>
       <div className="flex gap-3">
-        <div className="flex flex-1 flex-col gap-1">
-          <span className="text-sm font-semibold">{t.title}</span>
+        <div className="flex min-w-0 flex-1 flex-col gap-1">
+          <span className="text-[13px] font-semibold sm:text-sm">{t.title}</span>
           <span className="text-xs text-ink-3">{t.sub}</span>
         </div>
-        <span className="text-base font-semibold">{t.amount}</span>
+        <span className="shrink-0 whitespace-nowrap text-[15px] font-semibold sm:text-base">{t.amount}</span>
       </div>
       <div className="seq-fade flex items-center gap-2" style={d(1100)}>
         <span className="flex size-5 items-center justify-center rounded-full bg-teal-chip"><Icon name="Check" size={12} /></span>
@@ -55,7 +55,7 @@ function TxnCard({ t, style, className }: { t: NonNullable<HeroData["txn"]>; sty
       </div>
       <div className="flex items-center gap-2 border-t border-line pt-3">
         <span className="text-xs text-ink-3">{t.status}</span>
-        <span className="relative ml-auto flex h-6 min-w-[150px] justify-end">
+        <span className="relative ml-auto flex h-6 min-w-[150px] shrink-0 justify-end">
           {b2 ? (
             <>
               <Badge tone={b1[0]} className="seq-out absolute right-0" style={d(3000)}>{b1[1]}</Badge>
@@ -72,15 +72,15 @@ function TxnCard({ t, style, className }: { t: NonNullable<HeroData["txn"]>; sty
 
 function AiCard({ ai, dark, style, className = "" }: { ai: NonNullable<HeroData["ai"]>; dark?: boolean; style?: React.CSSProperties; className?: string }) {
   return (
-    <div aria-hidden="true" className={cx("illus seq-up flex w-[400px] max-w-full flex-col rounded-2xl border px-6 py-5", dark ? "border-navy-raised bg-navy-raised" : "border-line bg-white", className)} style={{ ...d(1500), ...style }}>
+    <div aria-hidden="true" className={cx("illus seq-up flex min-w-0 max-w-full flex-col rounded-2xl border px-4 py-5 min-[360px]:px-5 sm:px-6", dark ? "border-navy-raised bg-navy-raised" : "border-line bg-white", className)} style={{ ...d(1500), ...style }}>
       <div className="flex items-center gap-2 pb-3">
         <span className={cx("flex size-6 items-center justify-center rounded-full", dark ? "bg-navy text-teal-bright" : "bg-teal-chip")}><Icon name="Sparkles" size={14} /></span>
-        <span className={cx("text-sm font-semibold", dark ? "text-cream" : "text-ink")}>{ai.title}</span>
+        <span className={cx("text-[13px] font-semibold sm:text-sm", dark ? "text-cream" : "text-ink")}>{ai.title}</span>
       </div>
       {ai.rows.map(([l, v], i) => (
         <div key={l} className={cx("seq-x flex items-center gap-3 border-t py-2.5", dark ? "border-navy" : "border-line")} style={d(2000 + i * 250)}>
-          <span className={cx("flex-1 text-xs", dark ? "text-mist" : "text-ink-2")}>{l}</span>
-          <span className={cx("text-sm font-medium", dark ? "text-cream" : "text-ink")}>{v}</span>
+          <span className={cx("shrink-0 text-xs", dark ? "text-mist" : "text-ink-2")}>{l}</span>
+          <span className={cx("min-w-0 flex-1 text-right text-[13px] font-medium sm:text-sm", dark ? "text-cream" : "text-ink")}>{v}</span>
         </div>
       ))}
     </div>
@@ -89,7 +89,7 @@ function AiCard({ ai, dark, style, className = "" }: { ai: NonNullable<HeroData[
 
 function ProgressCard({ p, style, className }: { p: NonNullable<HeroData["progress"]>; style?: React.CSSProperties; className?: string }) {
   return (
-    <div aria-hidden="true" className={cx("illus seq-up flex w-[232px] flex-col gap-2 rounded-2xl border border-line bg-white px-5 py-4", className ?? "absolute")} style={{ ...d(3200, { ["--dy" as string]: "16px" }), ...style }}>
+    <div aria-hidden="true" className={cx("illus seq-up flex flex-col gap-2 rounded-2xl border border-line bg-white px-4 py-4 sm:px-5", className ?? "absolute w-[232px]")} style={{ ...d(3200, { ["--dy" as string]: "16px" }), ...style }}>
       <div className="flex justify-between gap-2">
         <span className="text-xs text-ink-2">{p.label}</span>
         <span className="text-sm font-medium">{p.value}</span>
@@ -108,15 +108,15 @@ function HeroCanvas({ data, w, h, pos }: { data: HeroData; w: number; h: number;
         <ScaleToFit width={w} height={h}>
           <div className="relative overflow-hidden rounded-[32px] bg-subtle" style={{ width: w, height: h }}>
             {data.txn && <TxnCard t={data.txn} style={{ left: pos.txn[0], top: pos.txn[1] }} />}
-            {data.ai && <AiCard ai={data.ai} className="absolute" style={{ left: pos.ai[0], top: pos.ai[1] }} />}
+            {data.ai && <AiCard ai={data.ai} className="absolute w-[400px]" style={{ left: pos.ai[0], top: pos.ai[1] }} />}
             {data.progress && <ProgressCard p={data.progress} style={{ left: pos.pr[0], top: pos.pr[1] }} />}
           </div>
         </ScaleToFit>
       </div>
-      <div className="flex flex-col gap-4 overflow-hidden rounded-3xl bg-subtle px-1.5 pb-4 pt-12 lg:hidden">
-        {data.txn && <TxnCard t={data.txn} className="relative mr-auto w-full max-w-[400px]" />}
-        {data.ai && <AiCard ai={data.ai} className="ml-auto w-full" />}
-        {data.progress && <ProgressCard p={data.progress} className="relative -mt-6 ml-1" />}
+      <div className="flex flex-col rounded-3xl bg-subtle pb-8 pt-8 md:px-10 md:py-12 lg:hidden">
+        {data.txn && <TxnCard t={data.txn} className="relative z-[1] mr-auto w-[91%] max-w-[400px] shadow-sm" />}
+        {data.ai && <AiCard ai={data.ai} className={cx("ml-auto w-[91%] max-w-[400px] shadow-sm", data.txn && "mt-0.5")} />}
+        {data.progress && <ProgressCard p={data.progress} className="relative z-[2] -mt-6 w-[65%] min-w-[200px] max-w-[232px] shadow-sm" />}
       </div>
     </>
   );
@@ -304,7 +304,7 @@ export function LibHiw({ data, bg = "bg-page" }: { data: HiwData; bg?: string })
               <h3 className="t-h3">{s.t}</h3>
               <p className="text-base text-ink-2">{s.b}</p>
             </div>
-            <div className="flex w-full items-center justify-center py-8 md:h-[380px] md:py-0 rounded-2xl md:rounded-3xl bg-subtle p-6 lg:w-[600px]">
+            <div className="flex w-full items-center justify-center py-6 md:h-[380px] md:py-0 rounded-2xl md:rounded-3xl bg-subtle px-2 md:p-6 lg:w-[600px]">
               {cards[i] && <MiniCard data={cards[i]!} className="shadow-sm" />}
             </div>
           </div>
@@ -322,8 +322,8 @@ export function LibHiw({ data, bg = "bg-page" }: { data: HiwData; bg?: string })
             </button>
           ))}
         </div>
-        <div role="tabpanel" className="flex flex-col items-center gap-6 rounded-3xl bg-teal-tint p-6 md:min-h-[460px] md:gap-10 md:rounded-[32px] md:p-8 lg:flex-row lg:gap-16 lg:px-16">
-          <div key={st.i} className="panel-in flex flex-1 flex-col gap-3">
+        <div role="tabpanel" className="flex flex-col items-center gap-6 rounded-3xl bg-teal-tint px-2 py-6 md:min-h-[460px] md:gap-10 md:rounded-[32px] md:p-8 lg:flex-row lg:gap-16 lg:px-16">
+          <div key={st.i} className="panel-in flex flex-1 flex-col gap-3 px-4 md:px-0">
             <span className="text-sm font-medium text-teal-text">Step {String(st.i + 1).padStart(2, "0")}</span>
             <h3 className="t-h3">{steps[st.i].t}</h3>
             <p className="text-base text-ink-2">{steps[st.i].b}</p>
@@ -509,7 +509,7 @@ export function LibProducts({ data }: { data: ProdData }) {
           <div className="grid grid-cols-1 gap-8 md:gap-12 md:grid-cols-2">
             {items.map((it) => (
               <div key={it.t} className="flex flex-col gap-6">
-                <div className="flex items-center justify-center py-8 md:py-0 rounded-2xl md:rounded-3xl bg-subtle p-6 md:h-[400px]">{prodCard(it) && <MiniCard data={prodCard(it)!} className="shadow-sm" />}</div>
+                <div className="flex items-center justify-center py-6 md:py-0 rounded-2xl md:rounded-3xl bg-subtle px-2 md:p-6 md:h-[400px]">{prodCard(it) && <MiniCard data={prodCard(it)!} className="shadow-sm" />}</div>
                 <div className="flex flex-col gap-2">
                   <h3 className="t-h3">{it.t}</h3>
                   <p className="text-base text-ink-2">{it.b}</p>
@@ -535,7 +535,7 @@ export function LibProducts({ data }: { data: ProdData }) {
                   <p className="text-base text-ink-2">{it.b}</p>
                   <ProdLink t={it.t} link={it.link} />
                 </div>
-                <div className="flex w-full items-center justify-center py-8 md:h-[400px] md:py-0 rounded-2xl md:rounded-3xl bg-subtle p-6 lg:w-[600px]">{prodCard(it) && <MiniCard data={prodCard(it)!} className="shadow-sm" />}</div>
+                <div className="flex w-full items-center justify-center py-6 md:h-[400px] md:py-0 rounded-2xl md:rounded-3xl bg-subtle px-2 md:p-6 lg:w-[600px]">{prodCard(it) && <MiniCard data={prodCard(it)!} className="shadow-sm" />}</div>
               </div>
             ))}
           </div>
@@ -548,8 +548,8 @@ export function LibProducts({ data }: { data: ProdData }) {
       <section className="section-y bg-page">
         <div className="wrap flex flex-col gap-8 md:gap-12">
           <SectionHeader eyebrow={h.e} title={h.t} body={h.b} />
-          <div className="flex flex-col items-center gap-10 rounded-3xl md:rounded-[32px] bg-subtle p-8 lg:flex-row lg:gap-16 lg:p-14">
-            <div className="flex flex-1 flex-col gap-4">
+          <div className="flex flex-col items-center gap-8 rounded-3xl md:rounded-[32px] bg-subtle px-2 py-8 md:gap-10 md:p-8 lg:flex-row lg:gap-16 lg:p-14">
+            <div className="flex flex-1 flex-col gap-4 px-4 md:px-0">
               <IconChip icon={productIcon(first.t)} size={48} iconSize={24} />
               <h3 className="t-h2">{first.t}</h3>
               <p className="text-base text-ink-2">{first.b}</p>
@@ -695,17 +695,17 @@ export function LibIntegration({ data }: { data: IntData }) {
             {link}
           </div>
           {data.log && (
-            <InView className="illus flex w-full max-w-[580px] flex-col rounded-2xl md:rounded-3xl border border-line bg-white px-7 pb-3 pt-6" >
-              <div className="flex items-center justify-between pb-3">
-                <span className="text-sm font-semibold">{data.log.title}</span>
+            <InView className="illus flex w-full max-w-[580px] flex-col rounded-2xl md:rounded-3xl border border-line bg-white px-4 pb-3 pt-5 min-[360px]:px-5 sm:px-7 sm:pt-6" >
+              <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 pb-3">
+                <span className="min-w-0 text-sm font-semibold">{data.log.title}</span>
                 <Badge tone="neutral">Sample data</Badge>
               </div>
               {data.log.rows.map(([ic, t, s, b], k) => {
                 const bb = badge(b);
                 return (
-                  <div key={t} className="seq-x flex items-center gap-4 border-t border-line py-3.5" style={d(200 + k * 250)}>
-                    <IconChip icon={ic} size={36} iconSize={18} />
-                    <span className="flex flex-1 flex-col">
+                  <div key={t} className="seq-x flex items-center gap-3 border-t border-line py-3.5 sm:gap-4" style={d(200 + k * 250)}>
+                    <IconChip icon={ic} size={36} iconSize={18} className="shrink-0" />
+                    <span className="flex min-w-0 flex-1 flex-col">
                       <span className="text-sm font-medium">{t}</span>
                       <span className="text-xs text-ink-2">{s}</span>
                     </span>

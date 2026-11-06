@@ -42,7 +42,7 @@ export default function DevDocsPage() {
           <div className="relative w-full flex-1 rounded-3xl md:rounded-[32px] bg-subtle p-4 md:p-8">
             <div className="mb-3 flex justify-end"><Badge tone="neutral">Sample response</Badge></div>
             <Code lines={['curl https://api.xpensari.com/v1/compliance/status \\', '  -H "Authorization: Bearer YOUR_API_KEY"', "", "{", '  "business_id": "biz_9f2a1c",', '  "e_invoicing": "compliant",', '  "last_filing": "2026-09-21",', '  "next_deadline": "2026-10-21"', "}"]} />
-            <Toast icon="Check" tone="success" title="200 OK" body="Compliance status · 142 ms" className="seq-up absolute -bottom-6 left-6 w-[260px]" />
+            <Toast icon="Check" tone="success" title="200 OK" body="Compliance status · 142 ms" className="seq-up absolute -bottom-6 left-4 w-[260px] max-w-[calc(100%-2rem)] sm:left-6" />
           </div>
         </div>
       </InView>

@@ -19,16 +19,16 @@ export default function CompliancePage() {
             <Button href="#deadlines" className="self-start">View all deadlines</Button>
             <span className="flex flex-wrap items-center gap-2 text-xs text-ink-2">Prefer a conversation? <Button href="/contact" variant="link" size="sm" icon="Arrow Right">Talk to sales</Button></span>
           </div>
-          <div aria-hidden="true" className="illus flex w-full flex-1 flex-col justify-center gap-5 rounded-3xl md:rounded-[32px] bg-subtle p-6 md:min-h-[480px] md:p-12">
+          <div aria-hidden="true" className="illus flex w-full flex-1 flex-col justify-center gap-5 rounded-3xl md:rounded-[32px] bg-subtle px-2 py-6 md:min-h-[480px] md:p-12">
             <div className="seq-up flex w-full max-w-[380px] flex-col gap-3 self-end rounded-2xl border border-line bg-white p-5">
               <Toast icon="Clock" tone="warning" title="VAT return due in 3 days" body="Draft ready for review" className="!border-0 !p-0 !shadow-none" />
               <div className="flex items-center justify-between border-t border-line pt-3"><span className="text-xs text-ink-2">21 Jun · Status</span><Badge tone="amber">Due soon</Badge></div>
               <span className="flex items-center gap-2 text-xs text-teal-text"><Icon name="Check" size={14} /> Reminder sent to finance team</span>
             </div>
-            <div className="seq-up flex w-full max-w-[400px] flex-col rounded-2xl border border-line bg-white px-6 py-5" style={d(800)}>
-              <div className="flex items-center justify-between pb-3"><span className="flex items-center gap-2 text-sm font-semibold"><Icon name="Clock" size={18} className="text-teal-text" /> Upcoming deadlines</span><Badge tone="neutral">Sample data</Badge></div>
+            <div className="seq-up flex w-full max-w-[400px] flex-col rounded-2xl border border-line bg-white px-5 py-5 sm:px-6" style={d(800)}>
+              <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 pb-3"><span className="flex items-center gap-2 text-sm font-semibold"><Icon name="Clock" size={18} className="text-teal-text" /> Upcoming deadlines</span><Badge tone="neutral">Sample data</Badge></div>
               {[["VAT Return Filing · 21 Jun", "Monthly"], ["WHT Remittance · 21 Jun", "Monthly"], ["E-Invoice Reconciliation · 30 Jun", "Quarterly"]].map(([l, v], i) => (
-                <div key={l} className="seq-x flex justify-between border-t border-line py-2.5" style={d(1300 + i * 250)}><span className="text-xs text-ink-2">{l}</span><span className="text-sm font-medium">{v}</span></div>
+                <div key={l} className="seq-x flex justify-between gap-3 border-t border-line py-2.5" style={d(1300 + i * 250)}><span className="text-xs text-ink-2">{l}</span><span className="shrink-0 text-sm font-medium">{v}</span></div>
               ))}
             </div>
           </div>

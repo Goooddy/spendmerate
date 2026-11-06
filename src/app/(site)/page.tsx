@@ -31,14 +31,14 @@ const TILES = [
 function MobileStage() {
   return (
     <div className="relative h-[300px] w-full max-w-[400px] md:hidden">
-      <div aria-hidden="true" className="absolute inset-x-[-20%] top-4 h-[290px] rounded-full bg-teal opacity-[0.06] blur-[40px]" />
-      <div className="rise absolute inset-x-1.5 top-10 overflow-hidden rounded-md" style={{ animationDelay: "200ms" }}>
+      <div data-bleed aria-hidden="true" className="absolute inset-x-[-20%] top-4 h-[290px] rounded-full bg-teal opacity-[0.06] blur-[40px]" />
+      <div data-bleed className="rise absolute left-2 top-14 w-[95vw] max-w-[560px] overflow-hidden rounded-md" style={{ animationDelay: "200ms" }}>
         <ScaleToFit width={960} height={580}><DashboardMock /></ScaleToFit>
       </div>
-      <div className="rise-drift absolute right-0 top-0 w-[280px] max-w-[80%]" style={{ animationDelay: "600ms, 1100ms" }}>
+      <div className="rise-drift absolute right-0 top-0 z-[1] w-[280px] max-w-[90%]" style={{ animationDelay: "600ms, 1100ms" }}>
         <Toast icon="Check" tone="success" title="NRS e-invoice accepted" body="INV-2026-0142 · just now" />
       </div>
-      <div className="rise-drift absolute bottom-0 left-0 w-[312px] max-w-[88%]" style={{ animationDelay: "900ms, 1900ms" }}>
+      <div className="rise-drift absolute bottom-0 left-0 z-[1] w-[312px] max-w-[92%]" style={{ animationDelay: "900ms, 1900ms" }}>
         <Toast icon="Sparkles" tone="ai" title="AI CFO found ₦1.2M in savings" body="3 overlapping subscriptions" />
       </div>
     </div>
@@ -72,9 +72,9 @@ export default function Home() {
       <section className="relative overflow-hidden bg-page pb-12 pt-12 md:pb-0 md:pt-16">
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/images/globe.svg" alt="" className="absolute left-1/2 top-[-120px] w-[1240px] max-w-none -translate-x-1/2" style={{ maskImage: "linear-gradient(#0000008c, #000 40%)" }} />
+          <img data-bleed src="/images/globe.svg" alt="" className="absolute left-1/2 top-[-120px] w-[1240px] max-w-none -translate-x-1/2" style={{ maskImage: "linear-gradient(#0000008c, #000 40%)" }} />
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/images/globe-halo.svg" alt="" className="absolute left-1/2 top-[-10px] w-[1100px] max-w-none -translate-x-1/2" />
+          <img data-bleed src="/images/globe-halo.svg" alt="" className="absolute left-1/2 top-[-10px] w-[1100px] max-w-none -translate-x-1/2" />
         </div>
         <div className="wrap relative flex flex-col items-center gap-8 md:gap-12">
           <div className="flex flex-col items-center gap-6 text-center">
@@ -142,7 +142,7 @@ export default function Home() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/images/2376e85e.jpg" alt="SME owner checking invoices on a laptop" className="ml-auto h-full w-full rounded-2xl object-cover sm:w-[70%]" />
               <InvoiceStatusSnippet className="absolute left-0 top-4 hidden sm:flex" />
-              <Toast icon="Clock" tone="warning" title="VAT return due in 3 days" body="Draft ready for review" className="absolute bottom-[-16px] right-4 w-[280px]" />
+              <Toast icon="Clock" tone="warning" title="VAT return due in 3 days" body="Draft ready for review" className="absolute bottom-[-16px] right-0 w-[280px] sm:right-4" />
             </BentoTile>
           </div>
           <Button href="/solutions" variant="link" icon="Arrow Right">Explore Solutions</Button>
@@ -201,8 +201,8 @@ export default function Home() {
             <SectionHeader eyebrow="Product preview" title="Every naira, one clear view." body="Total spend, savings and compliance in one executive dashboard, with AI recommendations your team can act on." />
             <Button href={DEMO_HREF} variant="ghost" icon="Arrow Right" className="self-start">Watch a 2-min Demo</Button>
           </div>
-          <div aria-hidden="true" className="illus flex flex-col gap-6 rounded-2xl md:rounded-3xl border border-line bg-white p-6 md:p-8">
-            <div className="flex items-center justify-between gap-3">
+          <div aria-hidden="true" className="illus flex flex-col gap-6 rounded-2xl md:rounded-3xl border border-line bg-white p-5 sm:p-6 md:p-8">
+            <div className="flex flex-wrap items-center justify-between gap-3">
               <span className="text-base font-semibold">Executive overview · Q3</span>
               <Badge tone="neutral">Illustrative data</Badge>
             </div>
@@ -288,7 +288,7 @@ function BentoTile({ bg, kicker, title, body, link, href, children }: { bg: stri
   return (
     <div className={`flex flex-col gap-6 overflow-hidden rounded-2xl md:rounded-3xl p-6 md:p-8 ${bg}`}>
       <div className="flex flex-col gap-2">
-        <Eyebrow className="[&>span:first-child]:hidden [&>span]:!text-teal-text">{kicker}</Eyebrow>
+        <p className="t-eyebrow text-teal-text">{kicker}</p>
         <h3 className="t-h3">{title}</h3>
         <p className="text-sm leading-[22px] text-ink-2">{body}</p>
         <Link href={href} className="inline-flex w-fit items-center gap-2 text-sm font-semibold text-teal-text hover:underline underline-offset-4">

@@ -27,15 +27,15 @@ export default function TaxHubPage() {
             <HubSearch />
             <span className="flex flex-wrap items-center gap-2 text-xs text-ink-2">Next deadline coming up? <Button href="/resources/compliance-calendar" variant="link" size="sm" icon="Arrow Right">View compliance calendar</Button></span>
           </div>
-          <div aria-hidden="true" className="illus relative flex h-[460px] w-full flex-1 flex-col justify-center gap-5 rounded-3xl md:rounded-[32px] bg-subtle p-6 md:p-12">
+          <div aria-hidden="true" className="illus relative flex h-[460px] w-full flex-1 flex-col justify-center gap-5 rounded-3xl md:rounded-[32px] bg-subtle px-2 py-6 md:p-12">
             <Toast icon="Check" tone="success" title="NRS e-invoice accepted" body="INV-2026-0142 · just now" className="seq-up w-full max-w-[320px] self-end" />
-            <div className="seq-up flex w-full max-w-[400px] flex-col rounded-2xl border border-line bg-white px-6 py-5" style={d(800)}>
-              <div className="flex items-center justify-between pb-3">
+            <div className="seq-up flex w-full max-w-[400px] flex-col rounded-2xl border border-line bg-white px-5 py-5 sm:px-6" style={d(800)}>
+              <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 pb-3">
                 <span className="flex items-center gap-2 text-sm font-semibold"><Icon name="Shield" size={18} className="text-teal-text" /> Compliance status</span>
                 <Badge tone="neutral">Sample data</Badge>
               </div>
               {[["E-invoicing", "Compliant", true], ["VAT return filing", "Due 21 Jun", false], ["WHT remittance", "Due 21 Jun", false]].map(([l, v, ok], i) => (
-                <div key={l as string} className="seq-x flex items-center justify-between border-t border-line py-2.5" style={d(1300 + i * 250)}>
+                <div key={l as string} className="seq-x flex items-center justify-between gap-3 border-t border-line py-2.5" style={d(1300 + i * 250)}>
                   <span className="text-xs text-ink-2">{l}</span>
                   <Badge tone={ok ? "teal" : "amber"}>{v}</Badge>
                 </div>

@@ -44,7 +44,7 @@ export default function InvestorsPage() {
         <div className="wrap flex flex-col items-center gap-8 md:gap-12 lg:flex-row lg:gap-16">
           <div className="relative w-full overflow-hidden rounded-3xl md:rounded-[32px] bg-teal-tint p-6 lg:w-[600px]">
             <ScaleToFit width={960} height={580}><DashboardMock /></ScaleToFit>
-            <Toast icon="Check" tone="success" title="NRS e-invoice accepted" body="INV-2026-0142 · just now" className="absolute bottom-4 right-4 w-[280px]" />
+            <Toast icon="Check" tone="success" title="NRS e-invoice accepted" body="INV-2026-0142 · just now" className="absolute bottom-4 left-4 right-4 sm:left-auto sm:w-[280px]" />
           </div>
           <div className="flex flex-1 flex-col gap-8">
             <SectionHeader eyebrow="Timing" title="Why now" body="A regulatory window is opening, and the category is still being defined." />
