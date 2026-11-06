@@ -20,15 +20,16 @@ export function Accordion({ items, defaultOpen = 0 }: { items: QA[]; defaultOpen
                 aria-expanded={isOpen}
                 aria-controls={id}
                 onClick={() => setOpen(isOpen ? null : i)}
-                className="flex w-full items-center justify-between gap-4 p-6 text-left text-base font-semibold leading-[22px] text-ink"
+                className={cx("flex w-full items-center justify-between gap-4 px-6 pt-6 text-left text-base font-semibold leading-[22px] text-ink transition-[padding] duration-200 ease-in-out", isOpen ? "pb-3" : "pb-6")}
               >
                 {it.q}
                 <Icon name="Chevron Down" size={20} className={cx("shrink-0 transition-transform duration-200 ease-in-out", isOpen && "rotate-180")} />
               </button>
             </h3>
             <div id={id} role="region" className={cx("grid transition-[grid-template-rows] duration-200 ease-in-out", isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]")}>
-              <div className="overflow-hidden">
-                <p className="px-6 pb-6 -mt-3 text-sm leading-[22px] text-ink-2">{it.a}</p>
+              {/* No negative margin here: this wrapper clips for the open/close animation, so anything pulled above it gets cut off. */}
+              <div className="min-h-0 overflow-hidden">
+                <p className="px-6 pb-6 text-sm leading-[22px] text-ink-2">{it.a}</p>
               </div>
             </div>
           </div>
