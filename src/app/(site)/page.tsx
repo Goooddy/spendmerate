@@ -23,7 +23,7 @@ const TILES = [
   ["Layers", "Invoice & AP/AR", "Reduce manual finance work on both sides of the ledger.", PRODUCTS.invoice.href],
   ["Trending Up", "Budget & Analytics", "See performance in real time, not at month-end.", PRODUCTS.budget.href],
   ["Shield", "Tax & Compliance", "Strengthen tax, regulatory and financial discipline by default.", PRODUCTS.tax.href],
-  ["Scan Eye", "Risk, Audit & ESG", "Catch problems before they become expensive.", PRODUCTS.risk.href],
+  ["Scan Eye", "Risk & Audit", "Catch problems before they become expensive.", PRODUCTS.risk.href],
   ["Trending Up", "Revenue Intelligence", "Grow money in with the same rigour you apply to spend.", PRODUCTS.revenue.href],
 ];
 

@@ -78,7 +78,7 @@ export const MEGA: Mega[] = [
         {
           label: "Move money",
           items: [
-            { icon: "Check", title: PRODUCTS.bank.title, body: "Bank lines matched every day", href: PRODUCTS.bank.href },
+            { icon: "Bank Check", title: PRODUCTS.bank.title, body: "Bank lines matched every day", href: PRODUCTS.bank.href },
             { icon: "Arrow Left Right", title: PRODUCTS.payments.title, body: "Every payment, reconciled", href: PRODUCTS.payments.href },
           ],
         },

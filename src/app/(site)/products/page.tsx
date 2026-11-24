@@ -22,7 +22,7 @@ export default function ProductsPage() {
             t("Chart Line", "budget", "Real-time numbers, not month-end"),
           ]} />
           <TileGroup title="Grow money in" body="Apply the same rigour to revenue." tiles={[t("Trending Up", "revenue", "Grow revenue with the same rigour")]} />
-          <TileGroup title="Move money" body="Every naira in and out, reconciled." tiles={[t("Check", "bank", "Bank lines matched every day"), t("Wallet", "payments", "Every payment, reconciled")]} />
+          <TileGroup title="Move money" body="Every naira in and out, reconciled." tiles={[t("Bank Check", "bank", "Bank lines matched every day"), t("Wallet", "payments", "Every payment, reconciled")]} />
           <TileGroup title="Stay compliant" body="Built for the Nigeria Tax Act 2025." tiles={[t("Shield", "tax", "Tax discipline by default"), t("Layers", "risk", "Catch problems before they cost")]} />
           <TileGroup title="Platform" body="The layer everything else runs on." tiles={[t("Sparkles", "ai", "Seven AI agents"), { ...t("Plug", "api", "Open by design"), badge: "Coming soon" }]} />
         </div>

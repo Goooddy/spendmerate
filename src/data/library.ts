@@ -107,7 +107,7 @@ export const PRODUCT_CARD: Record<string, string> = {
 
 const PRODUCT_ICON: Record<keyof typeof PRODUCTS, string> = {
   spend: "Scan Eye", expense: "Credit Card", procurement: "Shopping Cart", invoice: "Receipt", budget: "Chart Line",
-  revenue: "Trending Up", bank: "Check", payments: "Wallet", tax: "Landmark", risk: "Shield", ai: "Sparkles", api: "Plug",
+  revenue: "Trending Up", bank: "Bank Check", payments: "Wallet", tax: "Landmark", risk: "Shield", ai: "Sparkles", api: "Plug",
 };
 
 export function productKey(title: string): keyof typeof PRODUCTS {

@@ -2,7 +2,7 @@ import Link from "next/link";
 import {
   ArrowLeftRight, ArrowRight, ArrowUpRight, BookOpen, Briefcase, Building, Calculator, Calendar, ChartLine, ChartPie, Check,
   ChevronDown, Clock, Code, CreditCard, Info, Landmark, Layers, LayoutGrid, Lightbulb, Mail, Menu, Package, Plug, Receipt,
-  ScanEye, Shield, ShoppingCart, Sparkles, Store, Target, Terminal, TrendingUp, Users, Wallet, X, type LucideIcon,
+  ScanEye, Shield, ShoppingCart, Sparkles, Target, Terminal, TrendingUp, Users, Wallet, X, type LucideIcon,
 } from "lucide-react";
 import type { ReactNode } from "react";
 import { CtaArt } from "./CtaArt";
@@ -11,11 +11,25 @@ const ICONS: Record<string, LucideIcon> = {
   "Arrow Left Right": ArrowLeftRight, "Arrow Right": ArrowRight, "Arrow Up Right": ArrowUpRight, "Book Open": BookOpen,
   Briefcase, Building, Calculator, Calendar, "Chart Line": ChartLine, "Chart Pie": ChartPie, Check, "Chevron Down": ChevronDown,
   Clock, Code, "Credit Card": CreditCard, Info, Landmark, Layers, "Layout Grid": LayoutGrid, Lightbulb, Mail, Menu, Package,
-  Plug, Receipt, "Scan Eye": ScanEye, Shield, Shop: Store, "Shopping Cart": ShoppingCart, Sparkles, Target, Terminal, "Trending Up": TrendingUp,
+  Plug, Receipt, "Scan Eye": ScanEye, Shield, "Shopping Cart": ShoppingCart, Sparkles, Target, Terminal, "Trending Up": TrendingUp,
   Users, Wallet, Close: X,
 };
 
+/** Icons drawn in the design that are not in the lucide set (24px, 1.5 stroke, exported from Figma). */
+const CUSTOM_ICONS: Record<string, string> = {
+  "Bank Check": "M8.5 14.5L11 17L15.5 12.5M18 18V11M3 22H21M6 18V11M11.12 2.198C11.3944 2.06471 11.6957 1.99595 12.0007 1.99699C12.3058 1.99803 12.6065 2.06884 12.88 2.204L20.746 6.051C21.222 6.284 21.056 7 20.526 7H3.47401C2.94401 7 2.77901 6.284 3.25401 6.051L11.12 2.198Z",
+  Shop: "M4 12C3.46957 12 2.96086 11.7893 2.58579 11.4142C2.21071 11.0391 2 10.5304 2 10V7L6.41 2.59C6.59606 2.40283 6.81732 2.25434 7.06103 2.15308C7.30474 2.05182 7.56609 1.99979 7.83 2H16.17C16.4339 1.99979 16.6953 2.05182 16.939 2.15308C17.1827 2.25434 17.4039 2.40283 17.59 2.59L22 7V10C22 10.5304 21.7893 11.0391 21.4142 11.4142C21.0391 11.7893 20.5304 12 20 12M2 7H22M4 12V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H9M4 12C4.58426 11.9678 5.14227 11.7467 5.59 11.37C5.70932 11.2838 5.85279 11.2374 6 11.2374C6.14721 11.2374 6.29068 11.2838 6.41 11.37C6.85773 11.7467 7.41574 11.9678 8 12C8.58426 11.9678 9.14227 11.7467 9.59 11.37C9.70932 11.2838 9.85279 11.2374 10 11.2374C10.1472 11.2374 10.2907 11.2838 10.41 11.37C10.8577 11.7467 11.4157 11.9678 12 12C12.5843 11.9678 13.1423 11.7467 13.59 11.37C13.7093 11.2838 13.8528 11.2374 14 11.2374C14.1472 11.2374 14.2907 11.2838 14.41 11.37C14.8577 11.7467 15.4157 11.9678 16 12C16.5843 11.9678 17.1423 11.7467 17.59 11.37C17.7093 11.2838 17.8528 11.2374 18 11.2374C18.1472 11.2374 18.2907 11.2838 18.41 11.37C18.8577 11.7467 19.4157 11.9678 20 12M9 22H15M9 22V18C9 17.4696 9.21071 16.9609 9.58579 16.5858C9.96086 16.2107 10.4696 16 11 16H13C13.5304 16 14.0391 16.2107 14.4142 16.5858C14.7893 16.9609 15 17.4696 15 18V22M15 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V12",
+  Fuel: "M3 22H15M4 9H14M14 22V4C14 3.46957 13.7893 2.96086 13.4142 2.58579C13.0391 2.21071 12.5304 2 12 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V22M14 13H16C16.5304 13 17.0391 13.2107 17.4142 13.5858C17.7893 13.9609 18 14.4696 18 15V17C18 17.5304 18.2107 18.0391 18.5858 18.4142C18.9609 18.7893 19.4696 19 20 19C20.5304 19 21.0391 18.7893 21.4142 18.4142C21.7893 18.0391 22 17.5304 22 17V9.83C22.0002 9.56609 21.9482 9.30474 21.8469 9.06103C21.7457 8.81732 21.5972 8.59606 21.41 8.41L18 5",
+};
+
 export function Icon({ name, size = 24, className = "" }: { name: string; size?: number; className?: string }) {
+  const d = CUSTOM_ICONS[name];
+  if (d)
+    return (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+        <path d={d} />
+      </svg>
+    );
   const C = ICONS[name] ?? Sparkles;
   return <C size={size} strokeWidth={1.5} className={className} aria-hidden="true" />;
 }

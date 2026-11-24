@@ -31,7 +31,7 @@ export default function SolutionsPage() {
             t("Layout Grid", "manufacturing", "Materials, production and vendor spend"),
             t("Users", "hospitality", "Multi-site spend, reconciled daily"),
             t("Shield", "healthcare", "Regulated procurement and audit trails"),
-            t("Layers", "oil", "Complex contracts, multi-entity reporting"),
+            t("Fuel", "oil", "Complex contracts, multi-entity reporting"),
             t("Book Open", "education", "Grants, fees and tight budget control"),
             t("Landmark", "public", "Accountable spend across every department"),
           ]} />
