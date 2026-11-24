@@ -4,7 +4,7 @@ import { Icon } from "./ui";
 
 const QUOTES = [
   {
-    quote: "Month-end used to mean a week of chasing receipts and matching bank statements by hand. With XPensari our books are ready before the board pack is due, and VAT is never a scramble.",
+    quote: "Month-end used to mean a week of chasing receipts and matching bank statements by hand. With SpendMerate our books are ready before the board pack is due, and VAT is never a scramble.",
     name: "Ifeoma Nwosu",
     role: "Financial Controller, Kuramo Agro-Processing Ltd · Lagos",
     image: "/images/e57ac192.jpg",

@@ -13,7 +13,7 @@ const ALL = {
 };
 export type ResKey = keyof typeof ALL;
 
-export function MoreResources({ keys, eyebrow = "Resources", title = "More from XPensari", body = "Tools and guides that work together.", bg = "bg-subtle" }: { keys: ResKey[]; eyebrow?: string; title?: string; body?: string; bg?: string }) {
+export function MoreResources({ keys, eyebrow = "Resources", title = "More from SpendMerate", body = "Tools and guides that work together.", bg = "bg-subtle" }: { keys: ResKey[]; eyebrow?: string; title?: string; body?: string; bg?: string }) {
   return (
     <section className={`section-y ${bg}`}>
       <div className="wrap flex flex-col gap-8 md:gap-12">

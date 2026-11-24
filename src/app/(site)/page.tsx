@@ -153,7 +153,7 @@ export default function Home() {
       <section className="section-y bg-navy">
         <div className="wrap flex flex-col gap-8 md:gap-12">
           <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
-            <SectionHeader dark eyebrow="AI Intelligence Layer" title="Seven AI agents, working the books with you." body="Each agent watches one part of your finance operation and acts before problems reach month-end." />
+            <SectionHeader dark eyebrow="AI Intelligence Layer" title="Seven AI agents, working the books with you." body="Each agent watches one part of your finance operation, flags problems before month-end and acts only when you approve." />
             <div className="flex flex-wrap gap-6">
               <Button href={PRODUCTS.ai.href} variant="link-light" icon="Arrow Right">Meet the AI Layer</Button>
               <Button href={PRODUCTS.api.href} variant="link-light" icon="Arrow Right">Explore the API platform</Button>
@@ -257,7 +257,7 @@ export default function Home() {
       {/* Social proof */}
       <section className="section-y-sm bg-page">
         <div className="wrap flex flex-col items-center gap-8 md:gap-12">
-          <SectionHeader align="center" eyebrow="Pilot results" title="Less chasing. Faster month-ends." body="Early numbers from finance teams piloting XPensari across Lagos and Abuja." />
+          <SectionHeader align="center" eyebrow="Pilot results" title="Less chasing. Faster month-ends." body="Early numbers from finance teams piloting SpendMerate across Lagos and Abuja." />
           <div className="grid w-full grid-cols-1 gap-6 md:grid-cols-3">
             <Stat value="4 days" label="faster month-end close in the first quarter" />
             <Stat value="96%" label="of receipts captured and coded automatically" />

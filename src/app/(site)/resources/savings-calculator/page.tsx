@@ -46,7 +46,7 @@ export default function SavingsCalculatorPage() {
         { q: "Is there a cost?", a: "No. The calculator and the follow-up call are free, with no commitment." },
       ]} />
       <MoreResources keys={["hub", "calendar", "blog", "docs"]} />
-      <CtaBand image="3aabbf34" tone="teal" eyebrow="Next step" title="Want the full breakdown?" body="Talk to our team about your numbers and see how XPensari would work for your business." />
+      <CtaBand image="3aabbf34" tone="teal" eyebrow="Next step" title="Want the full breakdown?" body="Talk to our team about your numbers and see how SpendMerate would work for your business." />
     </>
   );
 }

@@ -22,7 +22,7 @@ export function PageHero({ eyebrow, title, body, actions = true, children, class
 
 export const StdTrust = () => <LibTrust data={{ L: "A", std: 1 }} />;
 
-export type Tile = { icon: string; title: string; body: string; link: string; href: string };
+export type Tile = { icon: string; title: string; body: string; link: string; href: string; badge?: string };
 export function TileGroup({ id, title, body, tiles, cols = 3 }: { id?: string; title: string; body: string; tiles: Tile[]; cols?: 2 | 3 }) {
   return (
     <div id={id} className="flex scroll-mt-28 flex-col gap-8 lg:flex-row lg:gap-12">

@@ -14,8 +14,8 @@ const DEADLINES: { date: string; iso: string; title: string; body: string; freq:
 const RRULE: Record<Freq, string> = { Monthly: "FREQ=MONTHLY", Quarterly: "FREQ=MONTHLY;INTERVAL=3", Annual: "FREQ=YEARLY" };
 
 function ics(list: typeof DEADLINES) {
-  const lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//XPensari//Compliance Calendar//EN"];
-  list.forEach((d, i) => lines.push("BEGIN:VEVENT", `UID:xpensari-${i}-${d.iso}@xpensari.com`, `DTSTAMP:20260101T000000Z`, `DTSTART;VALUE=DATE:${d.iso}`, `RRULE:${RRULE[d.freq]}`, `SUMMARY:${d.title}`, `DESCRIPTION:${d.body}`, "END:VEVENT"));
+  const lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//SpendMerate//Compliance Calendar//EN"];
+  list.forEach((d, i) => lines.push("BEGIN:VEVENT", `UID:spendmerate-${i}-${d.iso}@spendmerate.com`, `DTSTAMP:20260101T000000Z`, `DTSTART;VALUE=DATE:${d.iso}`, `RRULE:${RRULE[d.freq]}`, `SUMMARY:${d.title}`, `DESCRIPTION:${d.body}`, "END:VEVENT"));
   lines.push("END:VCALENDAR");
   return lines.join("\r\n");
 }
@@ -27,7 +27,7 @@ export function Deadlines() {
     const url = URL.createObjectURL(new Blob([ics(list)], { type: "text/calendar" }));
     const a = document.createElement("a");
     a.href = url;
-    a.download = "xpensari-compliance-calendar.ics";
+    a.download = "spendmerate-compliance-calendar.ics";
     a.click();
     URL.revokeObjectURL(url);
   };

@@ -135,16 +135,16 @@ export function DashboardMock() {
     <div aria-hidden="true" className="illus flex h-[580px] w-[960px] flex-col overflow-hidden rounded-2xl md:rounded-3xl border border-line bg-white" style={{ boxShadow: "var(--shadow-lg)" }}>
       <div className="flex items-center gap-2 bg-subtle px-4 py-3">
         {[0, 1, 2].map((i) => <span key={i} className="size-2.5 rounded-full bg-ink-3/60" />)}
-        <span className="flex flex-1 justify-center rounded-full bg-white px-4 py-1 text-xs text-ink-3">app.xpensari.com/overview</span>
+        <span className="flex flex-1 justify-center rounded-full bg-white px-4 py-1 text-xs text-ink-3">app.spendmerate.com/overview</span>
         <span className="w-[46px]" />
       </div>
       <div className="flex flex-1">
         <div className="flex w-[196px] flex-col gap-1 border-r border-line bg-page p-4">
-          <span className="flex items-center gap-1.5 pb-3">
+          <span className="flex h-[37px] items-start gap-1.5 pb-3">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/images/logo-mark.svg" alt="" width={19} height={25} />
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/images/logo-word.svg" alt="" width={63} height={25} />
+            <img src="/images/logo-word.svg" alt="" width={96} height={30} style={{ marginBottom: -5 }} />
           </span>
           {nav.map((n, i) => (
             <span key={n} className={cx("flex items-center gap-2 rounded-lg px-2.5 py-2 text-xs", i === 0 ? "bg-teal-chip text-ink" : "text-ink-2")}>

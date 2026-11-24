@@ -18,7 +18,7 @@ function estimate(v: Record<string, string>) {
   const hours = e * 1.5 + inv * 0.05; // finance hours saved / month
   const labour = hours * 12 * 6500;
   const total = leakage + labour;
-  return { total, leakage, labour, hours: Math.round(hours), gain: Math.min(62, Math.round(28 + Math.log10(inv) * 8)) };
+  return { total, leakage, labour, hours: Math.round(hours), gain: Math.min(62, Math.round(28 + Math.log10(inv) * 8)), costCut: Math.min(45, Math.round(18 + Math.log10(inv) * 6)) };
 }
 
 function Modal({ onClose, label, children }: { onClose: () => void; label: string; children: React.ReactNode }) {
@@ -68,6 +68,7 @@ export function Calculator() {
   const [stage, setStage] = useState<"estimate" | "email" | null>(null);
   const [email, setEmail] = useState("");
   const [emailErr, setEmailErr] = useState("");
+  const [resent, setResent] = useState(false);
 
   const submit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -95,26 +96,32 @@ export function Calculator() {
       {stage === "estimate" && r && vals && (
         <Modal label="Your estimate" onClose={() => setStage(null)}>
           <div className="flex flex-col gap-6">
-            <div className="flex flex-col gap-2">
-              <p className="t-eyebrow text-teal-text">Your estimate</p>
-              <h2 className="t-h2">You could save about {naira(r.total)} a year</h2>
-              <p className="text-sm text-ink-2">{vals.industry} · {vals.turnover} turnover · {vals.employees} employees · {vals.invoices} invoices a month</p>
+            <div className="flex flex-col gap-2 pr-10">
+              <p className="t-eyebrow text-teal-text">Your estimated savings</p>
+              <p className="text-sm text-ink-2">{vals.industry} · {vals.turnover} turnover · {vals.employees} employees</p>
+            </div>
+            <div className="flex flex-col gap-1">
+              <h2 className="t-h1 text-teal-text">{naira(r.total).replace("₦", "₦ ")}</h2>
+              <p className="text-sm text-ink-2">Estimated savings in your first 12 months with SpendMerate.</p>
             </div>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-              {[["Avoidable spend", naira(r.leakage)], ["Finance time saved", `${r.hours} hrs / month`], ["Efficiency gain", `${r.gain}%`]].map(([k, v], i) => (
+              {[[`${r.hours} hrs`, "Finance team hours saved each month"], [`${r.gain}%`, "Faster month-end close"], [`−${r.costCut}%`, "Cost per invoice processed"]].map(([v, k], i) => (
                 <div key={k} className="seq-up flex flex-col gap-1 rounded-2xl bg-page p-4" style={{ animationDelay: `${i * 120}ms` }}>
-                  <span className="text-xs text-ink-3">{k}</span>
                   <span className="text-[22px] font-semibold leading-7">{v}</span>
+                  <span className="text-xs text-ink-3">{k}</span>
                 </div>
               ))}
             </div>
             <form onSubmit={(e) => { e.preventDefault(); if (!EMAIL_RE.test(email)) return setEmailErr("Enter a valid work email."); setStage("email"); }} noValidate className="flex flex-col gap-3 rounded-2xl bg-teal-tint p-5">
-              <p className="text-sm font-semibold">Get the full breakdown by email</p>
+              <div className="flex flex-col gap-1">
+                <p className="text-base font-semibold">Want the line-by-line breakdown?</p>
+                <p className="text-sm text-ink-2">Add your work email and we will send savings by category, the assumptions behind them, and a 12-month projection.</p>
+              </div>
               <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
                 <Field className="flex-1" name="calc-email" type="email" label="Work email" required value={email} onChange={(e) => { setEmail((e.target as HTMLInputElement).value); setEmailErr(""); }} placeholder="you@company.com" autoComplete="email" error={emailErr || undefined} />
                 <button type="submit" className="press h-12 shrink-0 rounded-lg bg-teal px-6 font-semibold hover:bg-[#13a382] sm:mb-0">Email me the full breakdown</button>
               </div>
-              <p className="text-xs text-ink-3">Illustrative estimate based on businesses like yours. We'll never share your email.</p>
+              <p className="text-xs text-ink-3">We will never share your email or send you spam.</p>
             </form>
           </div>
         </Modal>
@@ -124,8 +131,12 @@ export function Calculator() {
           <div role="status" className="flex flex-col items-center gap-4 py-4 text-center">
             <span className="flex size-14 items-center justify-center rounded-full bg-teal-chip"><Icon name="Mail" /></span>
             <h2 className="t-h3">Check your email</h2>
-            <p className="max-w-[400px] text-base text-ink-2">We’ve sent your full savings breakdown to {email}. Want to go through it together?</p>
-            <a href="/request-demo" className="rounded-lg bg-navy px-6 py-3 font-semibold text-cream hover:bg-[#2f2e5c]">Talk to our team</a>
+            <p className="max-w-[400px] text-base text-ink-2">We have sent your full savings breakdown to {email}. It usually lands within a minute.</p>
+            <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+              <button type="button" onClick={() => setStage(null)} className="press rounded-lg bg-navy px-6 py-3 font-semibold text-cream hover:bg-[#2f2e5c]">Back to the calculator</button>
+              <button type="button" onClick={() => setResent(true)} className="press rounded-lg border border-navy px-6 py-3 font-semibold hover:bg-navy hover:text-cream">{resent ? "Email sent again" : "Resend the email"}</button>
+            </div>
+            <p className="text-xs text-ink-3">Can’t find it? Check your spam or promotions folder.</p>
           </div>
         </Modal>
       )}

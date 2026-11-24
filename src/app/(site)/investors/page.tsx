@@ -15,15 +15,15 @@ const WHY_NOW = [
 ];
 const MOAT = [
   ["96d0c81d", "Compliance built in", "Nigeria Tax Act 2025 rules, e-invoicing and statutory reporting live inside the product, not in a bolt-on."],
-  ["e0b66d17", "Distribution through partners", "WorkMerate’s client base and ChamsAccess infrastructure give XPensari a running start."],
+  ["e0b66d17", "Distribution through partners", "WorkMerate’s client base and ChamsAccess infrastructure give SpendMerate a running start."],
   ["ca4697a5", "Seven AI agents", "Agents work across spend, payables, tax, risk and revenue, all on one data model."],
-  ["e501b354", "Built on a proven ERP", "XPensari runs on WorkMerate, a customised Odoo ERP with 60 modules already live."],
+  ["e501b354", "Built on a proven ERP", "SpendMerate runs on WorkMerate, a customised Odoo ERP with 60 modules already live."],
 ];
 
 export default function InvestorsPage() {
   return (
     <>
-      <SplitHero eyebrow="For investors" title="A ₦700bn+ addressable market, and the compliance moat to defend it." body="Nigeria’s Tax Act 2025 is making e-invoicing and digital compliance mandatory. XPensari is the AI-native finance platform built for that window." cta="Request the investor deck" ctaHref="#request" alt={null} image="/images/94759cc3.jpg" imgAlt="Lagos skyline" />
+      <SplitHero eyebrow="For investors" title="A ₦700bn+ addressable market, and the compliance moat to defend it." body="Nigeria’s Tax Act 2025 is making e-invoicing and digital compliance mandatory. SpendMerate is the AI-native finance platform built for that window." cta="Request the investor deck" ctaHref="#request" alt={null} image="/images/94759cc3.jpg" imgAlt="Lagos skyline" />
       <LibTrust data={{ L: "A", items: [["Building", "Built on WorkMerate ERP"], ["Landmark", "Nigeria Tax Act 2025 rules built in"], ["Receipt", "Identity and payments with ChamsAccess"], ["Sparkles", "Seven AI agents for finance"]] }} />
       <section className="section-y bg-white">
         <div className="wrap flex flex-col gap-8 md:gap-12">
@@ -51,7 +51,7 @@ export default function InvestorsPage() {
             <ul className="flex flex-col gap-6">
               {WHY_NOW.map(([i, t, b]) => (
                 <li key={t} className="flex gap-4">
-                  <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-teal-chip"><Icon name={i} size={20} /></span>
+                  <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-teal-chip text-teal-text"><Icon name={i} size={20} /></span>
                   <span className="flex flex-col gap-1"><span className="text-base font-semibold">{t}</span><span className="text-sm leading-[22px] text-ink-2">{b}</span></span>
                 </li>
               ))}
@@ -61,7 +61,7 @@ export default function InvestorsPage() {
       </section>
       <section className="section-y bg-subtle">
         <div className="wrap flex flex-col items-center gap-8 md:gap-12">
-          <SectionHeader align="center" eyebrow="The moat" title="Why XPensari wins" body="Compliance that is built in, not bolted on, with distribution and intelligence on top." />
+          <SectionHeader align="center" eyebrow="The moat" title="Why SpendMerate wins" body="Compliance that is built in, not bolted on, with distribution and intelligence on top." />
           <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {MOAT.map(([img, t, b]) => (
               <div key={t} className="card-lift flex flex-col gap-6 rounded-2xl bg-white p-8">
@@ -83,8 +83,8 @@ export default function InvestorsPage() {
       ]} />
       <FormSection id="request" eyebrow="Investor request" title="Get the full investor deck" body="Tell us about your fund and focus, and we will share the deck and set up a call with the founding team.">
         <RequestForm submit="Request the investor deck" success={{ title: "Deck requested", body: "Thanks. We'll email the investor deck within one business day and suggest times for a call with the founding team." }} fields={[
-          { name: "name", label: "Full name", required: true, placeholder: "Your full name" },
-          { name: "email", label: "Work email", required: true, type: "email", placeholder: "you@fund.com" },
+          { name: "name", label: "Full name", required: true, placeholder: "Ada Okafor" },
+          { name: "email", label: "Work email", required: true, type: "email", placeholder: "ada@company" },
           { name: "firm", label: "Firm or fund", required: true, placeholder: "Firm / fund name" },
           { name: "focus", label: "Investment focus", placeholder: "Stage, sector, cheque size" },
           { name: "message", label: "Message", as: "textarea", placeholder: "Tell us about your investment thesis…" },

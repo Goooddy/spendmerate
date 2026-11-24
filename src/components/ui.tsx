@@ -2,7 +2,7 @@ import Link from "next/link";
 import {
   ArrowLeftRight, ArrowRight, ArrowUpRight, BookOpen, Briefcase, Building, Calculator, Calendar, ChartLine, ChartPie, Check,
   ChevronDown, Clock, Code, CreditCard, Info, Landmark, Layers, LayoutGrid, Lightbulb, Mail, Menu, Package, Plug, Receipt,
-  ScanEye, Shield, ShoppingCart, Sparkles, Target, Terminal, TrendingUp, Users, Wallet, X, type LucideIcon,
+  ScanEye, Shield, ShoppingCart, Sparkles, Store, Target, Terminal, TrendingUp, Users, Wallet, X, type LucideIcon,
 } from "lucide-react";
 import type { ReactNode } from "react";
 import { CtaArt } from "./CtaArt";
@@ -11,7 +11,7 @@ const ICONS: Record<string, LucideIcon> = {
   "Arrow Left Right": ArrowLeftRight, "Arrow Right": ArrowRight, "Arrow Up Right": ArrowUpRight, "Book Open": BookOpen,
   Briefcase, Building, Calculator, Calendar, "Chart Line": ChartLine, "Chart Pie": ChartPie, Check, "Chevron Down": ChevronDown,
   Clock, Code, "Credit Card": CreditCard, Info, Landmark, Layers, "Layout Grid": LayoutGrid, Lightbulb, Mail, Menu, Package,
-  Plug, Receipt, "Scan Eye": ScanEye, Shield, "Shopping Cart": ShoppingCart, Sparkles, Target, Terminal, "Trending Up": TrendingUp,
+  Plug, Receipt, "Scan Eye": ScanEye, Shield, Shop: Store, "Shopping Cart": ShoppingCart, Sparkles, Target, Terminal, "Trending Up": TrendingUp,
   Users, Wallet, Close: X,
 };
 
@@ -96,7 +96,7 @@ export function IconChip({
   icon, size = 40, iconSize, round = true, tone = "teal", className = "",
 }: { icon: string; size?: number; iconSize?: number; round?: boolean; tone?: "teal" | "dark" | "navy" | "success" | "warning" | "darkSuccess" | "darkWarning"; className?: string }) {
   const bg = {
-    teal: "bg-teal-chip text-ink",
+    teal: "bg-teal-chip text-teal-text",
     dark: "bg-navy-raised text-teal-bright",
     navy: "bg-navy text-teal-bright",
     success: "bg-teal-tint text-teal-text",
@@ -112,10 +112,13 @@ export function IconChip({
 }
 
 /* ---------- Cards ---------- */
-export function ProductTile({ icon, title, body, link, href }: { icon: string; title: string; body: string; link: string; href: string }) {
+export function ProductTile({ icon, title, body, link, href, badge }: { icon: string; title: string; body: string; link: string; href: string; badge?: string }) {
   return (
     <Link href={href} className="card-lift group flex flex-col gap-4 rounded-2xl border border-line bg-white p-5 shadow-sm md:p-6">
-      <IconChip icon={icon} round={false} />
+      <div className="flex items-start justify-between gap-3">
+        <IconChip icon={icon} round={false} />
+        {badge && <Badge tone="amber">{badge}</Badge>}
+      </div>
       <div className="flex flex-col gap-2">
         <h3 className="text-lg leading-6 font-semibold text-ink">{title}</h3>
         <p className="text-sm leading-[22px] text-ink-2">{body}</p>

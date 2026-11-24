@@ -43,7 +43,7 @@ export default function CompliancePage() {
       <FaqSection title="Questions about deadlines" items={[
         { q: "Do all of these deadlines apply to my business?", a: "Not always. Your obligations depend on your size, sector and registrations. Use the filters and check with your adviser." },
         { q: "What if a deadline falls on a weekend or holiday?", a: "File on the previous working day to be safe. The NRS publishes any official extensions, and we update this list when it does." },
-        { q: "Can I get reminders?", a: "Yes. Download the .ics file or add the dates to Google Calendar. XPensari customers also get reminders and draft returns inside the platform." },
+        { q: "Can I get reminders?", a: "Yes. Download the .ics file or add the dates to Google Calendar. SpendMerate customers also get reminders and draft returns inside the platform." },
       ]} />
       <MoreResources keys={["hub", "calc", "blog", "docs"]} />
       <CtaBand image="e834fbad" eyebrow="Reminders" title="Never miss a deadline" body="Get an email reminder a week before each filing date that applies to your business.">

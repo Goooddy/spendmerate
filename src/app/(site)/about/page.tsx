@@ -14,18 +14,18 @@ const TEAM = [
 export default function AboutPage() {
   return (
     <>
-      <SplitHero eyebrow="About XPensari" title="Africa's Intelligent Financial Operations Platform" body="Built to help organizations spend less, automate more, stay compliant, and make smarter financial decisions." cta="Explore our solutions" ctaHref="/solutions" image="/images/69f88811.jpg" card={{ title: "Your ambition. Fewer obstacles." }} />
+      <SplitHero eyebrow="About SpendMerate" title="Africa's Intelligent Financial Operations Platform" body="Built to help organizations spend less, automate more, stay compliant, and make smarter financial decisions." cta="Explore our solutions" ctaHref="/solutions" image="/images/69f88811.jpg" card={{ title: "Your ambition. Fewer obstacles." }} />
       <section className="section-y bg-white">
         <div className="wrap flex flex-col items-center gap-8 md:gap-12 lg:flex-row lg:gap-16">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/images/4be01f3a.jpg" alt="Business owner reviewing finances" className="h-[420px] w-full rounded-3xl md:rounded-[32px] object-cover lg:h-[560px] lg:w-[520px]" loading="lazy" />
           <div className="flex flex-1 flex-col gap-8">
             <SectionHeader eyebrow="Our Story" title="Money is complex. Life isn't." />
-            <p className="t-lead text-ink-2">XPensari is designed to bridge the gap between traditional ERP and native financial intelligence; built on a customised Odoo ERP. We advocate for Nigerians and African enterprises worldwide. Behind every balance is a bigger story: a first paycheck, an independent venture, a business ready for its next chapter. Financial tools should help that story move forward—not get in the way.</p>
+            <p className="t-lead text-ink-2">SpendMerate is designed to bridge the gap between traditional ERP and native financial intelligence; built on a customised Odoo ERP. We advocate for Nigerians and African enterprises worldwide. Behind every balance is a bigger story: a first paycheck, an independent venture, a business ready for its next chapter. Financial tools should help that story move forward—not get in the way.</p>
             <ul className="flex flex-col gap-4">
               {[["People come first", "From daily expenses to your next milestone, make financial decisions with tools built for the way your business works."], ["Turn complexity into clarity", ""], ["Move your business forward", ""]].map(([t, b]) => (
                 <li key={t} className="flex gap-3 border-t border-line pt-4">
-                  <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-teal-chip"><Icon name="Check" size={14} /></span>
+                  <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-teal-chip text-teal-text"><Icon name="Check" size={14} /></span>
                   <span className="flex flex-col gap-1"><span className="text-base font-semibold">{t}</span>{b && <span className="text-sm text-ink-2">{b}</span>}</span>
                 </li>
               ))}

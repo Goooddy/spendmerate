@@ -25,7 +25,7 @@ export default function PricingPage() {
     <>
       <section className="section-y bg-page">
         <div className="wrap flex flex-col items-center gap-8 md:gap-12">
-          <SectionHeader as="h1" level="page" align="center" eyebrow="Pricing" title="Naira-priced. Modular. Built to scale with you." body="Choose the tier that fits your organisation today and add modules as you grow. Every plan is billed in Naira." />
+          <SectionHeader as="h1" level="page" align="center" eyebrow="Pricing" title="Naira-priced. Modular. Built to scale with you." body="Start free, then pay only for finance, approver and sales seats. Requesters and vendors are free on every plan, and every price is in Naira." />
           <PricingTiers />
           <p className="text-center text-xs text-ink-3">All prices are in Naira (₦) and exclude VAT. Plan contents are confirmed in your proposal.</p>
         </div>
@@ -37,7 +37,7 @@ export default function PricingPage() {
 
       <section className="section-y bg-subtle">
         <div className="wrap flex flex-col items-center gap-8 md:gap-12">
-          <SectionHeader align="center" eyebrow="Every plan" title="The essentials come standard." body="Compliance, controls and AI insight are in every tier, not sold back to you as extras." />
+          <SectionHeader align="center" eyebrow="Every plan" title="The essentials come standard." body="Approvals, receipt capture and a full audit trail come with every plan. Tax compliance and AI agents start on Growth." />
           <div className="grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             <IncludedTile bg="bg-teal-tint" title="NRS e-invoicing" body="Every invoice signed with an IRN and QR code, then sent to NRS for you."><InvoiceStatusSnippet /></IncludedTile>
             <IncludedTile bg="bg-amber-tint" title="Tax engine" body="VAT, WHT and PAYE worked out on every transaction, with filing reminders.">
@@ -72,53 +72,34 @@ export default function PricingPage() {
 
       <section className="section-y bg-page">
         <div className="wrap flex flex-col items-center gap-8 md:gap-12">
-          <SectionHeader align="center" eyebrow="Compare plans" title="Every plan, line by line." body="Prices are per organisation. Every plan includes onboarding support and Naira billing." />
+          <SectionHeader align="center" eyebrow="Compare plans" title="Every plan, line by line." body="Prices are per organisation. You pay for finance, approver and sales seats; requesters and vendors are free." />
           <CompareTable />
         </div>
       </section>
 
       <section className="section-y bg-subtle">
         <div className="wrap flex flex-col gap-8 md:gap-12">
-          <SectionHeader eyebrow="Add-ons" title="Add what you need, when you need it." body="Optional modules on top of any plan, plus clear usage and one-time fees. No surprises on your invoice." />
+          <SectionHeader eyebrow="Add-ons" title="Add what you need, when you need it." body="Optional extras on top of any plan. No surprises on your invoice." />
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            <ProductTile icon="Shield" title="Compliance-as-a-Service" body="We run your statutory filings and NRS submissions alongside your team." link="Ask about this add-on" href="/contact" />
-            <ProductTile icon="Layers" title="Card issuance & interchange" body="Issue virtual and physical corporate cards under your programme." link="Ask about this add-on" href="/contact" />
-            <ProductTile icon="Scan Eye" title="Premium AI analytics" body="Deeper AI analysis and benchmarking against peers in your sector." link="Ask about this add-on" href="/contact" />
-            <ProductTile icon="Trending Up" title="API / ESB access" body="Enterprise integration access for partners and in-house systems." link="Ask about this add-on" href="/contact" />
-          </div>
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-            {[
-              ["Payments usage", "Charged per transaction, only when you move money through XPensari.", [["Local transfers", "₦25 per transfer"], ["Bulk supplier payouts", "₦20 per transfer"], ["Collections", "0.5%, capped at ₦2,000"], ["Failed or reversed transfers", "Free"]]],
-              ["One-time services", "Optional help to get your team live quickly, quoted upfront.", [["Onboarding & data migration", "From ₦500,000"], ["Remote team training", "₦150,000 per session"], ["On-site training", "From ₦350,000 per day"], ["Custom integrations", "Quoted per scope"]]],
-            ].map(([t, b, rows]) => (
-              <div key={t as string} className="flex flex-col gap-4 rounded-2xl bg-white p-8">
-                <h3 className="text-lg font-semibold">{t as string}</h3>
-                <p className="text-sm text-ink-2">{b as string}</p>
-                <dl>
-                  {(rows as string[][]).map(([k, v]) => (
-                    <div key={k} className="flex justify-between gap-4 border-t border-line py-3">
-                      <dt className="text-sm text-ink-2">{k}</dt>
-                      <dd className="text-sm font-medium">{v}</dd>
-                    </div>
-                  ))}
-                </dl>
-              </div>
-            ))}
+            <ProductTile icon="Shield" title="Compliance-as-a-Service" body="WorkMerate runs your statutory filings and NRS submissions alongside your team." link="Ask about this add-on" href="/contact" />
+            <ProductTile icon="Layers" title="Extra paid seats" body="Add finance, approver or sales seats for about ₦3,000 to ₦5,000 each a month." link="Ask about this add-on" href="/contact" />
+            <ProductTile icon="Scan Eye" title="Extra branches" body="Bring more branches under one head-office account." link="Ask about this add-on" href="/contact" />
+            <ProductTile icon="Trending Up" title="Extra bank accounts" body="Connect more bank accounts than your plan includes." link="Ask about this add-on" href="/contact" />
           </div>
         </div>
       </section>
 
       <FaqSection title="Pricing questions" items={[
         { q: "Can we switch plans later?", a: "Yes. Plans are modular, so you can add modules or move tiers as your team grows. Changes apply from your next billing period." },
-        { q: "What payment methods do you accept?", a: "Bank transfer and direct debit from Nigerian bank accounts, and corporate cards. Invoices are issued in Naira as NRS e-invoices." },
-        { q: "Is there a free trial or pilot?", a: "We run paid pilots for qualifying teams so you can test XPensari on your own numbers before a full rollout. Ask sales for details." },
-        { q: "What counts as a user?", a: "Anyone with a login who submits, approves or reviews. Employees who only receive a corporate card can be added at no extra cost." },
-        { q: "Are there setup or implementation fees?", a: "Onboarding support is included. Data migration, on-site training and custom integrations are optional one-time services, quoted upfront." },
-        { q: "What is the minimum contract length?", a: "Monthly plans can be cancelled with 30 days' notice. Annual plans are billed yearly and include the 20% discount." },
-        { q: "How are payment fees charged?", a: "Only when money moves through XPensari, per transfer or as a capped percentage on collections. Failed or reversed transfers are free." },
+        { q: "What payment methods do you accept?", a: "Bank transfer and card payments in Naira. Annual plans can be paid by invoice." },
+        { q: "Is there a free trial or pilot?", a: "Yes. The Free plan has no time limit, and Growth comes with a 30-day free trial so you can try the AI agents." },
+        { q: "What counts as a user?", a: "You pay only for finance, approver and sales seats. Requesters and vendors are free on every plan, so everyone who spends money can log requests." },
+        { q: "Are there setup or implementation fees?", a: "No. Onboarding support comes with every plan, and Enterprise includes dedicated onboarding." },
+        { q: "What is the minimum contract length?", a: "Annual plans run for 12 months. Monthly plans can be cancelled with 30 days’ notice." },
+        { q: "Can we pay suppliers from SpendMerate?", a: "Yes, as an add-on. Payments run through ChamsSwitch and its partner banks, and fees are confirmed in your proposal." },
       ]} />
 
-      <CtaBand image="a03beb62" tone="teal" eyebrow="Still deciding?" title="Not sure which plan fits?" body="Talk to sales. We’ll map your modules, users and entities to the right tier and send you a Naira quote." secondary={{ label: "Get a Custom Quote", href: "/contact" }} />
+      <CtaBand image="a03beb62" tone="teal" eyebrow="Still deciding?" title="Not sure which plan fits?" body="Talk to sales. We’ll map your seats, branches and modules to the right plan and send you a Naira quote." secondary={{ label: "Get a Custom Quote", href: "/contact" }} />
     </>
   );
 }

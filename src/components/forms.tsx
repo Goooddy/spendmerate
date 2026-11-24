@@ -42,12 +42,12 @@ export function NewsletterForm({ dark }: { dark?: boolean }) {
   );
 }
 
-export function EmailCapture({ dark, className = "" }: { dark?: boolean; className?: string }) {
+export function EmailCapture({ dark, className = "", label = "Request a Demo", href = "/request-demo" }: { dark?: boolean; className?: string; label?: string; href?: string }) {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const submit = (e: FormEvent) => {
     e.preventDefault();
-    router.push("/request-demo" + (email ? `?email=${encodeURIComponent(email)}` : ""));
+    router.push(href + (email ? `?email=${encodeURIComponent(email)}` : ""));
   };
   return (
     <form onSubmit={submit} className={pillClass({ dark, className: cx("w-full max-w-[480px]", className) })}>
@@ -60,7 +60,7 @@ export function EmailCapture({ dark, className = "" }: { dark?: boolean; classNa
         placeholder="Work email"
         className={pillInputClass(dark)}
       />
-      <button type="submit" className="press whitespace-nowrap rounded-lg bg-teal px-4 py-3 text-sm font-semibold text-ink hover:bg-[#13a382] sm:px-6 sm:text-base">Request a Demo</button>
+      <button type="submit" className="press whitespace-nowrap rounded-lg bg-teal px-4 py-3 text-sm font-semibold text-ink hover:bg-[#13a382] sm:px-6 sm:text-base">{label}</button>
     </form>
   );
 }

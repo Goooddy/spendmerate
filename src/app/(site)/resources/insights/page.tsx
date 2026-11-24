@@ -17,7 +17,7 @@ export default function InsightsPage() {
       <InView as="section" className="bg-page pb-24 pt-16">
         <div className="wrap flex flex-col items-center gap-8 md:gap-12 lg:flex-row lg:gap-16">
           <div className="flex w-full max-w-[560px] flex-col gap-6">
-            <SectionHeader as="h1" level="page" eyebrow="Insights" title="Insights & resources for modern finance teams" body="FinOps practice, compliance guidance and product updates from the XPensari team." />
+            <SectionHeader as="h1" level="page" eyebrow="Insights" title="Insights & resources for modern finance teams" body="FinOps practice, compliance guidance and product updates from the SpendMerate team." />
             <div className="max-w-[480px]"><NewsletterForm /></div>
             <p className="text-xs text-ink-2">Compliance deadlines, product updates and FinOps tips. Once a month.</p>
           </div>

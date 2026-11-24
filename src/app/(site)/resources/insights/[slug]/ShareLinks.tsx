@@ -7,7 +7,7 @@ export function ShareLinks({ title }: { title: string }) {
   const enc = encodeURIComponent;
   return (
     <div className="flex flex-col gap-3">
-      <p className="t-eyebrow text-ink-3">Share</p>
+      <p className="t-eyebrow text-ink-3">Share this article</p>
       <div className="flex flex-wrap gap-2 text-sm font-semibold">
         <a className="rounded-full border border-line bg-white px-4 py-2 hover:border-navy" target="_blank" rel="noreferrer" href={`https://x.com/intent/post?text=${enc(title)}&url=${enc(url)}`}>X</a>
         <a className="rounded-full border border-line bg-white px-4 py-2 hover:border-navy" target="_blank" rel="noreferrer" href={`https://www.linkedin.com/sharing/share-offsite/?url=${enc(url)}`}>LinkedIn</a>

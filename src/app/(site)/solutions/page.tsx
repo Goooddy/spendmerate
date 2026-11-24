@@ -19,6 +19,7 @@ export default function SolutionsPage() {
             t("Shopping Cart", "procurement", "Buy smarter, see vendor risk"),
             t("Trending Up", "sales", "Turn pipeline into cash"),
             t("Code", "developers", "Build on an open, documented API"),
+            t("Shop", "vendors", "List your prices free and get compared fairly"),
           ]} />
           <TileGroup id="size" title="By company size" body="Where you are on the e-invoicing timeline." tiles={[
             t("Target", "growing", "Under ₦1bn · e-invoicing in 2027"),
@@ -32,6 +33,7 @@ export default function SolutionsPage() {
             t("Shield", "healthcare", "Regulated procurement and audit trails"),
             t("Layers", "oil", "Complex contracts, multi-entity reporting"),
             t("Book Open", "education", "Grants, fees and tight budget control"),
+            t("Landmark", "public", "Accountable spend across every department"),
           ]} />
         </div>
       </section>

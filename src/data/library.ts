@@ -15,6 +15,8 @@ export type HeroData = {
   points?: string[];
   alerts?: { icon?: string; title: string; body: string; badge?: RawBadge }[];
   img?: string;
+  /** Hero button labels when they differ from "Request a Demo" / "Talk to sales". */
+  cta?: [string, string?];
 };
 export type TrustData = { L: "A" | "B" | "C" | "D"; label?: string; std?: number; items?: [string, string][] };
 export type Step = { t: string; b: string; snip?: [string, string]; card?: RawCard };
@@ -23,7 +25,7 @@ export type OutData = { L: "A" | "B" | "C" | "D"; h: Header; ah?: Header; items:
 export type ProdItem = { i?: string; t: string; b: string; link: string; card?: RawCard };
 export type ProdData = { L: "A" | "B" | "C" | "D"; h: Header; items: ProdItem[] };
 export type IntData = { L: "A" | "B" | "C" | "D"; h: Header; link?: string; sources: [string, string][]; ledger?: [string, string]; log?: { title: string; rows: [string, string, string, RawBadge][] } };
-export type CalcData = { L: "A" | "B" | "C" | "D"; h: Header };
+export type CalcData = { L: "A" | "B" | "C" | "D"; h: Header; items?: [string, string, number][] };
 export type FaqData = { h: Header; items: ([string, string] | [string] | { q: string; a: string })[] };
 export type CtaData = { tone?: string; e: string; t: string; b?: string; btns: string[]; img?: string };
 
@@ -99,13 +101,13 @@ export function card(c?: RawCard): MiniCardData | undefined {
 /** Product card shown for a product title when a layout needs a visual and the data omitted one. */
 export const PRODUCT_CARD: Record<string, string> = {
   spend: "Spend insights", expense: "Spend insights", procurement: "Payables this week", invoice: "Payables this week",
-  budget: "Budget vs actual · Q4", revenue: "Payables this week", payments: "Payables this week", tax: "Tax this month",
+  budget: "Budget vs actual · Q4", revenue: "Payables this week", bank: "Payables this week", payments: "Payables this week", tax: "Tax this month",
   risk: "Needs your decision", ai: "Spend insights", api: "October close",
 };
 
 const PRODUCT_ICON: Record<keyof typeof PRODUCTS, string> = {
   spend: "Scan Eye", expense: "Credit Card", procurement: "Shopping Cart", invoice: "Receipt", budget: "Chart Line",
-  revenue: "Trending Up", payments: "Wallet", tax: "Landmark", risk: "Shield", ai: "Sparkles", api: "Plug",
+  revenue: "Trending Up", bank: "Check", payments: "Wallet", tax: "Landmark", risk: "Shield", ai: "Sparkles", api: "Plug",
 };
 
 export function productKey(title: string): keyof typeof PRODUCTS {
@@ -116,6 +118,7 @@ export function productKey(title: string): keyof typeof PRODUCTS {
   if (t.includes("invoice")) return "invoice";
   if (t.includes("budget")) return "budget";
   if (t.includes("revenue")) return "revenue";
+  if (t.includes("bank recon")) return "bank";
   if (t.includes("payment")) return "payments";
   if (t.includes("tax")) return "tax";
   if (t.includes("risk")) return "risk";
@@ -135,7 +138,7 @@ export const STD_TRUST: [string, string][] = [
 export const STD_INT_HEADER: Header = {
   e: "Built on WorkMerate",
   t: "One ledger, no re-keying",
-  b: "XPensari is the finance layer on top of WorkMerate, a customised Odoo ERP. Approvals, payments and filings post to the same books, so there is nothing to export or reconcile between tools.",
+  b: "SpendMerate is the finance layer on top of WorkMerate, a customised Odoo ERP. Approvals, payments and filings post to the same books, so there is nothing to export or reconcile between tools.",
 };
 
 export const CALC_ITEMS: [string, string, number][] = [

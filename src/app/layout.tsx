@@ -6,8 +6,8 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "sw
 const league = League_Gothic({ subsets: ["latin"], variable: "--font-league-gothic", display: "swap" });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://xpensari.vercel.app"),
-  title: { default: "XPensari — Spend Less. Decide Smarter.", template: "%s · XPensari" },
+  metadataBase: new URL("https://spendmerate.vercel.app"),
+  title: { default: "SpendMerate — Spend Less. Decide Smarter.", template: "%s · SpendMerate" },
   description:
     "The AI-native Financial & Revenue Operating System for Nigerian and African enterprises: FinOps, RevOps, Payments and Compliance in one intelligence layer.",
   icons: { icon: "/images/logo-mark.svg" },

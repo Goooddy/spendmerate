@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return art ? { title: art.title, description: art.excerpt } : {};
 }
 
-const TOC = ["What changed", "Who needs to e-invoice, and when", "What it means for your finance team", "Three things to do this quarter", "How XPensari helps", "FAQs"];
+const TOC = ["What changed", "Who needs to e-invoice, and when", "What it means for your finance team", "Three things to do this quarter", "How SpendMerate helps", "FAQs"];
 const slugify = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 
 export default async function ArticlePage({ params }: { params: Promise<{ slug: string }> }) {
@@ -40,7 +40,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           <div className="flex items-center gap-3 text-sm">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/images/e57ac192.jpg" alt="" className="size-10 rounded-full object-cover" />
-            <span className="font-semibold">[Author name]</span><span className="text-ink-3">Finance writer, XPensari · {a.read}</span>
+            <span className="font-semibold">[Author name]</span><span className="text-ink-3">Finance writer, SpendMerate · {a.read}</span>
           </div>
         </div>
       </section>
@@ -57,7 +57,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
             </nav>
             <ShareLinks title={a.title} />
             <div className="flex flex-col gap-3 rounded-2xl bg-navy p-6 text-cream">
-              <p className="t-eyebrow text-teal-bright">XPensari</p>
+              <p className="t-eyebrow text-teal-bright">SpendMerate</p>
               <p className="text-lg font-semibold">Get NTA 2025-ready</p>
               <p className="text-sm text-mist">E-invoicing, VAT, WHT and PAYE in one platform, with an AI agent checking every transaction.</p>
               <Button href="/request-demo" size="sm" className="self-start">Request a Demo</Button>
@@ -86,11 +86,11 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
               <li>Get invoices, receipts and payments into one system of record.</li>
               <li>Give one person ownership of VAT, WHT and PAYE deadlines, on a shared calendar.</li>
             </ol>
-            <H2 t="How XPensari helps" />
-            <p>XPensari is built for the Nigeria Tax Act 2025: e-invoices go to the NRS through a system-to-system gateway, VAT and WHT are checked on every transaction, and the <Link href="/resources/compliance-calendar" className="text-teal-text underline">Compliance Calendar</Link> keeps every filing date in view.</p>
+            <H2 t="How SpendMerate helps" />
+            <p>SpendMerate is built for the Nigeria Tax Act 2025: e-invoices go to the NRS through a system-to-system gateway, VAT and WHT are checked on every transaction, and the <Link href="/resources/compliance-calendar" className="text-teal-text underline">Compliance Calendar</Link> keeps every filing date in view.</p>
             <div className="flex flex-col gap-2 border-y border-line py-6 text-base">
-              <p className="font-semibold text-ink">[Author name] · Finance writer, XPensari</p>
-              <p>[Short author bio: background, areas of expertise, and what they cover for XPensari.]</p>
+              <p className="font-semibold text-ink">[Author name] · Finance writer, SpendMerate</p>
+              <p>[Short author bio: background, areas of expertise, and what they cover for SpendMerate.]</p>
               <p className="text-sm text-ink-3">Reviewed by [Reviewer name], Tax &amp; Compliance lead</p>
             </div>
             <p className="text-sm text-ink-3">This article is general information about the Nigeria Tax Act 2025, not tax advice. Check current rules with the NRS or your tax adviser before acting.</p>
@@ -98,14 +98,14 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
             <Accordion items={[
               { q: "Does the Nigeria Tax Act 2025 apply to small businesses?", a: "Yes. Small companies below the Act’s thresholds may be exempt from some taxes, but most still have filing and record-keeping duties." },
               { q: "When do I need to start e-invoicing?", a: "It depends on your turnover band. Large taxpayers are already in scope, ₦1bn–₦5bn businesses joined in 2026, and smaller businesses are expected from 2027." },
-              { q: "Can XPensari submit e-invoices for me?", a: "Yes. XPensari signs each invoice and submits it to the NRS through the system-to-system gateway, then records the acceptance on the invoice." },
+              { q: "Can SpendMerate submit e-invoices for me?", a: "Yes. SpendMerate signs each invoice and submits it to the NRS through the system-to-system gateway, then records the acceptance on the invoice." },
             ]} />
           </article>
         </div>
       </section>
       <section className="section-y bg-subtle">
         <div className="wrap flex flex-col gap-8 md:gap-12">
-          <SectionHeader eyebrow="Keep reading" title="Related articles" />
+          <SectionHeader eyebrow="Keep reading" title="Don’t miss these" />
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">{related.map((r) => <ArticleCard key={r.slug} a={r} />)}</div>
         </div>
       </section>

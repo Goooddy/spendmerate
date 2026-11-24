@@ -15,7 +15,7 @@ import { DEMO_HREF } from "@/data/site";
 const H = (h?: Header) => h ?? {};
 
 /* ================= HERO ================= */
-function HeroCopy({ h, dark, points }: { h: Header; dark?: boolean; points?: string[] }) {
+function HeroCopy({ h, dark, points, cta }: { h: Header; dark?: boolean; points?: string[]; cta?: [string, string?] }) {
   return (
     <div className="flex w-full max-w-[560px] flex-col gap-6">
       <SectionHeader as="h1" level="page" dark={dark} eyebrow={h.e} title={h.t} body={h.b} />
@@ -23,16 +23,16 @@ function HeroCopy({ h, dark, points }: { h: Header; dark?: boolean; points?: str
         <ul className="flex flex-col gap-3">
           {points.map((p) => (
             <li key={p} className="flex items-center gap-3 text-base text-ink">
-              <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-teal-chip"><Icon name="Check" size={14} /></span>
+              <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-teal-chip text-teal-text"><Icon name="Check" size={14} /></span>
               {p}
             </li>
           ))}
         </ul>
       )}
-      <EmailCapture dark={dark} />
+      <EmailCapture dark={dark} {...(cta ? { label: cta[0], href: "/contact" } : {})} />
       <div className="flex flex-wrap items-center gap-2">
         <span className={cx("text-xs", dark ? "text-mist" : "text-ink-2")}>Prefer a conversation?</span>
-        <Button href="/contact" variant={dark ? "link-light" : "link"} size="sm" icon="Arrow Right">Talk to sales</Button>
+        <Button href="/contact" variant={dark ? "link-light" : "link"} size="sm" icon="Arrow Right">{cta?.[1] ?? "Talk to sales"}</Button>
       </div>
     </div>
   );
@@ -50,7 +50,7 @@ function TxnCard({ t, style, className }: { t: NonNullable<HeroData["txn"]>; sty
         <span className="shrink-0 whitespace-nowrap text-[15px] font-semibold sm:text-base">{t.amount}</span>
       </div>
       <div className="seq-fade flex items-center gap-2" style={d(1100)}>
-        <span className="flex size-5 items-center justify-center rounded-full bg-teal-chip"><Icon name="Check" size={12} /></span>
+        <span className="flex size-5 items-center justify-center rounded-full bg-teal-chip text-teal-text"><Icon name="Check" size={12} /></span>
         <span className="text-xs text-ink-2">{t.receipt}</span>
       </div>
       <div className="flex items-center gap-2 border-t border-line pt-3">
@@ -74,7 +74,7 @@ function AiCard({ ai, dark, style, className = "" }: { ai: NonNullable<HeroData[
   return (
     <div aria-hidden="true" className={cx("illus seq-up flex min-w-0 max-w-full flex-col rounded-2xl border px-4 py-5 min-[360px]:px-5 sm:px-6", dark ? "border-navy-raised bg-navy-raised" : "border-line bg-white", className)} style={{ ...d(1500), ...style }}>
       <div className="flex items-center gap-2 pb-3">
-        <span className={cx("flex size-6 items-center justify-center rounded-full", dark ? "bg-navy text-teal-bright" : "bg-teal-chip")}><Icon name="Sparkles" size={14} /></span>
+        <span className={cx("flex size-6 items-center justify-center rounded-full", dark ? "bg-navy text-teal-bright" : "bg-teal-chip text-teal-text")}><Icon name="Sparkles" size={14} /></span>
         <span className={cx("text-[13px] font-semibold sm:text-sm", dark ? "text-cream" : "text-ink")}>{ai.title}</span>
       </div>
       {ai.rows.map(([l, v], i) => (
@@ -159,7 +159,7 @@ export function LibHero({ data }: { data: HeroData }) {
     return (
       <InView as="section" className="bg-page pb-24 pt-16">
         <div className="wrap flex flex-col items-center gap-8 md:gap-16 lg:flex-row">
-          <HeroCopy h={h} points={data.points} />
+          <HeroCopy h={h} points={data.points} cta={data.cta} />
           <div className="flex w-full flex-1 flex-col justify-center gap-4 rounded-3xl bg-teal-tint px-2 py-6 md:gap-6 md:rounded-[32px] md:p-[72px] lg:min-h-[520px]">
             {data.alerts?.map((a, i) => {
               const b = badge(a.badge);
@@ -197,7 +197,7 @@ export function LibTrust({ data }: { data: TrustData }) {
     return (
       <section className="border-y border-line bg-page py-8">
         <div className="wrap flex flex-col gap-6 lg:flex-row lg:items-center">
-          <p className="t-eyebrow shrink-0 text-teal-text lg:w-[200px]">{data.label ?? "Why finance teams choose XPensari"}</p>
+          <p className="t-eyebrow shrink-0 text-teal-text lg:w-[200px]">{data.label ?? "Why finance teams choose SpendMerate"}</p>
           <ul className="flex flex-1 flex-col gap-3 lg:grid lg:grid-cols-4 lg:gap-4">
             {items.map(([i, t]) => (
               <li key={t} className="flex items-center gap-2 border-l border-line pl-6 pr-4 text-sm text-ink"><Icon name={i} size={20} className="shrink-0 text-teal-text" />{t}</li>
@@ -622,7 +622,7 @@ function MobileFlow({ sources, ledger, dark, hub }: { sources: [string, string][
       {line}
       {hub && (
         <>
-          <div className="seq-up mx-auto flex size-28 items-center justify-center rounded-full bg-teal text-base font-semibold" style={d(900)}>XPensari</div>
+          <div className="seq-up mx-auto flex size-28 items-center justify-center rounded-full bg-teal text-base font-semibold" style={d(900)}>SpendMerate</div>
           {line}
         </>
       )}
@@ -648,7 +648,7 @@ function FlowDiagram({ sources, ledger, dark }: { sources: [string, string][]; l
 export function LibIntegration({ data }: { data: IntData }) {
   const h = data.h.std ? STD_INT_HEADER : data.h;
   const ledger = data.ledger ?? ["WorkMerate ledger", "One set of books for spend, payables and tax"];
-  const link = <Button href="/products/integrations-api" variant={data.L === "C" ? "link-light" : "link"} icon="Arrow Right" className="self-start">{data.link ?? "How XPensari connects"}</Button>;
+  const link = <Button href="/products/integrations-api" variant={data.L === "C" ? "link-light" : "link"} icon="Arrow Right" className="self-start">{data.link ?? "How SpendMerate connects"}</Button>;
   if (data.L === "B")
     return (
       <section className="section-y bg-page">
@@ -664,7 +664,7 @@ export function LibIntegration({ data }: { data: IntData }) {
                 {[0, 1, 2].map((k) => <span key={k} className="seq-grow absolute left-[360px] h-0.5 w-[100px] bg-teal" style={{ top: 63 + k * 100, ...d(600 + k * 150) }} />)}
                 <span className="seq-fade absolute left-[460px] top-[63px] h-[202px] w-0.5 bg-teal" style={d(1000)} />
                 <span className="seq-grow absolute left-[460px] top-[163px] h-0.5 w-[94px] bg-teal" style={d(1100)} />
-                <div className="seq-up absolute left-[554px] top-[94px] flex size-[140px] items-center justify-center rounded-full bg-teal text-base font-semibold" style={d(1300)}>XPensari</div>
+                <div className="seq-up absolute left-[554px] top-[94px] flex size-[140px] items-center justify-center rounded-full bg-teal text-base font-semibold" style={d(1300)}>SpendMerate</div>
                 <span className="seq-grow absolute left-[694px] top-[163px] h-0.5 w-[174px] bg-teal" style={d(1600)} />
                 <div className="seq-up absolute left-[868px] top-[89px]" style={d(1800)}><Ledger l={ledger} /></div>
               </InView>
@@ -736,6 +736,7 @@ export function LibIntegration({ data }: { data: IntData }) {
 /* ================= CALCULATOR ================= */
 export function LibCalculator({ data }: { data: CalcData }) {
   const h = data.h;
+  const items = data.items ?? CALC_ITEMS;
   const [sel, setSel] = useState(0);
   if (data.L === "B")
     return (
@@ -743,7 +744,7 @@ export function LibCalculator({ data }: { data: CalcData }) {
         <div className="wrap flex flex-col items-center gap-8 md:gap-12">
           <SectionHeader align="center" eyebrow={h.e} title={h.t} body={h.b} />
           <InView className="flex w-full flex-col gap-6 rounded-3xl md:rounded-[32px] border border-line bg-white p-6 md:p-12">
-            {CALC_ITEMS.map(([l, v, p], i) => (
+            {items.map(([l, v, p], i) => (
               <div key={l} className="grid grid-cols-[1fr_auto] items-center gap-x-4 gap-y-2.5 md:flex md:gap-6">
                 <span className="text-sm text-ink-2 md:w-[200px]">{l}</span>
                 <span className="col-span-2 h-3 overflow-hidden rounded-2xl bg-subtle md:order-2 md:h-10 md:flex-1">
@@ -764,7 +765,7 @@ export function LibCalculator({ data }: { data: CalcData }) {
           <div className="flex flex-1 flex-col gap-8">
             <SectionHeader eyebrow={h.e} title={h.t} body={h.b} />
             <div role="radiogroup" aria-label="Monthly transactions" className="flex flex-col gap-2">
-              {CALC_ITEMS.map(([l], i) => (
+              {items.map(([l], i) => (
                 <button key={l} role="radio" aria-checked={sel === i} onClick={() => setSel(i)} className={cx("flex items-center gap-3 rounded-2xl border px-[18px] py-3.5 text-left text-sm font-medium transition-colors", sel === i ? "border-teal bg-teal-tint" : "border-line bg-white hover:border-line-strong")}>
                   <span className={cx("size-3 rounded-full border", sel === i ? "border-teal bg-teal" : "border-line-strong")} />
                   {l}
@@ -774,8 +775,8 @@ export function LibCalculator({ data }: { data: CalcData }) {
             <p className="text-xs text-ink-3">{CALC_NOTE}</p>
           </div>
           <div aria-live="polite" className="flex h-[360px] w-full flex-col items-center justify-center gap-2 rounded-3xl md:rounded-[32px] bg-teal-tint lg:h-[440px] lg:w-[560px]">
-            <span key={sel} className="panel-in font-display text-[96px] leading-none text-teal-text md:text-[144px]">{CALC_ITEMS[sel][1]}</span>
-            <span className="text-base text-ink-2">{CALC_ITEMS[sel][0]}</span>
+            <span key={sel} className="panel-in font-display text-[96px] leading-none text-teal-text md:text-[144px]">{items[sel][1]}</span>
+            <span className="text-base text-ink-2">{items[sel][0]}</span>
           </div>
         </div>
       </section>
@@ -786,7 +787,7 @@ export function LibCalculator({ data }: { data: CalcData }) {
         <div className="wrap flex flex-col items-center gap-8 md:gap-12">
           <SectionHeader dark align="center" eyebrow={h.e} title={h.t} body={h.b} />
           <InView className="grid w-full grid-cols-1 overflow-hidden rounded-2xl md:rounded-3xl border border-navy-raised bg-navy-raised sm:grid-cols-2 lg:grid-cols-4">
-            {CALC_ITEMS.map(([l, v, p], i) => (
+            {items.map(([l, v, p], i) => (
               <div key={l} className="flex flex-col gap-4 border-t border-navy p-8 first:border-t-0 lg:border-l lg:border-t-0 lg:first:border-l-0">
                 <span className="text-sm text-mist">{l}</span>
                 <span className="t-h1 text-cream">{v}</span>
@@ -803,7 +804,7 @@ export function LibCalculator({ data }: { data: CalcData }) {
       <div className="wrap flex flex-col items-center gap-8 md:gap-12">
         <SectionHeader align="center" eyebrow={h.e} title={h.t} body={h.b} />
         <InView className="flex w-full flex-col gap-3 lg:hidden">
-          {CALC_ITEMS.map(([l, v, p], i) => (
+          {items.map(([l, v, p], i) => (
             <div key={l} className="relative flex h-24 items-center overflow-hidden rounded-2xl border border-line bg-white">
               <div className={cx("seq-x absolute inset-y-0 left-0 flex items-center px-5", i === 3 ? "bg-teal" : "bg-teal-tint")} style={{ width: `${38 + p * 62}%`, ...d(i * 150) }}>
                 <span className={cx("t-h3", i === 3 ? "text-ink" : "text-teal-text")}>{v}</span>
@@ -813,7 +814,7 @@ export function LibCalculator({ data }: { data: CalcData }) {
           ))}
         </InView>
         <InView className="hidden w-full grid-cols-4 gap-6 lg:grid">
-          {CALC_ITEMS.map(([l, v, p], i) => (
+          {items.map(([l, v, p], i) => (
             <div key={l} className="relative flex h-[300px] flex-col overflow-hidden rounded-2xl md:rounded-3xl border border-line bg-white md:h-[400px]">
               <span className="p-5 text-sm font-medium text-ink-2 md:p-6">{i < 3 && l}</span>
               <div className={cx("seq-up absolute inset-x-0 bottom-0 flex flex-col justify-start gap-2 p-5 md:p-6", i === 3 ? "bg-teal" : "bg-teal-tint")} style={{ height: `${38 + p * 62}%`, ...d(i * 200) }}>
@@ -857,7 +858,7 @@ export function LibraryPageView({ page, kind }: { page: LibraryPage; kind: "prod
           eyebrow={cta.e}
           title={cta.t}
           body={cta.b}
-          primary={{ label: cta.btns[0] ?? "Request a Demo", href: cta.btns[0]?.includes("sandbox") ? "/get-api-key" : DEMO_HREF }}
+          primary={{ label: cta.btns[0] ?? "Request a Demo", href: /sandbox|waitlist/i.test(cta.btns[0] ?? "") ? "/get-api-key" : /vendor profile/i.test(cta.btns[0] ?? "") ? "/contact" : DEMO_HREF }}
           secondary={cta.btns[1] ? { label: cta.btns[1], href: "/resources/developers" } : undefined}
         />
       )}

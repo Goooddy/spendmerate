@@ -8,9 +8,10 @@ export const PRODUCTS = {
   invoice: { title: "Invoice & AP/AR Automation", href: "/products/invoice-ap-ar" },
   budget: { title: "Budget, Cash Flow & Financial Analytics", href: "/products/budget-analytics" },
   revenue: { title: "Revenue Intelligence", href: "/products/revenue-intelligence" },
+  bank: { title: "Bank Reconciliation", href: "/products/bank-reconciliation" },
   payments: { title: "Payments", href: "/products/payments" },
   tax: { title: "Tax & Compliance Intelligence", href: "/products/tax-compliance" },
-  risk: { title: "Risk, Audit & ESG", href: "/products/risk-audit-esg" },
+  risk: { title: "Risk & Audit", href: "/products/risk-audit" },
   ai: { title: "AI Intelligence Layer", href: "/products/ai-intelligence-layer" },
   api: { title: "Integrations & API Platform", href: "/products/integrations-api" },
 } as const;
@@ -20,6 +21,7 @@ export const SOLUTIONS = {
   procurement: { title: "Procurement teams", href: "/solutions/procurement-teams" },
   sales: { title: "Sales & revenue teams", href: "/solutions/sales-revenue" },
   developers: { title: "Developers", href: "/solutions/developers" },
+  vendors: { title: "Vendors", href: "/solutions/vendors" },
   growing: { title: "Growing businesses", href: "/solutions/growing-businesses" },
   mid: { title: "Mid-sized companies", href: "/solutions/mid-sized" },
   enterprise: { title: "Enterprises & groups", href: "/solutions/enterprises" },
@@ -29,6 +31,7 @@ export const SOLUTIONS = {
   healthcare: { title: "Healthcare", href: "/solutions/healthcare" },
   oil: { title: "Oil & Gas", href: "/solutions/oil-gas" },
   education: { title: "Education", href: "/solutions/education" },
+  public: { title: "Public sector", href: "/solutions/public-sector" },
 } as const;
 
 export const RESOURCES = {
@@ -72,7 +75,13 @@ export const MEGA: Mega[] = [
       ],
       [
         { label: "Grow money in", items: [{ icon: "Trending Up", title: PRODUCTS.revenue.title, body: "Grow revenue with the same rigor", href: PRODUCTS.revenue.href }] },
-        { label: "Move money", items: [{ icon: "Arrow Left Right", title: PRODUCTS.payments.title, body: "Every payment, reconciled", href: PRODUCTS.payments.href }] },
+        {
+          label: "Move money",
+          items: [
+            { icon: "Check", title: PRODUCTS.bank.title, body: "Bank lines matched every day", href: PRODUCTS.bank.href },
+            { icon: "Arrow Left Right", title: PRODUCTS.payments.title, body: "Every payment, reconciled", href: PRODUCTS.payments.href },
+          ],
+        },
         {
           label: "Stay compliant",
           items: [
@@ -104,6 +113,7 @@ export const MEGA: Mega[] = [
             { icon: "Package", title: SOLUTIONS.procurement.title, body: "Buy smarter, see vendor risk", href: SOLUTIONS.procurement.href },
             { icon: "Target", title: SOLUTIONS.sales.title, body: "Turn pipeline into cash", href: SOLUTIONS.sales.href },
             { icon: "Code", title: SOLUTIONS.developers.title, body: "Build on an open, documented API", href: SOLUTIONS.developers.href },
+            { icon: "Shop", title: SOLUTIONS.vendors.title, body: "List your prices, free", href: SOLUTIONS.vendors.href },
           ],
         },
       ],
@@ -120,7 +130,7 @@ export const MEGA: Mega[] = [
     ],
     textLinks: {
       label: "By industry",
-      links: [SOLUTIONS.retail, SOLUTIONS.manufacturing, SOLUTIONS.hospitality, SOLUTIONS.healthcare, SOLUTIONS.oil, SOLUTIONS.education],
+      links: [SOLUTIONS.retail, SOLUTIONS.manufacturing, SOLUTIONS.hospitality, SOLUTIONS.healthcare, SOLUTIONS.oil, SOLUTIONS.education, SOLUTIONS.public],
     },
     featured: { image: "/images/2cbe1022.jpg", icon: "Landmark", title: "Built for the Nigeria Tax Act 2025", body: "Compliance is built in, not retrofitted.", link: "See Tax & Compliance", href: PRODUCTS.tax.href },
   },
@@ -137,7 +147,7 @@ export const MEGA: Mega[] = [
             { icon: "Book Open", title: RESOURCES.hub.title, body: "NTA 2025 and NRS, explained", href: RESOURCES.hub.href },
           ],
         },
-        { label: "Build", items: [{ icon: "Terminal", title: "Developer Docs & API Reference", body: "Build on XPensari", href: RESOURCES.docs.href }] },
+        { label: "Build", items: [{ icon: "Terminal", title: "Developer Docs & API Reference", body: "Build on SpendMerate", href: RESOURCES.docs.href }] },
       ],
       [
         {
@@ -158,9 +168,9 @@ export const MEGA: Mega[] = [
     columns: [
       [
         {
-          label: "About XPensari",
+          label: "About SpendMerate",
           items: [
-            { icon: "Info", title: "About XPensari", body: "Our story, mission and roadmap", href: COMPANY.about.href },
+            { icon: "Info", title: "About SpendMerate", body: "Our story, mission and roadmap", href: COMPANY.about.href },
             { icon: "Users", title: "Partners", body: "Who we build and sell with", href: COMPANY.partners.href },
             { icon: "Chart Pie", title: "Investors", body: "The market and the deck", href: COMPANY.investors.href },
             { icon: "Briefcase", title: "Careers", body: "Join the team", href: COMPANY.careers.href },
@@ -168,7 +178,7 @@ export const MEGA: Mega[] = [
         },
       ],
     ],
-    featured: { image: "/images/4a83b43e.jpg", icon: "Chart Pie", title: "Investing in XPensari?", body: "Request the investor deck and market overview.", link: "Request the deck", href: COMPANY.investors.href + "#request" },
+    featured: { image: "/images/4a83b43e.jpg", icon: "Chart Pie", title: "Investing in SpendMerate?", body: "Request the investor deck and market overview.", link: "Request the deck", href: COMPANY.investors.href + "#request" },
   },
 ];
 
@@ -182,20 +192,21 @@ export const FOOTER_GROUPS: { label: string; links: { title: string; href: strin
       { title: "Invoice & AP/AR", href: PRODUCTS.invoice.href },
       { title: "Budget & Analytics", href: PRODUCTS.budget.href },
       { title: "Revenue Intelligence", href: PRODUCTS.revenue.href },
+      { title: "Bank Reconciliation", href: PRODUCTS.bank.href },
       { title: "Payments", href: PRODUCTS.payments.href },
       { title: "Tax & Compliance", href: PRODUCTS.tax.href },
-      { title: "Risk, Audit & ESG", href: PRODUCTS.risk.href },
+      { title: "Risk & Audit", href: PRODUCTS.risk.href },
       { title: "AI Intelligence Layer", href: PRODUCTS.ai.href },
       { title: "Integrations & API", href: PRODUCTS.api.href },
     ],
   },
   {
     label: "Solutions",
-    links: [SOLUTIONS.cfo, SOLUTIONS.procurement, SOLUTIONS.sales, SOLUTIONS.developers, SOLUTIONS.growing, SOLUTIONS.mid, SOLUTIONS.enterprise],
+    links: [SOLUTIONS.cfo, SOLUTIONS.procurement, SOLUTIONS.sales, SOLUTIONS.developers, SOLUTIONS.vendors, SOLUTIONS.growing, SOLUTIONS.mid, SOLUTIONS.enterprise],
   },
   {
     label: "Industries",
-    links: [SOLUTIONS.retail, SOLUTIONS.manufacturing, SOLUTIONS.hospitality, SOLUTIONS.healthcare, SOLUTIONS.oil, SOLUTIONS.education],
+    links: [SOLUTIONS.retail, SOLUTIONS.manufacturing, SOLUTIONS.hospitality, SOLUTIONS.healthcare, SOLUTIONS.oil, SOLUTIONS.education, SOLUTIONS.public],
   },
   {
     label: "Resources",

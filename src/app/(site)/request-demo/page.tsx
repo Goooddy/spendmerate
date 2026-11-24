@@ -5,7 +5,7 @@ import { LibHiw, LibTrust } from "@/components/sections";
 import { FaqSection } from "@/components/Accordion";
 import { DemoFlow } from "./DemoFlow";
 
-export const metadata: Metadata = { title: "Request a Demo", description: "See XPensari on your own numbers in a 30-minute walkthrough." };
+export const metadata: Metadata = { title: "Request a Demo", description: "See SpendMerate on your own numbers in a 30-minute walkthrough." };
 
 export default function RequestDemoPage() {
   return (
@@ -13,11 +13,11 @@ export default function RequestDemoPage() {
       <section className="section-y bg-page">
         <div className="wrap flex flex-col gap-8 md:gap-12 lg:flex-row lg:gap-16">
           <div className="flex flex-col gap-8 lg:w-[560px]">
-            <SectionHeader as="h1" level="page" eyebrow="Request a demo" title="See XPensari on your own numbers." body="A 30-minute walkthrough with our team, built around your spend, tax and compliance workflows." />
+            <SectionHeader as="h1" level="page" eyebrow="Request a demo" title="See SpendMerate on your own numbers." body="A 30-minute walkthrough with our team, built around your spend, tax and compliance workflows." />
             <ul className="flex flex-col gap-3">
               {["Tailored to your industry, size and modules", "See NTA 2025 e-invoicing and VAT checks in action", "Get pricing for your users and entities"].map((t) => (
                 <li key={t} className="flex items-center gap-3 text-base">
-                  <span className="flex size-6 items-center justify-center rounded-full bg-teal-chip"><Icon name="Check" size={14} /></span>{t}
+                  <span className="flex size-6 items-center justify-center rounded-full bg-teal-chip text-teal-text"><Icon name="Check" size={14} /></span>{t}
                 </li>
               ))}
             </ul>

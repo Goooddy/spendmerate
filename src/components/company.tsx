@@ -22,7 +22,7 @@ export function SplitHero({ eyebrow, title, body, cta, ctaHref, alt = { label: "
           {card && (
             <div aria-hidden="true" className="illus seq-up absolute bottom-6 left-6 right-6 flex flex-col rounded-2xl border border-line bg-white px-6 py-5 sm:right-auto sm:w-[360px]" style={d(900)}>
               <div className="flex items-center gap-2 pb-3">
-                <span className="flex size-6 items-center justify-center rounded-full bg-teal-chip"><Icon name="Sparkles" size={14} /></span>
+                <span className="flex size-6 items-center justify-center rounded-full bg-teal-chip text-teal-text"><Icon name="Sparkles" size={14} /></span>
                 <span className="text-sm font-semibold">{card.title}</span>
               </div>
               {[["Spend", "Less"], ["Automate", "More"], ["Compliance", "Built in"]].map(([l, v], i) => (
